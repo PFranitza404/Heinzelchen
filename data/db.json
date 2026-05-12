@@ -1,0 +1,29 @@
+{
+  "workers": [
+    {
+      "id": "worker-1",
+      "name": "Max Beispiel",
+      "email": "max@helfende-haende.de",
+      "phone": "+49 511 000001",
+      "city": "Hannover",
+      "skills": [
+        "Gartenarbeit",
+        "Einkaufsservice",
+        "Technik-Hilfe"
+      ],
+      "availability": {
+        "Montag": [
+          "09:00-13:00"
+        ],
+        "Mittwoch": [
+          "12:00-18:00"
+        ],
+        "Freitag": [
+          "09:00-16:00"
+        ]
+      },
+      "active": true
+    }
+  ],
+  "bookings": []
+}

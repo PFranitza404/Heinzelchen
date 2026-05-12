@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arbeiter Portal | Helfende Hände</title>
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+<nav>
+  <a class="nav-logo" href="index.html">Helfende <span>Hände</span></a>
+  <ul class="nav-links">
+    <li><a href="leistungen.html">Website</a></li>
+    <li><a href="admin-portal.html">Admin</a></li>
+    <li><a class="active" href="arbeiter-portal.html">Arbeiter</a></li>
+  </ul>
+</nav>
+<main>
+  <section class="subhero">
+    <div class="subhero-inner">
+      <div class="section-label">Arbeiter</div>
+      <h1>Arbeiter Portal</h1>
+      <p>Profil anlegen, Skills eintragen, Verfügbarkeit pflegen und zugewiesene Aufträge ansehen.</p>
+    </div>
+  </section>
+  <section class="portal-section">
+    <div class="portal-grid">
+      <form class="portal-panel" id="workerForm">
+        <h2>Profil anlegen</h2>
+        <div class="portal-field"><label>Name</label><input name="name" required placeholder="Vor- und Nachname"></div>
+        <div class="portal-field"><label>E-Mail</label><input name="email" type="email" required placeholder="name@email.de"></div>
+        <div class="portal-field"><label>Telefon</label><input name="phone" required placeholder="+49 ..."></div>
+        <div class="portal-field"><label>Stadt</label><input name="city" required placeholder="Hannover"></div>
+        <div class="portal-field">
+          <label>Skills</label>
+          <div class="portal-checks">
+            <label><input type="checkbox" name="skills" value="Gartenarbeit"> Gartenarbeit</label>
+            <label><input type="checkbox" name="skills" value="Einkaufsservice"> Einkaufsservice</label>
+            <label><input type="checkbox" name="skills" value="Nachhilfe"> Nachhilfe</label>
+            <label><input type="checkbox" name="skills" value="Malerarbeiten"> Malerarbeiten</label>
+            <label><input type="checkbox" name="skills" value="Technik-Hilfe"> Technik-Hilfe</label>
+            <label><input type="checkbox" name="skills" value="Babysitting"> Babysitting</label>
+            <label><input type="checkbox" name="skills" value="Hundeservice"> Hundeservice</label>
+            <label><input type="checkbox" name="skills" value="Putzen & Reinigen"> Putzen & Reinigen</label>
+          </div>
+        </div>
+        <div class="portal-field">
+          <label>Verfügbarkeit</label>
+          <textarea name="availability" placeholder="Montag: 09:00-13:00&#10;Mittwoch: 12:00-18:00"></textarea>
+        </div>
+        <button class="btn-primary form-submit" type="submit">Profil speichern</button>
+        <p id="workerFormMessage" class="portal-message"></p>
+      </form>
+      <div class="portal-panel">
+        <h2>Zugewiesene Aufträge</h2>
+        <div id="workerAssignments" class="portal-list"></div>
+      </div>
+    </div>
+  </section>
+</main>
+<script src="assets/portal.js"></script>
+</body>
+</html>

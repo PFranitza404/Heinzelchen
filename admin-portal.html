@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Portal | Helfende Hände</title>
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+<nav>
+  <a class="nav-logo" href="index.html">Helfende <span>Hände</span></a>
+  <ul class="nav-links">
+    <li><a href="leistungen.html">Website</a></li>
+    <li><a class="active" href="admin-portal.html">Admin</a></li>
+    <li><a href="arbeiter-portal.html">Arbeiter</a></li>
+  </ul>
+</nav>
+<main>
+  <section class="subhero">
+    <div class="subhero-inner">
+      <div class="section-label">Intern</div>
+      <h1>Admin Portal</h1>
+      <p>Buchungsanfragen prüfen, passende Arbeiter sehen und Aufträge intern zuweisen.</p>
+    </div>
+  </section>
+  <section class="portal-section">
+    <div class="portal-grid">
+      <div class="portal-panel">
+        <h2>Buchungsanfragen</h2>
+        <div id="adminBookings" class="portal-list"></div>
+      </div>
+      <div class="portal-panel">
+        <h2>Arbeiter</h2>
+        <div id="adminWorkers" class="portal-list"></div>
+      </div>
+    </div>
+  </section>
+</main>
+<script src="assets/portal.js"></script>
+</body>
+</html>

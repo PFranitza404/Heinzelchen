@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sag uns, was du kannst und wann du Zeit hast | Helfende Hände</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+<nav>
+  <a class="nav-logo" href="index.html">Helfende <span>Hände</span></a>
+  <button class="nav-toggle" type="button" aria-label="Menü öffnen">☰</button>
+  <ul class="nav-links">
+    <li><a class="" href="leistungen.html">Dienstleistung</a></li>
+    <li><a class="active" href="anbieter-werden.html">Dienstleister werden</a></li>
+    <li><a class="" href="kontakt.html">Wir</a></li>
+  </ul>
+</nav>
+<main>
+<section class="subhero subhero-anbieter-werden">
+  <div class="subhero-inner reveal">
+    <div class="section-label">Profil anlegen</div>
+    <h1>Sag uns, was du kannst und wann du Zeit hast</h1>
+    <p>Auf dieser Seite entsteht dein Dienstleisterprofil. Deine Angaben helfen uns, dir nur passende Anfragen in deiner Nähe zu senden.</p>
+  </div>
+</section>
+<section class="provider-form-section page-section">
+    <form class="provider-form reveal">
+      <div class="form-block">
+        <div class="section-label">Persönliche Angaben</div>
+        <div class="form-grid">
+          <div><label>Vor- und Nachname</label><input type="text" placeholder="Max Mustermann"></div>
+          <div><label>Telefon</label><input type="tel" placeholder="+49 ..."></div>
+          <div><label>E-Mail</label><input type="email" placeholder="deine@email.de"></div>
+          <div><label>Wohnort</label><input type="text" placeholder="PLZ, Stadt"></div>
+        </div>
+      </div>
+      <div class="form-block">
+        <div class="section-label">Skills</div>
+        <p class="form-help">Wähle alle Bereiche aus, in denen du zuverlässig helfen kannst.</p>
+        <div class="skill-grid">
+          <label class="skill-option"><input type="checkbox" name="skills" value="Gartenarbeit"><span>🌿 Gartenarbeit</span></label><label class="skill-option"><input type="checkbox" name="skills" value="Einkaufsservice"><span>🛒 Einkaufsservice</span></label><label class="skill-option"><input type="checkbox" name="skills" value="Nachhilfe"><span>📚 Nachhilfe</span></label><label class="skill-option"><input type="checkbox" name="skills" value="Malerarbeiten"><span>🖌️ Malerarbeiten</span></label><label class="skill-option"><input type="checkbox" name="skills" value="Technik-Hilfe"><span>📺 Technik-Hilfe</span></label><label class="skill-option"><input type="checkbox" name="skills" value="Babysitting"><span>👶 Babysitting</span></label><label class="skill-option"><input type="checkbox" name="skills" value="Hundeservice"><span>🐕 Hundeservice</span></label><label class="skill-option"><input type="checkbox" name="skills" value="Putzen & Reinigen"><span>🧹 Putzen & Reinigen</span></label>
+        </div>
+        <div class="field-spacer"><label>Weitere Fähigkeiten</label><textarea placeholder="z.B. Möbel aufbauen, kleine Reparaturen, Seniorenbegleitung ..."></textarea></div>
+      </div>
+      <div class="form-block">
+        <div class="section-label">Verfügbarkeit</div>
+        <div class="availability-grid">
+          <label class="day-option"><input type="checkbox" name="days" value="Montag"><span>Montag</span></label><label class="day-option"><input type="checkbox" name="days" value="Dienstag"><span>Dienstag</span></label><label class="day-option"><input type="checkbox" name="days" value="Mittwoch"><span>Mittwoch</span></label><label class="day-option"><input type="checkbox" name="days" value="Donnerstag"><span>Donnerstag</span></label><label class="day-option"><input type="checkbox" name="days" value="Freitag"><span>Freitag</span></label><label class="day-option"><input type="checkbox" name="days" value="Samstag"><span>Samstag</span></label><label class="day-option"><input type="checkbox" name="days" value="Sonntag"><span>Sonntag</span></label>
+        </div>
+        <div class="form-grid field-spacer">
+          <div><label>Frühestens ab</label><input type="time" value="08:00"></div>
+          <div><label>Spätestens bis</label><input type="time" value="18:00"></div>
+          <div><label>Wie oft möchtest du arbeiten?</label><select><option>Flexibel nach Anfrage</option><option>1-2 Tage pro Woche</option><option>3-4 Tage pro Woche</option><option>Vollzeit möglich</option></select></div>
+          <div><label>Vorlaufzeit</label><select><option>Am selben Tag möglich</option><option>Mindestens 24 Stunden</option><option>Mindestens 2-3 Tage</option><option>Nur mit einer Woche Vorlauf</option></select></div>
+        </div>
+      </div>
+      <div class="form-block">
+        <div class="section-label">Einsatzgebiet</div>
+        <div class="form-grid">
+          <div><label>Bevorzugter Einsatzort</label><input type="text" placeholder="z.B. Hannover List"></div>
+          <div><label>Maximaler Umkreis</label><select><option>bis 5 km</option><option>bis 10 km</option><option>bis 20 km</option><option>bis 50 km</option></select></div>
+          <div class="full"><label>Wo passt es dir am besten?</label><textarea placeholder="z.B. nur gut mit ÖPNV erreichbar, bevorzugt Innenstadt, keine Einsätze außerhalb der Stadt ..."></textarea></div>
+        </div>
+      </div>
+      <button class="btn-primary form-submit" type="button">Profil speichern und prüfen lassen</button>
+    </form>
+  </section>
+</main>
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a class="nav-logo" href="index.html">Helfende <span>Hände</span></a>
+      <p>Wir verbinden Menschen, die Hilfe suchen, mit zuverlässigen Helfern in ihrer Nähe.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Leistungen</h4>
+      <a href="leistungen.html">Alle Dienste</a>
+      <a href="leistungen.html#gartenarbeit">Gartenarbeit</a>
+      <a href="leistungen.html#einkaufsservice">Einkaufsservice</a>
+      <a href="leistungen.html#nachhilfe">Nachhilfe</a>
+    </div>
+    <div class="footer-col">
+      <h4>Unternehmen</h4>
+      <a href="anbieter-werden.html">Dienstleister werden</a>
+      <a href="kontakt.html">Kontakt</a>
+      <a href="presse.html">Presse</a>
+    </div>
+    <div class="footer-col">
+      <h4>Rechtliches</h4>
+      <a href="datenschutz.html">Datenschutz</a>
+      <a href="agb.html">AGB</a>
+      <a href="impressum.html">Impressum</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Helfende Hände. Alle Rechte vorbehalten.</span>
+    <span>Gemacht für Menschen, die Hilfe brauchen.</span>
+  </div>
+</footer>
+<script src="assets/main.js"></script>
+</body>
+</html>

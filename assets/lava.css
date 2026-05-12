@@ -1,0 +1,179 @@
+/* Dynamic lava lamp — oben rechts in der Ecke, stark vermischt */
+.hero {
+  position: relative;
+  overflow: hidden;
+}
+
+.lava-lamp {
+  position: absolute;
+  top: clamp(-10rem, -11vh, 2%);
+  right: clamp(-20%, -5vw, -1%);
+  width: min(58vw, 760px);
+  height: min(50vh, 520px);
+  pointer-events: none;
+  z-index: 1;
+  transform-origin: 100% 0;
+  filter: blur(9px) saturate(1.06);
+}
+
+.lava-bubble {
+  position: absolute;
+  border-radius: 50%;
+  mix-blend-mode: multiply;
+  opacity: 0.78;
+  will-change: transform;
+}
+
+/* Blobs bündeln sich oben rechts, große Überlappung + zweischichtige Verläufe */
+.bubble-a {
+  width: 82%;
+  height: 82%;
+  left: auto;
+  right: -18%;
+  top: -28%;
+  background:
+    radial-gradient(
+      ellipse 95% 90% at 72% 18%,
+      rgba(60, 130, 255, 0.55),
+      rgba(125, 85, 255, 0.32) 42%,
+      rgba(253, 88, 180, 0.14) 68%,
+      transparent 92%
+    ),
+    radial-gradient(
+      ellipse 70% 65% at 58% 28%,
+      rgba(147, 72, 255, 0.28),
+      transparent 76%
+    );
+  animation: lavaFloatA 13.75s ease-in-out infinite alternate;
+}
+
+.bubble-b {
+  width: 76%;
+  height: 76%;
+  right: -12%;
+  top: -8%;
+  background:
+    radial-gradient(
+      ellipse 100% 95% at 68% 22%,
+      rgba(253, 72, 184, 0.48),
+      rgba(147, 72, 255, 0.36) 38%,
+      rgba(72, 48, 225, 0.2) 62%,
+      transparent 93%
+    ),
+    radial-gradient(
+      ellipse 75% 70% at 45% 40%,
+      rgba(255, 56, 82, 0.18),
+      transparent 74%
+    );
+  animation: lavaFloatB 16.25s ease-in-out infinite alternate;
+}
+
+.bubble-c {
+  width: 70%;
+  height: 72%;
+  left: auto;
+  right: 2%;
+  top: 8%;
+  bottom: auto;
+  background:
+    radial-gradient(
+      ellipse 105% 100% at 78% 35%,
+      rgba(255, 56, 82, 0.42),
+      rgba(253, 72, 184, 0.3) 44%,
+      rgba(90, 120, 255, 0.16) 66%,
+      transparent 94%
+    ),
+    radial-gradient(
+      ellipse 65% 60% at 52% 48%,
+      rgba(174, 65, 255, 0.22),
+      transparent 78%
+    );
+  animation: lavaFloatC 12.5s ease-in-out infinite alternate;
+}
+
+.bubble-d {
+  width: 64%;
+  height: 64%;
+  right: 12%;
+  top: 22%;
+  bottom: auto;
+  background:
+    radial-gradient(
+      ellipse 95% 88% at 62% 18%,
+      rgba(90, 120, 255, 0.38),
+      rgba(147, 72, 255, 0.28) 48%,
+      rgba(253, 72, 184, 0.14) 72%,
+      transparent 95%
+    ),
+    radial-gradient(
+      ellipse 80% 72% at 82% 55%,
+      rgba(253, 88, 180, 0.16),
+      transparent 80%
+    );
+  animation: lavaFloatD 10s ease-in-out infinite alternate;
+}
+
+.hero .hero-left h1,
+.hero .hero-left .hero-sub,
+.hero .hero-left .hero-trust span {
+  color: #6a6a71;
+  transition: color 0.24s ease;
+}
+
+.hero.lava-overlap .hero-left h1,
+.hero.lava-overlap .hero-left .hero-sub,
+.hero.lava-overlap .hero-left .hero-trust span {
+  color: #000;
+}
+
+@keyframes lavaFloatA {
+  0% { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(-14%, 11%) scale(1.12); }
+}
+
+@keyframes lavaFloatB {
+  0% { transform: translate(0, 0) scale(0.95); }
+  100% { transform: translate(9%, -13%) scale(1.13); }
+}
+
+@keyframes lavaFloatC {
+  0% { transform: translate(0, 0) scale(1.04); }
+  100% { transform: translate(16%, -7%) scale(0.95); }
+}
+
+@keyframes lavaFloatD {
+  0% { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(-12%, -15%) scale(1.17); }
+}
+
+@media (max-width: 960px) {
+  .lava-lamp {
+    top: clamp(-8.5rem, -9vh, 3%);
+    right: -22%;
+    width: min(76vw, 520px);
+    height: min(40vh, 330px);
+    opacity: 0.9;
+    filter: blur(8px) saturate(1.05);
+  }
+
+  .bubble-a {
+    right: -22%;
+    top: -26%;
+  }
+}
+
+@media (max-width: 620px) {
+  .lava-lamp {
+    top: clamp(-6.5rem, -8vh, 5%);
+    right: -30%;
+    width: min(92vw, 420px);
+    height: min(34vh, 260px);
+    opacity: 0.8;
+    filter: blur(7px) saturate(1.04);
+  }
+
+  .bubble-a {
+    right: -26%;
+    top: -22%;
+  }
+}

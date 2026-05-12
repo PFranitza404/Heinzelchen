@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alles, was deinen Alltag leichter macht | Helfende Hände</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+<nav>
+  <a class="nav-logo" href="index.html">Helfende <span>Hände</span></a>
+  <button class="nav-toggle" type="button" aria-label="Menü öffnen">☰</button>
+  <ul class="nav-links">
+    <li><a class="active" href="leistungen.html">Dienstleistung</a></li>
+    <li><a class="" href="anbieter-werden.html">Dienstleister werden</a></li>
+    <li><a class="" href="kontakt.html">Wir</a></li>
+  </ul>
+</nav>
+<main>
+<section class="subhero subhero-leistungen">
+  <div class="subhero-inner reveal">
+    <div class="section-label">Unsere Leistungen</div>
+    <h1>Alles, was deinen Alltag leichter macht</h1>
+    <p>Von Gartenarbeit bis Technik-Hilfe: Wähle genau die Unterstützung, die du gerade brauchst.</p>
+  </div>
+</section>
+<section class="booking-flow-section page-section">
+    <div class="booking-flow-card reveal" data-booking-flow>
+      <div class="booking-progress" aria-label="Buchungsfortschritt">
+        <button class="progress-step active" type="button" data-step-jump="1">1. Ihre Buchung</button>
+        <span></span>
+        <button class="progress-step" type="button" data-step-jump="2">2. Ihre Angaben</button>
+        <span></span>
+        <button class="progress-step" type="button" data-step-jump="3">3. Zahlung</button>
+      </div>
+      <div class="booking-flow-grid">
+        <div class="booking-main">
+          <div class="booking-alert" data-error hidden></div>
+          <section class="booking-step-panel active" data-step="1">
+            <div class="section-label">Schritt 1</div>
+            <h2>Welche Arbeit soll erledigt werden?</h2>
+            <p class="form-help">Wähle alle Dienste aus, die du brauchst. Weitere Aufgaben kannst du darunter frei ergänzen.</p>
+            <div class="request-service-grid">
+              <label class="request-service-option"><input type="checkbox" name="requested-services" value="Gartenarbeit"><span><strong>🌿 Gartenarbeit</strong></span></label><label class="request-service-option"><input type="checkbox" name="requested-services" value="Einkaufsservice"><span><strong>🛒 Einkaufsservice</strong></span></label><label class="request-service-option"><input type="checkbox" name="requested-services" value="Nachhilfe"><span><strong>📚 Nachhilfe</strong></span></label><label class="request-service-option"><input type="checkbox" name="requested-services" value="Malerarbeiten"><span><strong>🖌️ Malerarbeiten</strong></span></label><label class="request-service-option"><input type="checkbox" name="requested-services" value="Technik-Hilfe"><span><strong>📺 Technik-Hilfe</strong></span></label><label class="request-service-option"><input type="checkbox" name="requested-services" value="Babysitting"><span><strong>👶 Babysitting</strong></span></label><label class="request-service-option"><input type="checkbox" name="requested-services" value="Hundeservice"><span><strong>🐕 Hundeservice</strong></span></label><label class="request-service-option"><input type="checkbox" name="requested-services" value="Putzen & Reinigen"><span><strong>🧹 Putzen & Reinigen</strong></span></label>
+            </div>
+            <div class="booking-field">
+              <label>Weitere Aufgabe / Notiz</label>
+              <textarea name="extraTask" placeholder="z.B. zusätzlich Keller aufräumen, Möbel tragen oder kleine Reparatur ..."></textarea>
+            </div>
+            <div class="booking-field-row">
+              <div class="booking-field">
+                <label>Geschätzte Dauer</label>
+                <input name="duration" type="text" placeholder="z.B. 3 Stunden oder halber Tag">
+              </div>
+              <div class="booking-field">
+                <label>Häufigkeit</label>
+                <div class="frequency-options">
+                  <label><input type="radio" name="frequency" value="Einmalig"><span>Einmalig</span></label>
+                  <label><input type="radio" name="frequency" value="Wöchentlich"><span>Wöchentlich</span></label>
+                  <label><input type="radio" name="frequency" value="2-wöchentlich"><span>2-wöchentlich</span></label>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section class="booking-step-panel" data-step="2">
+            <div class="section-label">Schritt 2</div>
+            <h2>Ihre Angaben</h2>
+            <p class="form-help">Diese Daten brauchen wir, um den Auftrag einzuordnen und später einen passenden Dienstleister zuzuweisen.</p>
+            <div class="booking-field-row">
+              <div class="booking-field"><label>Vorname</label><input name="firstName" type="text" placeholder="Vorname"></div>
+              <div class="booking-field"><label>Nachname</label><input name="lastName" type="text" placeholder="Nachname"></div>
+            </div>
+            <div class="booking-field"><label>Straße und Hausnummer</label><input name="street" type="text" placeholder="Musterstraße 12"></div>
+            <div class="booking-field-row">
+              <div class="booking-field"><label>PLZ</label><input name="zip" type="text" placeholder="30159"></div>
+              <div class="booking-field"><label>Stadt</label><input name="city" type="text" placeholder="Hannover"></div>
+            </div>
+            <div class="booking-field-row">
+              <div class="booking-field"><label>Telefon</label><input name="phone" type="tel" placeholder="+49 ..."></div>
+              <div class="booking-field"><label>E-Mail</label><input name="email" type="email" placeholder="deine@email.de"></div>
+            </div>
+            <div class="booking-field-row">
+              <div class="booking-field"><label>Wunschtermin</label><input name="date" type="date"></div>
+              <div class="booking-field"><label>Uhrzeit</label><input name="time" type="time" value="10:00"></div>
+            </div>
+          </section>
+          <section class="booking-step-panel" data-step="3">
+            <div class="section-label">Schritt 3</div>
+            <h2>Zahlung vorbereiten</h2>
+            <p class="form-help">Der Zahlungsbereich ist so vorbereitet, dass später Stripe eingebunden werden kann. Aktuell ist es noch ein Platzhalter ohne echte Abbuchung.</p>
+            <div class="payment-provider-box" data-payment-provider="stripe-placeholder">
+              <div>
+                <strong>Stripe-Zahlungsmodul</strong>
+                <span>Hier kann später Stripe Elements oder Stripe Checkout eingefügt werden.</span>
+              </div>
+              <div class="stripe-placeholder" id="stripe-card-element">Kartenzahlung wird später geladen</div>
+            </div>
+            <label class="payment-check"><input type="checkbox" name="paymentReady"> Ich bestätige, dass meine Angaben korrekt sind.</label>
+            <div class="booking-confirmation" data-confirmation hidden>
+              <strong>Buchungsanfrage vorbereitet.</strong>
+              <p>Wir prüfen die Verfügbarkeit unserer Dienstleister und bestätigen dir den Auftrag anschließend persönlich.</p>
+              <ul>
+                <li><span>Datum:</span> <strong data-confirm-date>-</strong></li>
+                <li><span>Uhrzeit:</span> <strong data-confirm-time>-</strong></li>
+                <li><span>Dauer:</span> <strong data-confirm-duration>-</strong></li>
+                <li><span>Adresse:</span> <strong data-confirm-address>-</strong></li>
+              </ul>
+            </div>
+          </section>
+          <div class="booking-actions">
+            <button class="btn-secondary booking-back" type="button" data-back hidden>Zurück</button>
+            <button class="btn-primary booking-next" type="button" data-next>Weiter</button>
+          </div>
+        </div>
+        <aside class="booking-summary" aria-label="Buchungsübersicht">
+          <h3>Ihre Buchungsübersicht</h3>
+          <dl>
+            <div><dt>Dienste</dt><dd data-summary-services>-</dd></div>
+            <div><dt>Weitere Aufgabe</dt><dd data-summary-extra>-</dd></div>
+            <div><dt>Häufigkeit</dt><dd data-summary-frequency>-</dd></div>
+            <div><dt>Dauer</dt><dd data-summary-duration>-</dd></div>
+            <div><dt>Datum</dt><dd data-summary-date>-</dd></div>
+            <div><dt>Uhrzeit</dt><dd data-summary-time>-</dd></div>
+            <div><dt>Adresse</dt><dd data-summary-address>-</dd></div>
+          </dl>
+          <div class="summary-price">
+            <span>Preisberechnung</span>
+            <strong>Platzhalter</strong>
+            <small>Wird später nach deinem Preiskonzept berechnet.</small>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+</main>
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a class="nav-logo" href="index.html">Helfende <span>Hände</span></a>
+      <p>Wir verbinden Menschen, die Hilfe suchen, mit zuverlässigen Helfern in ihrer Nähe.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Leistungen</h4>
+      <a href="leistungen.html">Alle Dienste</a>
+      <a href="leistungen.html#gartenarbeit">Gartenarbeit</a>
+      <a href="leistungen.html#einkaufsservice">Einkaufsservice</a>
+      <a href="leistungen.html#nachhilfe">Nachhilfe</a>
+    </div>
+    <div class="footer-col">
+      <h4>Unternehmen</h4>
+      <a href="anbieter-werden.html">Dienstleister werden</a>
+      <a href="kontakt.html">Kontakt</a>
+      <a href="presse.html">Presse</a>
+    </div>
+    <div class="footer-col">
+      <h4>Rechtliches</h4>
+      <a href="datenschutz.html">Datenschutz</a>
+      <a href="agb.html">AGB</a>
+      <a href="impressum.html">Impressum</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Helfende Hände. Alle Rechte vorbehalten.</span>
+    <span>Gemacht für Menschen, die Hilfe brauchen.</span>
+  </div>
+</footer>
+<script src="assets/main.js"></script>
+</body>
+</html>
