@@ -177,3 +177,24 @@
     top: -22%;
   }
 }
+
+/* Startseite: farbige Lava unter der Nav / hinter dem Burger (Blend-Isolation + Stack) */
+body.home .hero {
+  isolation: isolate;
+}
+
+body.home .lava-lamp {
+  z-index: 0;
+}
+
+@media (max-width: 960px) {
+  body.home .lava-lamp {
+    top: clamp(-2rem, 4vw, 14%);
+  }
+}
+
+@media (max-width: 620px) {
+  body.home .lava-lamp {
+    top: clamp(0rem, 7vw, 18%);
+  }
+}
