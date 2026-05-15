@@ -28,14 +28,14 @@
   </div>
 </section>
 <section class="provider-form-section page-section">
-    <form class="provider-form reveal">
+    <form class="provider-form reveal" id="publicWorkerForm">
       <div class="form-block">
         <div class="section-label">Persönliche Angaben</div>
         <div class="form-grid">
-          <div><label>Vor- und Nachname</label><input type="text" placeholder="Max Mustermann"></div>
-          <div><label>Telefon</label><input type="tel" placeholder="+49 ..."></div>
-          <div><label>E-Mail</label><input type="email" placeholder="deine@email.de"></div>
-          <div><label>Wohnort</label><input type="text" placeholder="PLZ, Stadt"></div>
+          <div><label>Vor- und Nachname</label><input name="name" type="text" required placeholder="Max Mustermann"></div>
+          <div><label>Telefon</label><input name="phone" type="tel" required placeholder="+49 ..."></div>
+          <div><label>E-Mail</label><input name="email" type="email" required placeholder="deine@email.de"></div>
+          <div><label>Wohnort</label><input name="city" type="text" required placeholder="PLZ, Stadt"></div>
         </div>
       </div>
       <div class="form-block">
@@ -44,7 +44,7 @@
         <div class="skill-grid">
           <label class="skill-option"><input type="checkbox" name="skills" value="Gartenarbeit"><span>🌿 Gartenarbeit</span></label><label class="skill-option"><input type="checkbox" name="skills" value="Einkaufsservice"><span>🛒 Einkaufsservice</span></label><label class="skill-option"><input type="checkbox" name="skills" value="Nachhilfe"><span>📚 Nachhilfe</span></label><label class="skill-option"><input type="checkbox" name="skills" value="Malerarbeiten"><span>🖌️ Malerarbeiten</span></label><label class="skill-option"><input type="checkbox" name="skills" value="Technik-Hilfe"><span>📺 Technik-Hilfe</span></label><label class="skill-option"><input type="checkbox" name="skills" value="Babysitting"><span>👶 Babysitting</span></label><label class="skill-option"><input type="checkbox" name="skills" value="Hundeservice"><span>🐕 Hundeservice</span></label><label class="skill-option"><input type="checkbox" name="skills" value="Putzen & Reinigen"><span>🧹 Putzen & Reinigen</span></label>
         </div>
-        <div class="field-spacer"><label>Weitere Fähigkeiten</label><textarea placeholder="z.B. Möbel aufbauen, kleine Reparaturen, Seniorenbegleitung ..."></textarea></div>
+        <div class="field-spacer"><label>Weitere Fähigkeiten</label><textarea name="extraSkills" placeholder="z.B. Möbel aufbauen, kleine Reparaturen, Seniorenbegleitung ..."></textarea></div>
       </div>
       <div class="form-block">
         <div class="section-label">Verfügbarkeit</div>
@@ -52,21 +52,22 @@
           <label class="day-option"><input type="checkbox" name="days" value="Montag"><span>Montag</span></label><label class="day-option"><input type="checkbox" name="days" value="Dienstag"><span>Dienstag</span></label><label class="day-option"><input type="checkbox" name="days" value="Mittwoch"><span>Mittwoch</span></label><label class="day-option"><input type="checkbox" name="days" value="Donnerstag"><span>Donnerstag</span></label><label class="day-option"><input type="checkbox" name="days" value="Freitag"><span>Freitag</span></label><label class="day-option"><input type="checkbox" name="days" value="Samstag"><span>Samstag</span></label><label class="day-option"><input type="checkbox" name="days" value="Sonntag"><span>Sonntag</span></label>
         </div>
         <div class="form-grid field-spacer">
-          <div><label>Frühestens ab</label><input type="time" value="08:00"></div>
-          <div><label>Spätestens bis</label><input type="time" value="18:00"></div>
-          <div><label>Wie oft möchtest du arbeiten?</label><select><option>Flexibel nach Anfrage</option><option>1-2 Tage pro Woche</option><option>3-4 Tage pro Woche</option><option>Vollzeit möglich</option></select></div>
-          <div><label>Vorlaufzeit</label><select><option>Am selben Tag möglich</option><option>Mindestens 24 Stunden</option><option>Mindestens 2-3 Tage</option><option>Nur mit einer Woche Vorlauf</option></select></div>
+          <div><label>Frühestens ab</label><input name="availableFrom" type="time" value="08:00"></div>
+          <div><label>Spätestens bis</label><input name="availableUntil" type="time" value="18:00"></div>
+          <div><label>Wie oft möchtest du arbeiten?</label><select name="workload"><option>Flexibel nach Anfrage</option><option>1-2 Tage pro Woche</option><option>3-4 Tage pro Woche</option><option>Vollzeit möglich</option></select></div>
+          <div><label>Vorlaufzeit</label><select name="leadTime"><option>Am selben Tag möglich</option><option>Mindestens 24 Stunden</option><option>Mindestens 2-3 Tage</option><option>Nur mit einer Woche Vorlauf</option></select></div>
         </div>
       </div>
       <div class="form-block">
         <div class="section-label">Einsatzgebiet</div>
         <div class="form-grid">
-          <div><label>Bevorzugter Einsatzort</label><input type="text" placeholder="z.B. Hannover List"></div>
-          <div><label>Maximaler Umkreis</label><select><option>bis 5 km</option><option>bis 10 km</option><option>bis 20 km</option><option>bis 50 km</option></select></div>
-          <div class="full"><label>Wo passt es dir am besten?</label><textarea placeholder="z.B. nur gut mit ÖPNV erreichbar, bevorzugt Innenstadt, keine Einsätze außerhalb der Stadt ..."></textarea></div>
+          <div><label>Bevorzugter Einsatzort</label><input name="serviceArea" type="text" placeholder="z.B. Hannover List"></div>
+          <div><label>Maximaler Umkreis</label><select name="radiusKm"><option>bis 5 km</option><option>bis 10 km</option><option>bis 20 km</option><option>bis 50 km</option></select></div>
+          <div class="full"><label>Wo passt es dir am besten?</label><textarea name="areaNotes" placeholder="z.B. nur gut mit ÖPNV erreichbar, bevorzugt Innenstadt, keine Einsätze außerhalb der Stadt ..."></textarea></div>
         </div>
       </div>
-      <button class="btn-primary form-submit" type="button">Profil speichern und prüfen lassen</button>
+      <button class="btn-primary form-submit" type="submit">Profil speichern und prüfen lassen</button>
+      <p id="publicWorkerFormMessage" class="portal-message"></p>
     </form>
   </section>
 </main>
@@ -102,5 +103,6 @@
   </div>
 </footer>
 <script src="assets/main.js"></script>
+<script src="assets/provider-form.js"></script>
 </body>
 </html>

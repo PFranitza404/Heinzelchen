@@ -39,7 +39,7 @@
       <h1>Alltagshilfe, die sich <em>wirklich</em> kümmert.</h1>
       <p class="hero-sub">Ob Gartenarbeit, Einkauf oder Nachhilfe: Bei uns findest du zuverlässige Menschen, die dir den Alltag erleichtern. Schnell gebucht, persönlich betreut.</p>
       <div class="hero-actions">
-        <a href="leistungen.html" class="btn-primary">Jetzt Hilfe buchen</a>
+        <a href="leistungen.html" class="btn-primary">Hilfe buchen</a>
         <a href="#so-funktionierts" class="btn-secondary">Wie es funktioniert →</a>
       </div>
       <div class="hero-trust">
@@ -59,72 +59,94 @@
   </div>
 </section>
 <section class="how page-section" id="so-funktionierts">
-  <div class="section-header reveal">
-    <div class="section-label">So einfach geht's</div>
-    <h2>In 3 Schritten zur Hilfe</h2>
-    <p class="section-sub">Keine lange Suche, kein Papierkram. Du beschreibst, was du brauchst, und wir bringen dich mit passenden Helfern zusammen.</p>
-    <div class="center-action"><a class="btn-primary" href="leistungen.html">Hilfe buchen</a></div>
+  <div class="steps-shell reveal">
+    <div class="section-header">
+      <h2>In 3 Schritten zur Hilfe</h2>
+      <p class="section-sub">Keine lange Suche, kein Papierkram. Du beschreibst, was du brauchst, und wir bringen dich mit passenden Helfern zusammen.</p>
+      <div class="center-action"><a class="btn-primary" href="leistungen.html">Hilfe buchen</a></div>
+    </div>
+    <div class="steps">
+      <article class="step">
+        <div class="step-num">1</div>
+        <h3>Dienst auswählen</h3>
+        <p>Wähle eine Leistung, gib deinen Ort an und beschreibe kurz den Auftrag.</p>
+      </article>
+      <article class="step">
+        <div class="step-num">2</div>
+        <h3>Termin vereinbaren</h3>
+        <p>Du nennst Datum und Uhrzeit. Wir prüfen passende Helfer in deiner Nähe.</p>
+      </article>
+      <article class="step">
+        <div class="step-num">3</div>
+        <h3>Entspannt genießen</h3>
+        <p>Der Helfer kommt pünktlich. Danach bewertest du den Einsatz transparent.</p>
+      </article>
+    </div>
   </div>
-  <div class="steps">
-    <div class="step reveal"><div class="step-num">1</div><h3>Dienst auswählen</h3><p>Wähle eine Leistung, gib deinen Ort an und beschreibe kurz den Auftrag.</p></div>
-    <div class="step reveal"><div class="step-num">2</div><h3>Termin vereinbaren</h3><p>Du nennst Datum und Uhrzeit. Wir prüfen passende Helfer in deiner Nähe.</p></div>
-    <div class="step reveal"><div class="step-num">3</div><h3>Entspannt genießen</h3><p>Der Helfer kommt pünktlich. Danach bewertest du den Einsatz transparent.</p></div>
+</section>
+<section class="service-carousel-section" aria-labelledby="service-carousel-title">
+  <div class="service-carousel-inner">
+    <div class="section-header reveal">
+      <h2 id="service-carousel-title">Wähle, wobei du Hilfe brauchst</h2>
+      <p class="section-sub">Ein schneller Überblick über die häufigsten Aufgaben, die unsere Studenten für dich übernehmen.</p>
+    </div>
+    <div class="service-carousel" data-service-carousel tabindex="0">
+      <div class="service-carousel-stage">
+        <button class="service-carousel-arrow service-carousel-up" type="button" data-service-prev aria-label="Vorherige Dienstleistung">↑</button>
+        <div class="service-carousel-track">
+          <article class="service-carousel-card" data-index="0" data-name="Garten" data-description="Rasenmähen, Hecken schneiden, Gartenarbeit" data-price="ab 18€/Std.">
+            <div class="service-carousel-icon">🌿</div>
+          </article>
+          <article class="service-carousel-card" data-index="1" data-name="Einkauf" data-description="Besorgungen & Lieferungen" data-price="ab 12€/Auftrag">
+            <div class="service-carousel-icon">🛒</div>
+          </article>
+          <article class="service-carousel-card" data-index="2" data-name="Nachhilfe" data-description="Lernhilfe für Schüler & Studenten" data-price="ab 22€/Std.">
+            <div class="service-carousel-icon">📚</div>
+          </article>
+          <article class="service-carousel-card" data-index="3" data-name="Maler" data-description="Streichen & Renovieren" data-price="ab 20€/Std.">
+            <div class="service-carousel-icon">🎨</div>
+          </article>
+          <article class="service-carousel-card" data-index="4" data-name="Technik" data-description="IT Support & Geräte einrichten" data-price="ab 25€/Std.">
+            <div class="service-carousel-icon">💻</div>
+          </article>
+          <article class="service-carousel-card" data-index="5" data-name="Babysitting" data-description="Kinderbetreuung" data-price="ab 15€/Std.">
+            <div class="service-carousel-icon">👶</div>
+          </article>
+          <article class="service-carousel-card" data-index="6" data-name="Hund" data-description="Gassi gehen & Betreuung" data-price="ab 14€/Std.">
+            <div class="service-carousel-icon">🐕</div>
+          </article>
+          <article class="service-carousel-card" data-index="7" data-name="Reinigung" data-description="Haus & Büro reinigen" data-price="ab 16€/Std.">
+            <div class="service-carousel-icon">🧹</div>
+          </article>
+        </div>
+        <button class="service-carousel-arrow service-carousel-down" type="button" data-service-next aria-label="Nächste Dienstleistung">↓</button>
+      </div>
+      <div class="service-carousel-content">
+        <div class="service-carousel-controls">
+          <button class="service-carousel-arrow" type="button" data-service-prev>↑</button>
+          <button class="service-carousel-arrow" type="button" data-service-next>↓</button>
+        </div>
+        <div class="service-carousel-info">
+          <h3 data-service-name>Garten</h3>
+          <p data-service-description>Rasenmähen, Hecken schneiden, Gartenarbeit</p>
+          <strong data-service-price>ab 18€/Std.</strong>
+        </div>
+        <div class="service-carousel-dots" aria-label="Dienstleistung auswählen">
+          <button class="active" type="button" data-service-dot="0" aria-label="Garten"></button>
+          <button type="button" data-service-dot="1" aria-label="Einkauf"></button>
+          <button type="button" data-service-dot="2" aria-label="Nachhilfe"></button>
+          <button type="button" data-service-dot="3" aria-label="Maler"></button>
+          <button type="button" data-service-dot="4" aria-label="Technik"></button>
+          <button type="button" data-service-dot="5" aria-label="Babysitting"></button>
+          <button type="button" data-service-dot="6" aria-label="Hund"></button>
+          <button type="button" data-service-dot="7" aria-label="Reinigung"></button>
+        </div>
+        <a class="btn-primary" href="leistungen.html">Hilfe buchen</a>
+      </div>
+    </div>
   </div>
 </section>
 <section class="services compact">
-  <div class="section-header reveal">
-    <div class="section-label">Unsere Leistungen</div>
-    <h2>Alles, was deinen Alltag leichter macht</h2>
-    <p class="section-sub">Ein kurzer Überblick. Auf der Leistungsseite findest du alle Dienste ausführlicher.</p>
-  </div>
-  <div class="services-grid"><article class="service-card reveal" id="gartenarbeit">
-    <div class="service-icon">🌿</div>
-    <h3>Gartenarbeit</h3>
-    <p>Rasenmähen, Hecken schneiden, Bepflanzen und saisonale Pflege.</p>
-    <span class="service-from">ab 18 EUR/Std.</span>
-  </article>
-<article class="service-card reveal" id="einkaufsservice">
-    <div class="service-icon">🛒</div>
-    <h3>Einkaufsservice</h3>
-    <p>Einkäufe nach Liste, Botengänge und Lieferung bis an die Tür.</p>
-    <span class="service-from">ab 12 EUR/Auftrag</span>
-  </article>
-<article class="service-card reveal" id="nachhilfe">
-    <div class="service-icon">📚</div>
-    <h3>Nachhilfe</h3>
-    <p>Unterstützung in Mathe, Deutsch, Englisch und weiteren Schulfächern.</p>
-    <span class="service-from">ab 22 EUR/Std.</span>
-  </article>
-<article class="service-card reveal" id="malerarbeiten">
-    <div class="service-icon">🖌️</div>
-    <h3>Malerarbeiten</h3>
-    <p>Zimmer streichen, kleine Renovierungen und saubere Ausbesserungen.</p>
-    <span class="service-from">ab 20 EUR/Std.</span>
-  </article>
-<article class="service-card reveal" id="technik-hilfe">
-    <div class="service-icon">📺</div>
-    <h3>Technik-Hilfe</h3>
-    <p>WLAN, Drucker, Fernseher, Smartphone und Computer einfach eingerichtet.</p>
-    <span class="service-from">ab 25 EUR/Std.</span>
-  </article>
-<article class="service-card reveal" id="babysitting">
-    <div class="service-icon">👶</div>
-    <h3>Babysitting</h3>
-    <p>Liebevolle Betreuung für Kinder, flexibel und persönlich abgestimmt.</p>
-    <span class="service-from">ab 15 EUR/Std.</span>
-  </article>
-<article class="service-card reveal" id="hundeservice">
-    <div class="service-icon">🐕</div>
-    <h3>Hundeservice</h3>
-    <p>Gassi gehen, Hundesitting und zuverlässige Versorgung im Alltag.</p>
-    <span class="service-from">ab 14 EUR/Std.</span>
-  </article>
-<article class="service-card reveal" id="putzen-reinigen">
-    <div class="service-icon">🧹</div>
-    <h3>Putzen & Reinigen</h3>
-    <p>Wohnung, Fenster, Treppenhaus, Keller und Außenflächen.</p>
-    <span class="service-from">ab 16 EUR/Std.</span>
-  </article></div>
   <div class="center-action"><a class="btn-primary" href="leistungen.html">Alle Leistungen ansehen</a></div>
 </section>
 </main>
@@ -160,5 +182,6 @@
   </div>
 </footer>
 <script src="assets/main.js"></script>
+<script src="assets/service-carousel.js"></script>
 </body>
 </html>
