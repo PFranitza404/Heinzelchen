@@ -1184,3 +1184,60 @@ body.home .nav-links{z-index:2}
     min-height:280px;
   }
 }
+
+body{
+  background:
+    radial-gradient(circle at 8% 10%,rgba(44,132,76,.08),transparent 24rem),
+    radial-gradient(circle at 94% 26%,rgba(48,105,185,.045),transparent 22rem),
+    radial-gradient(circle at 18% 86%,rgba(198,55,48,.075),transparent 27rem),
+    radial-gradient(circle at 78% 72%,rgba(198,55,48,.04),transparent 24rem),
+    linear-gradient(135deg,#fbfcf8 0%,#f8fbf6 42%,#fbf6f5 72%,#f7fafb 100%)!important;
+  background-attachment:fixed!important;
+}
+
+main,
+.hero,
+.subhero,
+.stats-bar,
+.how,
+.services,
+.reviews,
+.providers,
+.content,
+.booking-flow-section,
+.provider-form-section,
+.portal-section,
+.service-request-section,
+.page-section,
+.compact,
+.young-helper.page-section,
+.providers.page-section,
+.service-carousel-section,
+#so-startest-du.how.page-section{
+  background:transparent!important;
+  background-image:none!important;
+}
+
+nav{
+  background:rgba(253,253,251,.82)!important;
+}
+
+body.home nav:not(.nav-scrolled){
+  background:rgba(253,253,251,.42)!important;
+}
+
+.hero-card,
+.service-card,
+.review-card,
+.value-card,
+.provider-form,
+.service-request-card,
+.booking-flow-card,
+.portal-panel,
+.anbieter-faq-item,
+.login-card,
+.panel,
+.stats-inner{
+  background:rgba(253,253,251,.9)!important;
+  backdrop-filter:blur(18px);
+}

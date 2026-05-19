@@ -198,3 +198,31 @@ body.home .lava-lamp {
     top: clamp(0rem, 7vw, 18%);
   }
 }
+
+body.home .lava-lamp {
+  opacity: 0.42;
+  filter: blur(18px) saturate(0.92);
+}
+
+body.home .bubble-a {
+  background: radial-gradient(ellipse 95% 90% at 72% 18%,rgba(44,132,76,0.28),rgba(44,132,76,0.13) 48%,transparent 86%);
+}
+
+body.home .bubble-b {
+  background: radial-gradient(ellipse 100% 95% at 68% 22%,rgba(198,55,48,0.18),rgba(198,55,48,0.08) 45%,transparent 88%);
+}
+
+body.home .bubble-c {
+  background: radial-gradient(ellipse 105% 100% at 78% 35%,rgba(48,105,185,0.14),rgba(48,105,185,0.06) 48%,transparent 90%);
+}
+
+body.home .bubble-d {
+  background: radial-gradient(ellipse 95% 88% at 62% 18%,rgba(44,132,76,0.16),rgba(198,55,48,0.06) 58%,transparent 92%);
+}
+
+@media (max-width: 620px) {
+  body.home .lava-lamp {
+    opacity: 0.36;
+    filter: blur(16px) saturate(0.9);
+  }
+}
