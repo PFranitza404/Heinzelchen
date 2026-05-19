@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arbeiter Dashboard | Helfende Hände</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.css">
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+<nav>
+  <a class="nav-logo" href="index.html">Helfende <span>Hände</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html">Start</a></li>
+    <li><a class="active" href="arbeiter-dashboard">Dashboard</a></li>
+  </ul>
+</nav>
+<main>
+  <section class="subhero worker-dashboard-head">
+    <div class="subhero-inner">
+      <h1 id="workerGreeting">Willkommen</h1>
+      <p>Hier verwaltest du bald deine Aufträge und Zeiten.</p>
+      <button class="btn-primary" id="workerLogoutButton" type="button">Logout</button>
+    </div>
+  </section>
+  <section class="portal-section">
+    <div class="portal-grid worker-dashboard-grid">
+      <article class="portal-panel">
+        <h2>Heutige Aufträge</h2>
+        <div id="workerTodayJobs" class="portal-list">
+        </div>
+      </article>
+      <article class="portal-panel">
+        <h2>Verfügbarkeit eintragen</h2>
+        <div class="worker-calendar-legend">
+          <span><i class="legend-available"></i> Verfügbar</span>
+          <span><i class="legend-booked"></i> Gebucht</span>
+          <span><i class="legend-unavailable"></i> Nicht verfügbar</span>
+        </div>
+        <div id="workerAvailabilityCalendar"></div>
+      </article>
+    </div>
+  </section>
+  <dialog class="availability-dialog" id="availabilityDialog">
+    <form method="dialog" id="availabilityForm">
+      <h2>Verfügbarkeit eintragen</h2>
+      <p id="availabilityDateLabel"></p>
+      <input name="date" type="hidden">
+      <div class="booking-field-row">
+        <div class="portal-field"><label>Uhrzeit von</label><input name="from" type="time" required value="09:00"></div>
+        <div class="portal-field"><label>Uhrzeit bis</label><input name="until" type="time" required value="17:00"></div>
+      </div>
+      <label class="availability-repeat"><input name="recurring" type="checkbox"> Wöchentlich für 8 Wochen eintragen</label>
+      <p class="portal-message" id="availabilityMessage"></p>
+      <div class="availability-dialog-actions">
+        <button class="btn-primary" value="save" type="submit">Verfügbar eintragen</button>
+        <button class="btn-secondary" value="cancel" type="button" id="availabilityCancelButton">Abbrechen</button>
+      </div>
+    </form>
+  </dialog>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
+<script src="assets/worker-auth.js"></script>
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arbeiter Registrierung | Helfende Hände</title>
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+<nav>
+  <a class="nav-logo" href="index.html">Helfende <span>Hände</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html">Start</a></li>
+    <li><a href="leistungen.html">Leistungen</a></li>
+    <li><a class="active" href="arbeiter-registrierung">Arbeiter werden</a></li>
+  </ul>
+</nav>
+<main>
+  <section class="subhero">
+    <div class="subhero-inner">
+      <h1>Als Helfer registrieren</h1>
+      <p>Erstelle deinen Account. Wir prüfen deine Bewerbung und schalten dich danach frei.</p>
+    </div>
+  </section>
+  <section class="portal-section">
+    <form class="portal-panel worker-auth-panel" id="workerRegisterForm">
+      <h2>Registrierung</h2>
+      <div class="booking-field-row">
+        <div class="portal-field"><label>Vorname</label><input name="firstName" required autocomplete="given-name"></div>
+        <div class="portal-field"><label>Nachname</label><input name="lastName" required autocomplete="family-name"></div>
+      </div>
+      <div class="portal-field"><label>E-Mail</label><input name="email" type="email" required autocomplete="email"></div>
+      <div class="booking-field-row">
+        <div class="portal-field"><label>Passwort</label><input name="password" type="password" required minlength="8" autocomplete="new-password"></div>
+        <div class="portal-field"><label>Passwort wiederholen</label><input name="passwordRepeat" type="password" required minlength="8" autocomplete="new-password"></div>
+      </div>
+      <div class="booking-field-row">
+        <div class="portal-field"><label>Telefonnummer</label><input name="phone" required autocomplete="tel"></div>
+        <div class="portal-field"><label>Stadt</label><input name="city" required autocomplete="address-level2"></div>
+      </div>
+      <div class="portal-field">
+        <label>Ausweis hochladen</label>
+        <input name="idCard" type="file" accept=".jpg,.jpeg,.png,.pdf,image/jpeg,image/png,application/pdf" required>
+        <small>JPG, PNG oder PDF · maximal 10MB</small>
+      </div>
+      <button class="btn-primary form-submit" type="submit">Registrieren</button>
+      <p class="portal-message" id="workerRegisterMessage"></p>
+      <p class="worker-auth-note">Schon registriert? <a href="arbeiter-login">Einloggen</a></p>
+    </form>
+  </section>
+</main>
+<script src="assets/worker-auth.js"></script>
+</body>
+</html>

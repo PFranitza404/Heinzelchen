@@ -1,0 +1,106 @@
+# Helfende Haende
+
+Website fuer einen Studenten-Helfer-Service mit Kundenbuchung, Arbeiter-Registrierung, Ausweis-Upload, Arbeiter-Kalender, Supabase und Resend Emails.
+
+## Lokal starten
+
+1. Abhaengigkeiten installieren:
+
+```bash
+npm install
+```
+
+2. `.env` aus `.env.example` befuellen.
+
+3. Website-Server starten:
+
+```bash
+env PORT=3001 node server.mjs
+```
+
+Lokale URLs:
+
+- Website: `http://localhost:3001`
+- Buchung: `http://localhost:3001/leistungen.html`
+- Arbeiter Registrierung: `http://localhost:3001/arbeiter-registrierung`
+- Arbeiter Login: `http://localhost:3001/arbeiter-login`
+- Arbeiter Dashboard: `http://localhost:3001/arbeiter-dashboard`
+- Admin: `http://localhost:3001/admin`
+
+## Environment Variablen
+
+```env
+PORT=3001
+SUPABASE_URL=
+SUPABASE_ANON_KEY=
+SUPABASE_SERVICE_ROLE_KEY=
+RESEND_API_KEY=
+EMAIL_FROM=
+MAIL_FROM=
+ADMIN_EMAIL=
+PUBLIC_URL=
+SUPABASE_ID_CARD_BUCKET=worker-documents
+FORCE_HTTPS=true
+NODE_ENV=production
+```
+
+Wichtig:
+
+- `SUPABASE_SERVICE_ROLE_KEY` niemals ins Frontend kopieren.
+- `.env` ist in `.gitignore` und darf nicht auf GitHub.
+- Arbeiter-Passwoerter werden nicht im Projekt gespeichert, sondern ueber Supabase Auth verwaltet.
+- `/admin` ist aktuell ohne Passwort erreichbar, bis der Schutz wieder eingebaut wird.
+
+## Supabase einrichten
+
+1. Supabase Projekt erstellen.
+2. In Project Settings -> API diese Werte kopieren:
+   - Project URL -> `SUPABASE_URL`
+   - anon public key -> `SUPABASE_ANON_KEY`
+   - service_role key -> `SUPABASE_SERVICE_ROLE_KEY`
+3. In Supabase SQL Editor den Inhalt von `supabase-schema.sql` ausfuehren.
+4. Storage Bucket `worker-documents` pruefen:
+   - Public: `false`
+   - Ausweise liegen privat unter `ausweise/`.
+
+## Resend einrichten
+
+1. Resend Account erstellen.
+2. Domain verifizieren.
+3. API Key erstellen und als `RESEND_API_KEY` in `.env` setzen.
+4. Absender setzen:
+
+```env
+EMAIL_FROM=Helfende Haende <noreply@deine-domain.de>
+```
+
+Ohne `RESEND_API_KEY` werden Emails nicht echt verschickt, sondern als Konsolen-Vorschau protokolliert.
+
+## Verwaltung
+
+Die interne Verwaltung passiert ueber `/admin` im normalen Website-Server. Supabase bleibt die Datenquelle:
+
+- Bewerbungen: Tabelle `workers`
+- Buchungen: Tabelle `bookings`
+- Verfuegbarkeiten: Tabelle `verfuegbarkeiten`
+- Email-Logs: Tabelle `email_logs`
+- Aktionslogs: Tabelle `action_logs`
+- Ausweise: Storage Bucket `worker-documents`
+
+## Live-Gang Checkliste
+
+- [ ] Korrekte Supabase Keys in `.env` gesetzt.
+- [ ] Admin-Schutz fuer `/admin` vor Live-Gang wieder aktivieren.
+- [ ] `supabase-schema.sql` im Supabase SQL Editor ausgefuehrt.
+- [ ] Storage Bucket `worker-documents` ist privat.
+- [ ] Resend Domain verifiziert.
+- [ ] `RESEND_API_KEY` gesetzt.
+- [ ] `EMAIL_FROM` nutzt eine verifizierte Domain.
+- [ ] `PUBLIC_URL` auf echte Domain gesetzt.
+- [ ] `FORCE_HTTPS=true` gesetzt.
+- [ ] Hosting erzwingt HTTPS.
+- [ ] `.env` ist nicht im Git-Repository.
+- [ ] Testbuchung kommt in Supabase an.
+- [ ] Test-Arbeiterregistrierung inklusive Ausweis funktioniert.
+- [ ] Email-Log zeigt Versandstatus.
+- [ ] Kalender-Verfuegbarkeiten werden in Supabase gespeichert.
