@@ -1466,3 +1466,515 @@ body.home .hero-trust{
   background:rgba(253,253,251,.9)!important;
   backdrop-filter:blur(18px);
 }
+
+/* Clean visual system override */
+:root{
+  --cream:#f7f7f5;
+  --warm-white:#fdfdfb;
+  --gold:#4b35ff;
+  --gold-light:#7b6cff;
+  --gold-pale:#f1efff;
+  --dark:#1d1d1f;
+  --brown-mid:#3a3a3c;
+  --text:#1d1d1f;
+  --text-light:#6e6e73;
+  --green-trust:#4b35ff;
+  --green-light:#f1efff;
+  --border:rgba(29,29,31,.08);
+  --shadow:0 12px 34px rgba(29,29,31,.045);
+  --shadow-md:0 18px 48px rgba(29,29,31,.06);
+}
+
+html,
+body,
+main,
+.hero,
+.subhero,
+.stats-bar,
+.how,
+.services,
+.reviews,
+.providers,
+.content,
+.booking-flow-section,
+.provider-form-section,
+.portal-section,
+.service-request-section,
+.page-section,
+.compact,
+.service-carousel-section,
+#so-startest-du.how.page-section{
+  background:#f7f7f5!important;
+  background-image:none!important;
+}
+
+nav,
+body.home nav,
+body.home nav:not(.nav-scrolled),
+body.home nav.nav-scrolled{
+  background:rgba(247,247,245,.88)!important;
+  border-bottom:1px solid rgba(29,29,31,.06)!important;
+  box-shadow:none!important;
+  backdrop-filter:blur(18px);
+}
+
+h1,
+h2,
+h3,
+.nav-logo,
+.trust-item strong,
+.stat strong,
+.hero-card-title,
+.prov-stat strong,
+.summary-price strong{
+  color:#1d1d1f!important;
+}
+
+.nav-logo span,
+h1 em,
+.section-label,
+.service-from,
+.btn-secondary,
+.booking-back,
+.footer-col a:hover{
+  color:#4b35ff!important;
+}
+
+.hero-sub,
+.section-sub,
+.subhero p,
+.content p,
+.trust-item span,
+.service-card p,
+.step p,
+.review-card span,
+.prov-stat span,
+.portal-card p,
+.portal-card small,
+.footer-brand p{
+  color:#6e6e73!important;
+}
+
+.btn-primary,
+.btn-book,
+.btn-book-main,
+.nav-cta,
+.booking-next,
+.form-submit{
+  background:#4b35ff!important;
+  color:#fff!important;
+  border:0!important;
+  border-radius:999px!important;
+  box-shadow:0 14px 30px rgba(75,53,255,.18)!important;
+}
+
+.btn-primary:hover,
+.btn-book:hover,
+.btn-book-main:hover,
+.nav-cta:hover,
+.booking-next:hover,
+.form-submit:hover{
+  background:#3927db!important;
+  box-shadow:0 16px 34px rgba(75,53,255,.22)!important;
+}
+
+.hero-badge,
+.section-label-pill,
+.service-icon,
+.summary-price,
+.providers-visual,
+.philosophy-statement,
+.request-service-option input:checked+span,
+.frequency-options input:checked+span,
+.skill-option input:checked+span,
+.day-option input:checked+span{
+  background:#f1efff!important;
+  color:#4b35ff!important;
+}
+
+.hero-badge::before,
+.step-num,
+.provider-perks li::before{
+  background:#4b35ff!important;
+  color:#fff!important;
+}
+
+.hero-card,
+.service-card,
+.review-card,
+.value-card,
+.provider-form,
+.service-request-card,
+.booking-flow-card,
+.portal-panel,
+.anbieter-faq-item,
+.login-card,
+.panel,
+.stats-inner,
+.booking-main,
+.booking-summary,
+.payment-provider-box,
+.portal-card,
+.service-carousel,
+.service-carousel-card{
+  background:rgba(253,253,251,.86)!important;
+  border:1px solid rgba(29,29,31,.07)!important;
+  box-shadow:0 16px 40px rgba(29,29,31,.045)!important;
+  backdrop-filter:blur(18px);
+}
+
+.stats-bar{
+  margin-top:0!important;
+  padding-top:0!important;
+  overflow:visible!important;
+}
+
+.stats-inner{
+  border-radius:24px!important;
+  overflow:hidden;
+}
+
+.stat{
+  border-color:rgba(29,29,31,.07)!important;
+}
+
+.booking-progress,
+.booking-flow-grid,
+.booking-summary,
+.booking-main{
+  background:#fdfdfb!important;
+}
+
+input,
+select,
+textarea,
+.service-chip,
+.request-service-option span,
+.frequency-options span,
+.skill-option span,
+.day-option span{
+  background:#fdfdfb!important;
+  border:1px solid rgba(29,29,31,.11)!important;
+  color:#1d1d1f!important;
+  box-shadow:none!important;
+}
+
+input:focus,
+select:focus,
+textarea:focus{
+  border-color:#4b35ff!important;
+  box-shadow:0 0 0 4px rgba(75,53,255,.13)!important;
+}
+
+.service-chip.active,
+.service-chip:hover,
+.request-service-option:hover span,
+.request-service-option input:checked+span,
+.frequency-options input:checked+span,
+.skill-option input:checked+span,
+.day-option input:checked+span{
+  border-color:rgba(75,53,255,.36)!important;
+  background:#f1efff!important;
+  color:#1d1d1f!important;
+}
+
+.color-ribbon,
+.stats-bar::before,
+.hero::before,
+.hero::after,
+.subhero::before,
+.booking-flow-card::before{
+  display:none!important;
+}
+
+footer,
+.booking{
+  background:#1d1d1f!important;
+  color:rgba(255,255,255,.64)!important;
+}
+
+footer .nav-logo,
+footer .nav-logo span,
+footer h4,
+footer .footer-col h4{
+  color:#fff!important;
+}
+
+footer a{
+  color:rgba(255,255,255,.62)!important;
+}
+
+.worker-broom{
+  background:#3a3a3c!important;
+}
+
+.worker-broom::after,
+.worker-box{
+  background:linear-gradient(135deg,#e1c37b,#c9a552)!important;
+}
+
+.worker-dust,
+.spark-three{
+  background:rgba(201,165,82,.46)!important;
+}
+
+.spark-two{
+  background:#7b6cff!important;
+}
+
+.hamburg-map-section{
+  padding:clamp(4.5rem,7vw,6.5rem) 5%;
+  background:#f7f7f5!important;
+}
+
+.hamburg-map-inner{
+  width:min(1180px,100%);
+  margin:0 auto;
+  display:grid;
+  grid-template-columns:minmax(280px,.78fr) minmax(320px,1.22fr);
+  gap:clamp(2rem,5vw,4.5rem);
+  align-items:center;
+}
+
+.hamburg-map-copy .section-sub{
+  max-width:520px;
+}
+
+.map-stats{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:.75rem;
+  margin-top:2rem;
+}
+
+.map-stats span{
+  min-width:0;
+  padding:1rem;
+  border:1px solid rgba(29,29,31,.07);
+  border-radius:18px;
+  background:rgba(253,253,251,.82);
+  box-shadow:0 12px 28px rgba(29,29,31,.04);
+  color:#6e6e73;
+  font-size:.88rem;
+  line-height:1.35;
+}
+
+.map-stats strong{
+  display:block;
+  color:#1d1d1f;
+  font-size:1.2rem;
+  line-height:1.1;
+}
+
+.hamburg-map-card{
+  position:relative;
+  min-height:520px;
+  border:1px solid rgba(29,29,31,.07);
+  border-radius:28px;
+  overflow:hidden;
+  background:
+    radial-gradient(circle at 22% 18%,rgba(75,53,255,.08),transparent 15rem),
+    radial-gradient(circle at 82% 70%,rgba(123,108,255,.09),transparent 17rem),
+    linear-gradient(135deg,#fdfdfb 0%,#f3f3f1 100%);
+  box-shadow:0 22px 60px rgba(29,29,31,.07);
+}
+
+.hamburg-map-card::before{
+  content:"Hamburg";
+  position:absolute;
+  left:1.4rem;
+  top:1.2rem;
+  z-index:4;
+  padding:.55rem .85rem;
+  border-radius:999px;
+  background:rgba(253,253,251,.82);
+  border:1px solid rgba(29,29,31,.07);
+  color:#1d1d1f;
+  font-weight:700;
+  letter-spacing:.02em;
+  backdrop-filter:blur(14px);
+}
+
+.hamburg-map-card::after{
+  content:"";
+  position:absolute;
+  inset:8%;
+  border-radius:42% 58% 45% 55%;
+  background:#eef0eb;
+  border:1px solid rgba(29,29,31,.05);
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.7);
+}
+
+.map-water{
+  position:absolute;
+  z-index:2;
+  background:rgba(75,53,255,.14);
+  box-shadow:0 0 0 1px rgba(75,53,255,.05);
+}
+
+.map-water-one{
+  left:-8%;
+  top:46%;
+  width:116%;
+  height:54px;
+  border-radius:999px;
+  transform:rotate(-12deg);
+}
+
+.map-water-two{
+  left:42%;
+  top:22%;
+  width:52px;
+  height:72%;
+  border-radius:999px;
+  transform:rotate(18deg);
+}
+
+.map-route{
+  position:absolute;
+  z-index:3;
+  height:2px;
+  background:rgba(29,29,31,.11);
+  border-radius:999px;
+}
+
+.map-route-one{
+  left:12%;
+  top:35%;
+  width:74%;
+  transform:rotate(19deg);
+}
+
+.map-route-two{
+  left:18%;
+  top:68%;
+  width:66%;
+  transform:rotate(-24deg);
+}
+
+.map-district{
+  position:absolute;
+  z-index:3;
+  color:rgba(29,29,31,.3);
+  font-weight:700;
+  font-size:.8rem;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+}
+
+.district-north{left:47%;top:16%}
+.district-west{left:18%;top:35%}
+.district-center{left:44%;top:47%}
+.district-east{right:12%;top:38%}
+.district-south{left:46%;bottom:14%}
+
+.map-pin{
+  position:absolute;
+  z-index:6;
+  display:flex;
+  align-items:center;
+  gap:.65rem;
+  filter:drop-shadow(0 14px 20px rgba(29,29,31,.12));
+}
+
+.map-pin>span{
+  width:24px;
+  height:24px;
+  border-radius:50% 50% 50% 0;
+  background:#4b35ff;
+  border:4px solid #fff;
+  transform:rotate(-45deg);
+  box-shadow:0 0 0 1px rgba(75,53,255,.18);
+}
+
+.map-pin>span::after{
+  content:"";
+  position:absolute;
+  inset:5px;
+  border-radius:50%;
+  background:#fff;
+}
+
+.map-pin>div{
+  padding:.62rem .72rem;
+  border-radius:14px;
+  background:rgba(253,253,251,.9);
+  border:1px solid rgba(29,29,31,.07);
+  backdrop-filter:blur(12px);
+  white-space:nowrap;
+}
+
+.map-pin strong,
+.map-pin small{
+  display:block;
+  line-height:1.15;
+}
+
+.map-pin strong{
+  color:#1d1d1f;
+  font-size:.9rem;
+}
+
+.map-pin small{
+  margin-top:.18rem;
+  color:#6e6e73;
+  font-size:.75rem;
+}
+
+.pin-altona{left:14%;top:46%}
+.pin-eimsbuettel{left:28%;top:28%}
+.pin-winterhude{left:53%;top:22%}
+.pin-st-georg{left:55%;top:48%}
+.pin-harburg{left:44%;bottom:14%}
+.pin-blankenese{left:8%;bottom:24%}
+
+.pin-eimsbuettel>span,
+.pin-harburg>span{
+  background:#7b6cff;
+}
+
+.pin-winterhude>span,
+.pin-blankenese>span{
+  background:#1d1d1f;
+}
+
+@media(max-width:960px){
+  .hamburg-map-inner{
+    grid-template-columns:1fr;
+  }
+
+  .hamburg-map-copy{
+    text-align:center;
+  }
+
+  .hamburg-map-copy .section-sub{
+    margin-left:auto;
+    margin-right:auto;
+  }
+}
+
+@media(max-width:680px){
+  .map-stats{
+    grid-template-columns:1fr;
+  }
+
+  .hamburg-map-card{
+    min-height:620px;
+    border-radius:24px;
+  }
+
+  .map-pin{
+    gap:.45rem;
+  }
+
+  .map-pin>div{
+    padding:.52rem .6rem;
+  }
+
+  .pin-altona{left:8%;top:41%}
+  .pin-eimsbuettel{left:18%;top:25%}
+  .pin-winterhude{left:46%;top:16%}
+  .pin-st-georg{left:45%;top:48%}
+  .pin-harburg{left:34%;bottom:11%}
+  .pin-blankenese{left:7%;bottom:27%}
+}
