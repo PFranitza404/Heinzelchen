@@ -1237,8 +1237,6 @@ body.home nav:not(.nav-scrolled){
   align-items:center;
   justify-content:center;
   isolation:isolate;
-  text-decoration:none;
-  cursor:pointer;
 }
 
 .hero-worker-scene::before{
