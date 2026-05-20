@@ -1226,6 +1226,50 @@ body.home nav:not(.nav-scrolled){
   background:rgba(253,253,251,.42)!important;
 }
 
+.nav-mascot{
+  position:relative;
+  z-index:3;
+  margin-left:auto;
+  width:58px;
+  height:58px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:50%;
+  background:rgba(253,253,251,.72);
+  border:1px solid rgba(0,0,0,.08);
+  box-shadow:0 10px 26px rgba(29,29,31,.1);
+  transition:transform .2s ease,box-shadow .2s ease,background .2s ease;
+}
+
+.nav-mascot:hover{
+  transform:translateY(-2px) rotate(-4deg);
+  background:#fff;
+  box-shadow:0 14px 32px rgba(75,53,255,.18);
+}
+
+.nav-mascot img{
+  width:50px;
+  height:50px;
+  display:block;
+}
+
+.nav-toggle{
+  margin-left:.8rem;
+}
+
+@media(max-width:620px){
+  .nav-mascot{
+    width:48px;
+    height:48px;
+  }
+
+  .nav-mascot img{
+    width:41px;
+    height:41px;
+  }
+}
+
 .hero-card,
 .service-card,
 .review-card,
