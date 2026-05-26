@@ -112,6 +112,13 @@ function bookingToRow(booking) {
     assigned_worker_id: booking.assignedWorkerId,
     appointment_date: booking.appointment?.date || null,
     city: booking.customer?.city || "",
+    name: booking.name || "",
+    address: booking.address || "",
+    contact: booking.contact || "",
+    extra_task: booking.extraTask || "",
+    location_notes: booking.locationNotes || "",
+    availability: booking.availability || {},
+    detail_notes: booking.detailNotes || {},
     first_name: booking.customer?.firstName || "",
     last_name: booking.customer?.lastName || "",
     email: booking.customer?.email || "",
@@ -233,23 +240,30 @@ function sendJson(res, status, data, headers = {}) {
 }
 
 function normalizeBooking(body) {
+  const customer = {
+    firstName: body.firstName || "",
+    lastName: body.lastName || "",
+    street: body.street || "",
+    zip: body.zip || "",
+    city: body.city || "",
+    phone: body.phone || "",
+    email: body.email || "",
+  };
   return {
     id: `booking-${Date.now()}`,
     status: "Neu",
     createdAt: new Date().toISOString(),
     services: Array.isArray(body.services) ? body.services : [],
     extraTask: body.extraTask || "",
+    locationNotes: body.locationNotes || "",
+    availability: body.availability && typeof body.availability === "object" ? body.availability : {},
+    detailNotes: body.detailNotes && typeof body.detailNotes === "object" ? body.detailNotes : {},
+    name: body.name || `${customer.firstName} ${customer.lastName}`.trim(),
+    address: body.address || [customer.city, customer.street, customer.zip].filter(Boolean).join(", "),
+    contact: body.contact || [customer.email, customer.phone].filter(Boolean).join(", "),
     duration: body.duration || "",
     frequency: body.frequency || "",
-    customer: {
-      firstName: body.firstName || "",
-      lastName: body.lastName || "",
-      street: body.street || "",
-      zip: body.zip || "",
-      city: body.city || "",
-      phone: body.phone || "",
-      email: body.email || "",
-    },
+    customer,
     appointment: {
       date: body.date || "",
       time: body.time || "",

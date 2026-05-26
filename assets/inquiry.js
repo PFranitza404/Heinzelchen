@@ -42,7 +42,6 @@
       detailCleaningScope: "Reinigung Umfang",
       detailCleaningSize: "Wohnfläche",
       detailCleaningCustom: "Weitere Reinigungswünsche",
-      locationNotes: "Ort Hinweise",
     };
     const textDetails = Object.entries(labels)
       .map(([name, label]) => {
@@ -54,10 +53,38 @@
     if (gardenTasks.length) textDetails.unshift(`Garten Aufgaben: ${gardenTasks.join(", ")}`);
     const cleaningTasks = checkedValues("detailCleaningTasks");
     if (cleaningTasks.length) textDetails.unshift(`Reinigung Dienste: ${cleaningTasks.join(", ")}`);
-    const availability = availabilityText();
-    if (availability) textDetails.unshift(`Mögliche Zeiten: ${availability}`);
     return textDetails.join("\n");
   };
+  const fullName = () => [value("firstName"), value("lastName")].filter(Boolean).join(" ");
+  const fullAddress = () => [value("city"), value("street"), value("zip")].filter(Boolean).join(", ");
+  const contactText = () => [value("email"), value("phone")].filter(Boolean).join(", ");
+  const availabilityData = () => availabilityRows.reduce((days, row) => {
+    const checkbox = row.querySelector("[data-availability-day]");
+    if (!checkbox?.checked) return days;
+    const times = row.querySelectorAll("[data-availability-time]");
+    days[checkbox.value] = {
+      from: times[0]?.value || "",
+      to: times[1]?.value || "",
+    };
+    return days;
+  }, {});
+  const detailNotes = () => ({
+    garden: {
+      tasks: checkedValues("detailGardenTasks"),
+      size: value("detailGardenSize"),
+      custom: value("detailGardenCustom"),
+    },
+    tutoring: {
+      level: value("detailTutoringLevel"),
+      subject: value("detailTutoringSubject"),
+      topic: value("detailTutoringTopic"),
+    },
+    cleaning: {
+      tasks: checkedValues("detailCleaningTasks"),
+      size: value("detailCleaningSize"),
+      custom: value("detailCleaningCustom"),
+    },
+  });
   const availabilityText = () => availabilityRows
     .filter((row) => row.querySelector("[data-availability-day]")?.checked)
     .map((row) => {
@@ -195,6 +222,12 @@
         body: JSON.stringify({
           services: services(),
           extraTask: detailText(),
+          locationNotes: value("locationNotes"),
+          availability: availabilityData(),
+          detailNotes: detailNotes(),
+          name: fullName(),
+          address: fullAddress(),
+          contact: contactText(),
           duration: `${value("duration")} volle Stunde(n)`,
           frequency: value("frequency") || "Prüfung angefragt",
           firstName: value("firstName"),
