@@ -95,6 +95,11 @@ async function supabaseRequest(table, options = {}) {
 
 const rowToData = (row) => row?.data || row;
 
+function radiusToInteger(radiusKm) {
+  const match = `${radiusKm || ""}`.match(/\d+/);
+  return match ? Number(match[0]) : null;
+}
+
 function bookingToRow(booking) {
   return {
     id: booking.id,
@@ -113,6 +118,13 @@ function workerToRow(worker) {
     active: worker.active !== false,
     city: worker.city || "",
     service_area: worker.serviceArea || worker.city || "",
+    name: worker.name || "",
+    email: worker.email || "",
+    phone: worker.phone || "",
+    skills: Array.isArray(worker.skills) ? worker.skills : [],
+    availability: worker.availability || {},
+    radius_km: radiusToInteger(worker.radiusKm),
+    local_areas: Array.isArray(worker.localAreas) ? worker.localAreas : [],
     data: worker,
   };
 }
@@ -176,6 +188,23 @@ async function updateBooking(booking) {
   return rowToData(row);
 }
 
+async function updateWorker(worker) {
+  if (!supabaseEnabled()) {
+    const db = await readLocalDb();
+    const index = db.workers.findIndex((item) => item.id === worker.id);
+    if (index >= 0) db.workers[index] = worker;
+    await writeLocalDb(db);
+    return worker;
+  }
+  const [row] = await supabaseRequest("workers", {
+    method: "PATCH",
+    query: `id=eq.${encodeURIComponent(worker.id)}`,
+    prefer: "return=representation",
+    body: workerToRow(worker),
+  });
+  return rowToData(row);
+}
+
 async function readBody(req) {
   let raw = "";
   for await (const chunk of req) raw += chunk;
@@ -230,6 +259,12 @@ function normalizeWorker(body) {
     radiusKm: body.radiusKm || "",
     leadTime: body.leadTime || "",
     skills: Array.isArray(body.skills) ? body.skills : [],
+    extraSkills: body.extraSkills || "",
+    localAreas: Array.isArray(body.localAreas) ? body.localAreas : [],
+    areaNotes: body.areaNotes || "",
+    qualificationConfirmed: body.qualificationConfirmed === true,
+    identityNotes: body.identityNotes || "",
+    identityDocumentName: body.identityDocumentName || "",
     availability,
     active: true,
   };
@@ -252,6 +287,14 @@ function hasSkill(worker, booking) {
   return booking.services.length === 0 || booking.services.some((service) => worker.skills.includes(service));
 }
 
+function workerStatus(worker) {
+  return worker.status || (worker.active === false ? "neu" : "aktiv");
+}
+
+function isAssignableWorker(worker) {
+  return worker.active !== false && workerStatus(worker) === "aktiv";
+}
+
 function hasAvailability(worker, booking) {
   const weekday = weekdayFromDate(booking.appointment.date);
   return Boolean(worker.availability?.[weekday]?.length);
@@ -263,7 +306,7 @@ function workerHasOpenAssignment(db, workerId) {
 
 function findBestWorker(db, booking) {
   return db.workers
-    .filter((worker) => worker.active !== false)
+    .filter(isAssignableWorker)
     .filter((worker) => hasSkill(worker, booking))
     .filter((worker) => hasAvailability(worker, booking))
     .filter((worker) => cityMatches(worker, booking))
@@ -275,7 +318,7 @@ function findBestWorker(db, booking) {
 function findAvailableWorkers(db, booking) {
   const weekday = weekdayFromDate(booking.appointment.date);
   return db.workers
-    .filter((worker) => worker.active !== false)
+    .filter(isAssignableWorker)
     .filter((worker) => hasSkill(worker, booking))
     .map((worker) => ({
       id: worker.id,
@@ -346,6 +389,48 @@ async function sendAssignmentEmails(booking, worker) {
 
 async function handleApi(req, res, url) {
   const db = await readDb();
+
+  if (req.method === "GET" && url.pathname === "/api/vermittlung") {
+    return sendJson(res, 200, {
+      bookings: db.bookings,
+      workers: db.workers.map((worker) => ({
+        ...worker,
+        status: workerStatus(worker),
+      })),
+    });
+  }
+
+  const assignmentMatch = url.pathname.match(/^\/api\/bookings\/([^/]+)\/assignment$/);
+  if (req.method === "PATCH" && assignmentMatch) {
+    const booking = db.bookings.find((item) => item.id === decodeURIComponent(assignmentMatch[1]));
+    if (!booking) return sendJson(res, 404, { error: "Buchung nicht gefunden." });
+
+    const body = await readBody(req);
+    const worker = db.workers.find((item) => item.id === body.workerId);
+    if (!worker) return sendJson(res, 404, { error: "Heinzelchen nicht gefunden." });
+    if (!isAssignableWorker(worker) || !hasSkill(worker, booking) || !cityMatches(worker, booking)) {
+      return sendJson(res, 400, { error: "Dieses Heinzelchen passt nicht zu Skill und Stadt der Buchung." });
+    }
+
+    booking.assignedWorkerId = worker.id;
+    booking.status = "Zugewiesen";
+    booking.internalNote = `Manuell zugewiesen an ${worker.name || worker.id}.`;
+    return sendJson(res, 200, { booking: await updateBooking(booking) });
+  }
+
+  const workerStatusMatch = url.pathname.match(/^\/api\/workers\/([^/]+)\/status$/);
+  if (req.method === "PATCH" && workerStatusMatch) {
+    const worker = db.workers.find((item) => item.id === decodeURIComponent(workerStatusMatch[1]));
+    if (!worker) return sendJson(res, 404, { error: "Heinzelchen nicht gefunden." });
+
+    const body = await readBody(req);
+    const allowed = ["neu", "geprüft", "aktiv", "abgelehnt"];
+    if (!allowed.includes(body.status)) return sendJson(res, 400, { error: "Ungültiger Status." });
+
+    worker.status = body.status;
+    worker.active = body.status === "aktiv";
+    return sendJson(res, 200, { worker: await updateWorker(worker) });
+  }
 
   if (req.method === "POST" && url.pathname === "/api/bookings") {
     const booking = normalizeBooking(await readBody(req));

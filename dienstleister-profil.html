@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sag uns, was du kannst und wann du Zeit hast | Helfende Hände</title>
+<title>Heinzelchen Profil anlegen | Helfende Hände</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
@@ -11,11 +11,11 @@
 </head>
 <body>
 <nav>
-  <a class="nav-logo" href="index.html">Helfende <span>Hände</span></a>
+  <a class="nav-logo" href="index.html">Heinzelchen</a>
   <button class="nav-toggle" type="button" aria-label="Menü öffnen">☰</button>
   <ul class="nav-links">
-    <li><a class="" href="leistungen.html">Dienstleistung</a></li>
-    <li><a class="active" href="anbieter-werden.html">Dienstleister werden</a></li>
+    <li><a class="" href="leistungen.html">Heinzelchen buchen</a></li>
+    <li><a class="" href="anbieter-werden.html">Heinzelchen werden</a></li>
     <li><a class="" href="kontakt.html">Über uns</a></li>
   </ul>
 </nav>
@@ -23,53 +23,92 @@
 <section class="subhero subhero-anbieter-werden">
   <div class="subhero-inner reveal">
     <div class="section-label">Profil anlegen</div>
-    <h1>Sag uns, was du kannst und wann du Zeit hast</h1>
-    <p>Auf dieser Seite entsteht dein Dienstleisterprofil. Deine Angaben helfen uns, dir nur passende Anfragen in deiner Nähe zu senden.</p>
+    <h1>Lege dein Heinzelchen-Profil an</h1>
+    <p>Wir prüfen deine Angaben und leiten dir danach passende Arbeitsgelegenheiten weiter. Deine Zeiten sind erst einmal richtungsweisend und nicht verbindlich.</p>
   </div>
 </section>
 <section class="provider-form-section page-section">
-    <form class="provider-form reveal" id="publicWorkerForm">
-      <div class="form-block">
-        <div class="section-label">Persönliche Angaben</div>
-        <div class="form-grid">
-          <div><label>Vor- und Nachname</label><input name="name" type="text" required placeholder="Max Mustermann"></div>
-          <div><label>Telefon</label><input name="phone" type="tel" required placeholder="+49 ..."></div>
-          <div><label>E-Mail</label><input name="email" type="email" required placeholder="deine@email.de"></div>
-          <div><label>Wohnort</label><input name="city" type="text" required placeholder="PLZ, Stadt"></div>
+  <form class="provider-form reveal" id="publicWorkerForm">
+    <div class="form-block">
+      <div class="section-label">1. Persönliche Angaben</div>
+      <div class="form-grid">
+        <div><label>Vor- und Nachname</label><input name="name" type="text" required placeholder="Max Mustermann"></div>
+        <div><label>Telefonnummer</label><input name="phone" type="tel" required placeholder="+49 ..."></div>
+        <div><label>E-Mail</label><input name="email" type="email" required placeholder="deine@email.de"></div>
+        <div><label>Wohnort / Startpunkt</label><input name="city" type="text" required placeholder="z.B. Hamburg Blankenese"></div>
+      </div>
+      <div class="field-spacer">
+        <label>Ausweis / Identitätsnachweis hochladen</label>
+        <input name="identityDocument" type="file" accept=".jpg,.jpeg,.png,.pdf" required>
+      </div>
+      <div class="field-spacer">
+        <label>Hinweis zur Verifizierung</label>
+        <textarea name="identityNotes" placeholder="Optional: Gibt es etwas, das wir bei deiner Identitätsprüfung beachten sollen?"></textarea>
+      </div>
+    </div>
+
+    <div class="form-block">
+      <div class="section-label">2. Dienstleistungen</div>
+      <h2>Welche Dienstleistungen könntest du anbieten?</h2>
+      <p class="form-help">Wähle alle Bereiche aus, die du aus unserer vermittelten Auswahl zuverlässig übernehmen könntest.</p>
+      <div class="skill-grid">
+        <label class="skill-option"><input type="checkbox" name="skills" value="Gartenarbeit"><span>🌿 Gartenarbeit</span></label>
+        <label class="skill-option"><input type="checkbox" name="skills" value="Einkaufsservice"><span>🛒 Einkaufsservice</span></label>
+        <label class="skill-option"><input type="checkbox" name="skills" value="Nachhilfe"><span>📚 Nachhilfe</span></label>
+        <label class="skill-option"><input type="checkbox" name="skills" value="Malerarbeiten"><span>🖌️ Malerarbeiten</span></label>
+        <label class="skill-option"><input type="checkbox" name="skills" value="Technik-Hilfe"><span>📺 Technik-Hilfe</span></label>
+        <label class="skill-option"><input type="checkbox" name="skills" value="Babysitting"><span>👶 Babysitting</span></label>
+        <label class="skill-option"><input type="checkbox" name="skills" value="Hundeservice"><span>🐕 Hundeservice</span></label>
+        <label class="skill-option"><input type="checkbox" name="skills" value="Putzen & Reinigen"><span>🧹 Putzen & Reinigen</span></label>
+      </div>
+      <div class="field-spacer"><label>Weitere Fähigkeiten</label><textarea name="extraSkills" placeholder="z.B. Möbel aufbauen, kleine Reparaturen, Seniorenbegleitung ..."></textarea></div>
+    </div>
+
+    <div class="form-block">
+      <div class="section-label">3. Qualifikation</div>
+      <h2>Bist du dir bei den ausgewählten Dienstleistungen sicher?</h2>
+      <div class="qualification-note">
+        <strong>Wichtig:</strong>
+        <p>Bitte wähle nur Dienstleistungen aus, bei denen du dir zutraust, zuverlässig, sorgfältig und freundlich zu arbeiten. Bei Aufgaben wie Nachhilfe, Babysitting, Technik oder Malerarbeiten können Erfahrung, Verantwortungsgefühl und passende Kenntnisse besonders wichtig sein.</p>
+      </div>
+      <label class="qualification-check"><input name="qualificationConfirmed" type="checkbox" required><span>Ich bestätige, dass ich die ausgewählten Dienstleistungen sicher und verantwortungsvoll anbieten kann.</span></label>
+    </div>
+
+    <div class="form-block">
+      <div class="section-label">4. Einsatzbereich</div>
+      <h2>Wo ist dein Heinzelchen-Einsatzbereich?</h2>
+      <div class="form-grid">
+        <div><label>Maximaler Umkreis</label><select name="radiusKm"><option>bis 5 km</option><option>bis 10 km</option><option>bis 20 km</option><option>bis 50 km</option></select></div>
+        <div><label>Ortskreise / Stadtteile</label><input name="localAreasText" type="text" placeholder="z.B. Blankenese, Nienstedten, Othmarschen"></div>
+      </div>
+      <div class="field-spacer">
+        <label>Weitere Hinweise zum Einsatzgebiet</label>
+        <textarea name="areaNotes" placeholder="z.B. bevorzugt Blankenese und Umgebung, gut mit Fahrrad erreichbar, keine Einsätze außerhalb Hamburg-West ..."></textarea>
+      </div>
+      <div class="field-spacer">
+        <label>Typische freie Zeiten</label>
+        <p class="form-help">Nicht verbindlich, nur richtungsweisend. Du kannst trotzdem auch außerhalb dieser Zeiten Angebote bekommen.</p>
+        <div class="availability-week-grid">
+          <label class="availability-day-row"><input type="checkbox" name="days" value="Montag" data-provider-day><span>Montag</span><select name="MontagFrom" data-provider-time><option value="08:00">08:00</option><option value="09:00" selected>09:00</option><option value="10:00">10:00</option><option value="11:00">11:00</option><option value="12:00">12:00</option><option value="13:00">13:00</option><option value="14:00">14:00</option><option value="15:00">15:00</option><option value="16:00">16:00</option><option value="17:00">17:00</option><option value="18:00">18:00</option><option value="19:00">19:00</option><option value="20:00">20:00</option></select><select name="MontagUntil" data-provider-time><option value="10:00">10:00</option><option value="11:00">11:00</option><option value="12:00">12:00</option><option value="13:00">13:00</option><option value="14:00">14:00</option><option value="15:00">15:00</option><option value="16:00">16:00</option><option value="17:00" selected>17:00</option><option value="18:00">18:00</option><option value="19:00">19:00</option><option value="20:00">20:00</option><option value="21:00">21:00</option><option value="22:00">22:00</option></select></label>
+          <label class="availability-day-row"><input type="checkbox" name="days" value="Dienstag" data-provider-day><span>Dienstag</span><select name="DienstagFrom" data-provider-time><option value="08:00">08:00</option><option value="09:00" selected>09:00</option><option value="10:00">10:00</option><option value="11:00">11:00</option><option value="12:00">12:00</option><option value="13:00">13:00</option><option value="14:00">14:00</option><option value="15:00">15:00</option><option value="16:00">16:00</option><option value="17:00">17:00</option><option value="18:00">18:00</option><option value="19:00">19:00</option><option value="20:00">20:00</option></select><select name="DienstagUntil" data-provider-time><option value="10:00">10:00</option><option value="11:00">11:00</option><option value="12:00">12:00</option><option value="13:00">13:00</option><option value="14:00">14:00</option><option value="15:00">15:00</option><option value="16:00">16:00</option><option value="17:00" selected>17:00</option><option value="18:00">18:00</option><option value="19:00">19:00</option><option value="20:00">20:00</option><option value="21:00">21:00</option><option value="22:00">22:00</option></select></label>
+          <label class="availability-day-row"><input type="checkbox" name="days" value="Mittwoch" data-provider-day><span>Mittwoch</span><select name="MittwochFrom" data-provider-time><option value="08:00">08:00</option><option value="09:00" selected>09:00</option><option value="10:00">10:00</option><option value="11:00">11:00</option><option value="12:00">12:00</option><option value="13:00">13:00</option><option value="14:00">14:00</option><option value="15:00">15:00</option><option value="16:00">16:00</option><option value="17:00">17:00</option><option value="18:00">18:00</option><option value="19:00">19:00</option><option value="20:00">20:00</option></select><select name="MittwochUntil" data-provider-time><option value="10:00">10:00</option><option value="11:00">11:00</option><option value="12:00">12:00</option><option value="13:00">13:00</option><option value="14:00">14:00</option><option value="15:00">15:00</option><option value="16:00">16:00</option><option value="17:00" selected>17:00</option><option value="18:00">18:00</option><option value="19:00">19:00</option><option value="20:00">20:00</option><option value="21:00">21:00</option><option value="22:00">22:00</option></select></label>
+          <label class="availability-day-row"><input type="checkbox" name="days" value="Donnerstag" data-provider-day><span>Donnerstag</span><select name="DonnerstagFrom" data-provider-time><option value="08:00">08:00</option><option value="09:00" selected>09:00</option><option value="10:00">10:00</option><option value="11:00">11:00</option><option value="12:00">12:00</option><option value="13:00">13:00</option><option value="14:00">14:00</option><option value="15:00">15:00</option><option value="16:00">16:00</option><option value="17:00">17:00</option><option value="18:00">18:00</option><option value="19:00">19:00</option><option value="20:00">20:00</option></select><select name="DonnerstagUntil" data-provider-time><option value="10:00">10:00</option><option value="11:00">11:00</option><option value="12:00">12:00</option><option value="13:00">13:00</option><option value="14:00">14:00</option><option value="15:00">15:00</option><option value="16:00">16:00</option><option value="17:00" selected>17:00</option><option value="18:00">18:00</option><option value="19:00">19:00</option><option value="20:00">20:00</option><option value="21:00">21:00</option><option value="22:00">22:00</option></select></label>
+          <label class="availability-day-row"><input type="checkbox" name="days" value="Freitag" data-provider-day><span>Freitag</span><select name="FreitagFrom" data-provider-time><option value="08:00">08:00</option><option value="09:00" selected>09:00</option><option value="10:00">10:00</option><option value="11:00">11:00</option><option value="12:00">12:00</option><option value="13:00">13:00</option><option value="14:00">14:00</option><option value="15:00">15:00</option><option value="16:00">16:00</option><option value="17:00">17:00</option><option value="18:00">18:00</option><option value="19:00">19:00</option><option value="20:00">20:00</option></select><select name="FreitagUntil" data-provider-time><option value="10:00">10:00</option><option value="11:00">11:00</option><option value="12:00">12:00</option><option value="13:00">13:00</option><option value="14:00">14:00</option><option value="15:00">15:00</option><option value="16:00">16:00</option><option value="17:00" selected>17:00</option><option value="18:00">18:00</option><option value="19:00">19:00</option><option value="20:00">20:00</option><option value="21:00">21:00</option><option value="22:00">22:00</option></select></label>
+          <label class="availability-day-row"><input type="checkbox" name="days" value="Samstag" data-provider-day><span>Samstag</span><select name="SamstagFrom" data-provider-time><option value="08:00">08:00</option><option value="09:00" selected>09:00</option><option value="10:00">10:00</option><option value="11:00">11:00</option><option value="12:00">12:00</option><option value="13:00">13:00</option><option value="14:00">14:00</option><option value="15:00">15:00</option><option value="16:00">16:00</option><option value="17:00">17:00</option><option value="18:00">18:00</option><option value="19:00">19:00</option><option value="20:00">20:00</option></select><select name="SamstagUntil" data-provider-time><option value="10:00">10:00</option><option value="11:00">11:00</option><option value="12:00">12:00</option><option value="13:00">13:00</option><option value="14:00">14:00</option><option value="15:00">15:00</option><option value="16:00">16:00</option><option value="17:00" selected>17:00</option><option value="18:00">18:00</option><option value="19:00">19:00</option><option value="20:00">20:00</option><option value="21:00">21:00</option><option value="22:00">22:00</option></select></label>
+          <label class="availability-day-row"><input type="checkbox" name="days" value="Sonntag" data-provider-day><span>Sonntag</span><select name="SonntagFrom" data-provider-time><option value="08:00">08:00</option><option value="09:00" selected>09:00</option><option value="10:00">10:00</option><option value="11:00">11:00</option><option value="12:00">12:00</option><option value="13:00">13:00</option><option value="14:00">14:00</option><option value="15:00">15:00</option><option value="16:00">16:00</option><option value="17:00">17:00</option><option value="18:00">18:00</option><option value="19:00">19:00</option><option value="20:00">20:00</option></select><select name="SonntagUntil" data-provider-time><option value="10:00">10:00</option><option value="11:00">11:00</option><option value="12:00">12:00</option><option value="13:00">13:00</option><option value="14:00">14:00</option><option value="15:00">15:00</option><option value="16:00">16:00</option><option value="17:00" selected>17:00</option><option value="18:00">18:00</option><option value="19:00">19:00</option><option value="20:00">20:00</option><option value="21:00">21:00</option><option value="22:00">22:00</option></select></label>
         </div>
       </div>
-      <div class="form-block">
-        <div class="section-label">Skills</div>
-        <p class="form-help">Wähle alle Bereiche aus, in denen du zuverlässig helfen kannst.</p>
-        <div class="skill-grid">
-          <label class="skill-option"><input type="checkbox" name="skills" value="Gartenarbeit"><span>🌿 Gartenarbeit</span></label><label class="skill-option"><input type="checkbox" name="skills" value="Einkaufsservice"><span>🛒 Einkaufsservice</span></label><label class="skill-option"><input type="checkbox" name="skills" value="Nachhilfe"><span>📚 Nachhilfe</span></label><label class="skill-option"><input type="checkbox" name="skills" value="Malerarbeiten"><span>🖌️ Malerarbeiten</span></label><label class="skill-option"><input type="checkbox" name="skills" value="Technik-Hilfe"><span>📺 Technik-Hilfe</span></label><label class="skill-option"><input type="checkbox" name="skills" value="Babysitting"><span>👶 Babysitting</span></label><label class="skill-option"><input type="checkbox" name="skills" value="Hundeservice"><span>🐕 Hundeservice</span></label><label class="skill-option"><input type="checkbox" name="skills" value="Putzen & Reinigen"><span>🧹 Putzen & Reinigen</span></label>
-        </div>
-        <div class="field-spacer"><label>Weitere Fähigkeiten</label><textarea name="extraSkills" placeholder="z.B. Möbel aufbauen, kleine Reparaturen, Seniorenbegleitung ..."></textarea></div>
-      </div>
-      <div class="form-block">
-        <div class="section-label">Verfügbarkeit</div>
-        <div class="availability-grid">
-          <label class="day-option"><input type="checkbox" name="days" value="Montag"><span>Montag</span></label><label class="day-option"><input type="checkbox" name="days" value="Dienstag"><span>Dienstag</span></label><label class="day-option"><input type="checkbox" name="days" value="Mittwoch"><span>Mittwoch</span></label><label class="day-option"><input type="checkbox" name="days" value="Donnerstag"><span>Donnerstag</span></label><label class="day-option"><input type="checkbox" name="days" value="Freitag"><span>Freitag</span></label><label class="day-option"><input type="checkbox" name="days" value="Samstag"><span>Samstag</span></label><label class="day-option"><input type="checkbox" name="days" value="Sonntag"><span>Sonntag</span></label>
-        </div>
-        <div class="form-grid field-spacer">
-          <div><label>Frühestens ab</label><input name="availableFrom" type="time" value="08:00"></div>
-          <div><label>Spätestens bis</label><input name="availableUntil" type="time" value="18:00"></div>
-          <div><label>Wie oft möchtest du arbeiten?</label><select name="workload"><option>Flexibel nach Anfrage</option><option>1-2 Tage pro Woche</option><option>3-4 Tage pro Woche</option><option>Vollzeit möglich</option></select></div>
-          <div><label>Vorlaufzeit</label><select name="leadTime"><option>Am selben Tag möglich</option><option>Mindestens 24 Stunden</option><option>Mindestens 2-3 Tage</option><option>Nur mit einer Woche Vorlauf</option></select></div>
-        </div>
-      </div>
-      <div class="form-block">
-        <div class="section-label">Einsatzgebiet</div>
-        <div class="form-grid">
-          <div><label>Bevorzugter Einsatzort</label><input name="serviceArea" type="text" placeholder="z.B. Hannover List"></div>
-          <div><label>Maximaler Umkreis</label><select name="radiusKm"><option>bis 5 km</option><option>bis 10 km</option><option>bis 20 km</option><option>bis 50 km</option></select></div>
-          <div class="full"><label>Wo passt es dir am besten?</label><textarea name="areaNotes" placeholder="z.B. nur gut mit ÖPNV erreichbar, bevorzugt Innenstadt, keine Einsätze außerhalb der Stadt ..."></textarea></div>
-        </div>
-      </div>
-      <button class="btn-primary form-submit" type="submit">Profil speichern und prüfen lassen</button>
-      <p id="publicWorkerFormMessage" class="portal-message"></p>
-    </form>
-  </section>
+    </div>
+
+    <div class="form-block profile-final-block">
+      <div class="section-label">5. Fertig</div>
+      <h2>Jetzt bist du ein Heinzelchen</h2>
+      <p class="form-help">Nach dem Absenden prüfen wir dein Profil. Danach können dir mögliche Arbeitsgelegenheiten weitergeleitet werden.</p>
+    </div>
+    <button class="btn-primary form-submit" type="submit">Profil speichern und prüfen lassen</button>
+    <p id="publicWorkerFormMessage" class="portal-message"></p>
+  </form>
+</section>
 </main>
 <footer>
   <div class="footer-inner">

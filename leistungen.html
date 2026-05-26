@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Alles, was deinen Alltag leichter macht | Helfende Hände</title>
+<title>Heinzelchen</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
@@ -11,11 +11,11 @@
 </head>
 <body>
 <nav>
-  <a class="nav-logo" href="index.html">Helfende <span>Hände</span></a>
+  <a class="nav-logo" href="index.html">Heinzelchen</a>
   <button class="nav-toggle" type="button" aria-label="Menü öffnen">☰</button>
   <ul class="nav-links">
-    <li><a class="active" href="leistungen.html">Dienstleistung</a></li>
-    <li><a class="" href="anbieter-werden.html">Dienstleister werden</a></li>
+    <li><a class="" href="leistungen.html">Heinzelchen buchen</a></li>
+    <li><a class="" href="anbieter-werden.html">Heinzelchen werden</a></li>
     <li><a class="" href="kontakt.html">Über uns</a></li>
   </ul>
 </nav>
@@ -28,183 +28,182 @@
   </div>
 </section>
 <section class="booking-flow-section page-section">
-    <div class="booking-flow-card reveal" data-booking-flow>
-      <div class="booking-progress" aria-label="Buchungsfortschritt">
-        <button class="progress-step active" type="button" data-step-jump="1">1. Ihre Buchung</button>
-        <span></span>
-        <button class="progress-step" type="button" data-step-jump="2">2. Ihre Angaben</button>
-        <span></span>
-        <button class="progress-step" type="button" data-step-jump="3">3. Zahlung</button>
+    <form class="inquiry-card reveal" data-inquiry-form>
+      <div class="inquiry-intro">
+        <div class="section-label">Anfrage prüfen lassen</div>
+        <h2>Beschreibe kurz, wobei du Hilfe brauchst.</h2>
+        <p class="form-help">Du buchst hier noch nichts verbindlich und es wird nichts bezahlt. Wir prüfen deine Anfrage und melden uns persönlich mit einem passenden Vorschlag.</p>
       </div>
-      <div class="booking-flow-grid">
-        <div class="booking-main">
-          <div class="booking-alert" data-error hidden></div>
-          <section class="booking-step-panel active" data-step="1">
-            <div class="section-label">Schritt 1</div>
-            <h2>Welche Arbeit soll erledigt werden?</h2>
-            <p class="form-help">Wähle alle Dienste aus, die du brauchst. Weitere Aufgaben kannst du darunter frei ergänzen.</p>
-            <div class="request-service-grid service-choice-grid">
-              <label class="request-service-option service-choice-card">
-                <input type="checkbox" name="requested-services" value="Gartenarbeit">
-                <span>
-                  <i aria-hidden="true">🌿</i>
-                  <strong>Garten</strong>
-                  <small>Rasen, Beete, Laub und kleine Außenarbeiten</small>
-                  <em>ab 18 €/Std.</em>
-                </span>
-              </label>
-              <label class="request-service-option service-choice-card">
-                <input type="checkbox" name="requested-services" value="Einkaufsservice">
-                <span>
-                  <i aria-hidden="true">🛒</i>
-                  <strong>Einkauf</strong>
-                  <small>Besorgungen, Wochenmarkt und Lieferung nach Hause</small>
-                  <em>ab 12 €/Auftrag</em>
-                </span>
-              </label>
-              <label class="request-service-option service-choice-card">
-                <input type="checkbox" name="requested-services" value="Nachhilfe">
-                <span>
-                  <i aria-hidden="true">📚</i>
-                  <strong>Nachhilfe</strong>
-                  <small>Geduldig erklärt für Schule, Prüfung und Alltag</small>
-                  <em>ab 22 €/Std.</em>
-                </span>
-              </label>
-              <label class="request-service-option service-choice-card">
-                <input type="checkbox" name="requested-services" value="Malerarbeiten">
-                <span>
-                  <i aria-hidden="true">🖌️</i>
-                  <strong>Maler</strong>
-                  <small>Streichen, Ausbessern und frische Wände</small>
-                  <em>ab 20 €/Std.</em>
-                </span>
-              </label>
-              <label class="request-service-option service-choice-card">
-                <input type="checkbox" name="requested-services" value="Technik-Hilfe">
-                <span>
-                  <i aria-hidden="true">📺</i>
-                  <strong>Technik</strong>
-                  <small>Handy, WLAN, Fernseher und einfache Einrichtung</small>
-                  <em>ab 25 €/Std.</em>
-                </span>
-              </label>
-              <label class="request-service-option service-choice-card">
-                <input type="checkbox" name="requested-services" value="Babysitting">
-                <span>
-                  <i aria-hidden="true">👶</i>
-                  <strong>Babysitting</strong>
-                  <small>Verlässliche Betreuung nach Absprache</small>
-                  <em>ab 15 €/Std.</em>
-                </span>
-              </label>
-              <label class="request-service-option service-choice-card">
-                <input type="checkbox" name="requested-services" value="Hundeservice">
-                <span>
-                  <i aria-hidden="true">🐕</i>
-                  <strong>Hund</strong>
-                  <small>Gassi gehen, Füttern und kurze Betreuung</small>
-                  <em>ab 14 €/Std.</em>
-                </span>
-              </label>
-              <label class="request-service-option service-choice-card">
-                <input type="checkbox" name="requested-services" value="Putzen & Reinigen">
-                <span>
-                  <i aria-hidden="true">🧹</i>
-                  <strong>Reinigung</strong>
-                  <small>Wohnung, Bad, Küche und regelmäßige Hilfe</small>
-                  <em>ab 16 €/Std.</em>
-                </span>
-              </label>
-            </div>
-            <div class="booking-field">
-              <label>Weitere Aufgabe / Notiz</label>
-              <textarea name="extraTask" placeholder="z.B. zusätzlich Keller aufräumen, Möbel tragen oder kleine Reparatur ..."></textarea>
-            </div>
-            <div class="booking-field-row">
-              <div class="booking-field">
-                <label>Geschätzte Dauer</label>
-                <input name="duration" type="text" placeholder="z.B. 3 Stunden oder halber Tag">
+      <div class="booking-alert" data-inquiry-error hidden></div>
+      <div class="booking-confirmation inquiry-confirmation" data-inquiry-confirmation hidden>
+        <strong>Anfrage erhalten.</strong>
+        <p>Wir prüfen dein Anliegen und melden uns bei dir mit einer Einschätzung.</p>
+      </div>
+
+      <div class="inquiry-block">
+        <h3>1. Dienstleistung auswählen</h3>
+        <div class="request-service-grid service-choice-grid inquiry-service-grid">
+          <div class="service-choice-with-detail">
+            <label class="request-service-option service-choice-card"><input type="checkbox" name="requested-services" value="Gartenarbeit"><span><i aria-hidden="true">🌿</i><strong>Garten</strong><small>Rasen, Beete, Laub und Außenarbeiten</small></span></label>
+            <article class="service-detail-card inline-service-detail" data-service-detail="Gartenarbeit" hidden>
+              <strong>Garten Details</strong>
+              <details class="garden-task-dropdown">
+                <summary>Gartenaufgaben auswählen</summary>
+                <div class="garden-task-grid">
+                  <label><input type="checkbox" name="detailGardenTasks" value="Rasenmähen"><span>Rasenmähen</span></label>
+                  <label><input type="checkbox" name="detailGardenTasks" value="Unkraut entfernen"><span>Unkraut entfernen</span></label>
+                  <label><input type="checkbox" name="detailGardenTasks" value="Laub entfernen"><span>Laub entfernen</span></label>
+                  <label><input type="checkbox" name="detailGardenTasks" value="Beete pflegen"><span>Beete pflegen</span></label>
+                  <label><input type="checkbox" name="detailGardenTasks" value="Pflanzen gießen"><span>Pflanzen gießen</span></label>
+                </div>
+              </details>
+              <div class="selected-task-list" data-selected-garden-tasks hidden></div>
+              <div class="booking-field-row">
+                <div class="booking-field"><label>Ungefähre Fläche</label><input name="detailGardenSize" type="text" placeholder="z.B. 80 qm oder kleiner Vorgarten"></div>
+                <div class="booking-field"><label>Weitere Gartenarbeit</label><input name="detailGardenCustom" type="text" placeholder="z.B. Terrasse fegen, Blumenkästen bepflanzen"></div>
               </div>
-              <div class="booking-field">
-                <label>Häufigkeit</label>
-                <div class="frequency-options">
-                  <label><input type="radio" name="frequency" value="Einmalig"><span>Einmalig</span></label>
-                  <label><input type="radio" name="frequency" value="Wöchentlich"><span>Wöchentlich</span></label>
-                  <label><input type="radio" name="frequency" value="2-wöchentlich"><span>2-wöchentlich</span></label>
+            </article>
+          </div>
+          <label class="request-service-option service-choice-card"><input type="checkbox" name="requested-services" value="Einkaufsservice"><span><i aria-hidden="true">🛒</i><strong>Einkauf</strong><small>Besorgungen und Lieferungen</small></span></label>
+          <div class="service-choice-with-detail">
+            <label class="request-service-option service-choice-card"><input type="checkbox" name="requested-services" value="Nachhilfe"><span><i aria-hidden="true">📚</i><strong>Nachhilfe</strong><small>Lernhilfe und Prüfungsvorbereitung</small></span></label>
+            <article class="service-detail-card inline-service-detail" data-service-detail="Nachhilfe" hidden>
+              <strong>Nachhilfe Details</strong>
+              <div class="booking-field-row">
+                <div class="booking-field">
+                  <label>Klasse</label>
+                  <select name="detailTutoringLevel">
+                    <option value="">Bitte auswählen</option>
+                    <option value="1. Klasse">1. Klasse</option>
+                    <option value="2. Klasse">2. Klasse</option>
+                    <option value="3. Klasse">3. Klasse</option>
+                    <option value="4. Klasse">4. Klasse</option>
+                    <option value="5. Klasse">5. Klasse</option>
+                    <option value="6. Klasse">6. Klasse</option>
+                    <option value="7. Klasse">7. Klasse</option>
+                    <option value="8. Klasse">8. Klasse</option>
+                    <option value="9. Klasse">9. Klasse</option>
+                    <option value="10. Klasse">10. Klasse</option>
+                    <option value="11. Klasse">11. Klasse</option>
+                    <option value="12. Klasse">12. Klasse</option>
+                    <option value="13. Klasse">13. Klasse</option>
+                    <option value="Abiturvorbereitung">Abiturvorbereitung</option>
+                    <option value="Studium">Studium</option>
+                  </select>
+                </div>
+                <div class="booking-field">
+                  <label>Fach</label>
+                  <select name="detailTutoringSubject">
+                    <option value="">Bitte auswählen</option>
+                    <option value="Mathematik">Mathematik</option>
+                    <option value="Deutsch">Deutsch</option>
+                    <option value="Englisch">Englisch</option>
+                    <option value="Französisch">Französisch</option>
+                    <option value="Spanisch">Spanisch</option>
+                    <option value="Physik">Physik</option>
+                    <option value="Chemie">Chemie</option>
+                    <option value="Biologie">Biologie</option>
+                    <option value="Geschichte">Geschichte</option>
+                    <option value="Informatik">Informatik</option>
+                    <option value="Anderes Fach">Anderes Fach</option>
+                  </select>
                 </div>
               </div>
-            </div>
-          </section>
-          <section class="booking-step-panel" data-step="2">
-            <div class="section-label">Schritt 2</div>
-            <h2>Ihre Angaben</h2>
-            <p class="form-help">Diese Daten brauchen wir, um den Auftrag einzuordnen und später einen passenden Dienstleister zuzuweisen.</p>
-            <div class="booking-field-row">
-              <div class="booking-field"><label>Vorname</label><input name="firstName" type="text" placeholder="Vorname"></div>
-              <div class="booking-field"><label>Nachname</label><input name="lastName" type="text" placeholder="Nachname"></div>
-            </div>
-            <div class="booking-field"><label>Straße und Hausnummer</label><input name="street" type="text" placeholder="Musterstraße 12"></div>
-            <div class="booking-field-row">
-              <div class="booking-field"><label>PLZ</label><input name="zip" type="text" placeholder="30159"></div>
-              <div class="booking-field"><label>Stadt</label><input name="city" type="text" placeholder="Hannover"></div>
-            </div>
-            <div class="booking-field-row">
-              <div class="booking-field"><label>Telefon</label><input name="phone" type="tel" placeholder="+49 ..."></div>
-              <div class="booking-field"><label>E-Mail</label><input name="email" type="email" placeholder="deine@email.de"></div>
-            </div>
-            <div class="booking-field-row">
-              <div class="booking-field"><label>Wunschtermin</label><input name="date" type="date"></div>
-              <div class="booking-field"><label>Uhrzeit</label><input name="time" type="time" value="10:00"></div>
-            </div>
-          </section>
-          <section class="booking-step-panel" data-step="3">
-            <div class="section-label">Schritt 3</div>
-            <h2>Zahlung vorbereiten</h2>
-            <p class="form-help">Der Zahlungsbereich ist so vorbereitet, dass später Stripe eingebunden werden kann. Aktuell ist es noch ein Platzhalter ohne echte Abbuchung.</p>
-            <div class="payment-provider-box" data-payment-provider="stripe-placeholder">
-              <div>
-                <strong>Stripe-Zahlungsmodul</strong>
-                <span>Hier kann später Stripe Elements oder Stripe Checkout eingefügt werden.</span>
+              <div class="booking-field">
+                <label>Thema optional</label>
+                <input name="detailTutoringTopic" type="text" placeholder="z.B. Bruchrechnung, Gedichtanalyse, Prüfungsvorbereitung">
               </div>
-              <div class="stripe-placeholder" id="stripe-card-element">Kartenzahlung wird später geladen</div>
-            </div>
-            <label class="payment-check"><input type="checkbox" name="paymentReady"> Ich bestätige, dass meine Angaben korrekt sind.</label>
-            <div class="booking-confirmation" data-confirmation hidden>
-              <strong>Buchungsanfrage vorbereitet.</strong>
-              <p>Wir prüfen die Verfügbarkeit unserer Dienstleister und bestätigen dir den Auftrag anschließend persönlich.</p>
-              <ul>
-                <li><span>Datum:</span> <strong data-confirm-date>-</strong></li>
-                <li><span>Uhrzeit:</span> <strong data-confirm-time>-</strong></li>
-                <li><span>Dauer:</span> <strong data-confirm-duration>-</strong></li>
-                <li><span>Adresse:</span> <strong data-confirm-address>-</strong></li>
-              </ul>
-            </div>
-          </section>
-          <div class="booking-actions">
-            <button class="btn-secondary booking-back" type="button" data-back hidden>Zurück</button>
-            <button class="btn-primary booking-next" type="button" data-next>Weiter</button>
+            </article>
+          </div>
+          <label class="request-service-option service-choice-card"><input type="checkbox" name="requested-services" value="Malerarbeiten"><span><i aria-hidden="true">🖌️</i><strong>Maler</strong><small>Streichen und Ausbessern</small></span></label>
+          <label class="request-service-option service-choice-card"><input type="checkbox" name="requested-services" value="Technik-Hilfe"><span><i aria-hidden="true">📺</i><strong>Technik</strong><small>Geräte, WLAN und Einrichtung</small></span></label>
+          <label class="request-service-option service-choice-card"><input type="checkbox" name="requested-services" value="Babysitting"><span><i aria-hidden="true">👶</i><strong>Babysitting</strong><small>Betreuung nach Absprache</small></span></label>
+          <label class="request-service-option service-choice-card"><input type="checkbox" name="requested-services" value="Hundeservice"><span><i aria-hidden="true">🐕</i><strong>Hund</strong><small>Gassi gehen und Betreuung</small></span></label>
+          <div class="service-choice-with-detail">
+            <label class="request-service-option service-choice-card"><input type="checkbox" name="requested-services" value="Putzen & Reinigen"><span><i aria-hidden="true">🧹</i><strong>Reinigung</strong><small>Wohnung, Bad, Küche und Büro</small></span></label>
+            <article class="service-detail-card inline-service-detail" data-service-detail="Putzen & Reinigen" hidden>
+              <strong>Reinigung Details</strong>
+              <details class="garden-task-dropdown">
+                <summary>Reinigungsdienste auswählen</summary>
+                <div class="garden-task-grid">
+                  <label><input type="checkbox" name="detailCleaningTasks" value="Grundreinigung"><span>Grundreinigung</span></label>
+                  <label><input type="checkbox" name="detailCleaningTasks" value="Bad reinigen"><span>Bad reinigen</span></label>
+                  <label><input type="checkbox" name="detailCleaningTasks" value="Küche reinigen"><span>Küche reinigen</span></label>
+                  <label><input type="checkbox" name="detailCleaningTasks" value="Staubsaugen"><span>Staubsaugen</span></label>
+                  <label><input type="checkbox" name="detailCleaningTasks" value="Boden wischen"><span>Boden wischen</span></label>
+                  <label><input type="checkbox" name="detailCleaningTasks" value="Fenster putzen"><span>Fenster putzen</span></label>
+                </div>
+              </details>
+              <div class="selected-task-list" data-selected-cleaning-tasks hidden></div>
+              <div class="booking-field-row">
+                <div class="booking-field"><label>Wohnfläche</label><input name="detailCleaningSize" type="text" placeholder="z.B. 75 qm"></div>
+                <div class="booking-field"><label>Weitere Reinigungswünsche</label><input name="detailCleaningCustom" type="text" placeholder="z.B. Kühlschrank, Balkon, Treppenhaus"></div>
+              </div>
+            </article>
           </div>
         </div>
-        <aside class="booking-summary" aria-label="Buchungsübersicht">
-          <h3>Ihre Buchungsübersicht</h3>
-          <dl>
-            <div><dt>Dienste</dt><dd data-summary-services>-</dd></div>
-            <div><dt>Weitere Aufgabe</dt><dd data-summary-extra>-</dd></div>
-            <div><dt>Häufigkeit</dt><dd data-summary-frequency>-</dd></div>
-            <div><dt>Dauer</dt><dd data-summary-duration>-</dd></div>
-            <div><dt>Datum</dt><dd data-summary-date>-</dd></div>
-            <div><dt>Uhrzeit</dt><dd data-summary-time>-</dd></div>
-            <div><dt>Adresse</dt><dd data-summary-address>-</dd></div>
-          </dl>
-          <div class="summary-price">
-            <span>Preisberechnung</span>
-            <strong>Platzhalter</strong>
-            <small>Wird später nach deinem Preiskonzept berechnet.</small>
-          </div>
-        </aside>
       </div>
-    </div>
+
+      <div class="inquiry-block">
+        <h3>2. Dauer einschätzen</h3>
+        <div class="booking-field-row">
+          <div class="booking-field"><label>Dauer in vollen Stunden</label><input name="duration" type="number" min="1" step="1" placeholder="z.B. 3"><p class="ai-duration-note" data-ai-duration-estimate>KI-Einschätzung: Wähle eine Dienstleistung aus, dann schlägt unsere KI eine ungefähre Dauer vor.</p></div>
+        </div>
+      </div>
+
+      <div class="inquiry-block">
+        <h3>3. Häufigkeit auswählen</h3>
+        <div class="frequency-options inquiry-frequency">
+          <label><input type="radio" name="frequency" value="Einmalig"><span><strong>Einmalig</strong><small>Für einen einzelnen Auftrag</small></span></label>
+          <label><input type="radio" name="frequency" value="Wöchentlich"><span><strong>Wöchentlich</strong><small>Regelmäßig jede Woche</small></span></label>
+          <label><input type="radio" name="frequency" value="2-wöchentlich"><span><strong>2-wöchentlich</strong><small>Alle zwei Wochen</small></span></label>
+        </div>
+      </div>
+
+      <div class="inquiry-block">
+        <h3>4. Wann ist es möglich?</h3>
+        <div class="booking-field-row">
+          <div class="booking-field"><label>Datum</label><input name="date" type="date" required></div>
+          <div class="booking-field"><label>Uhrzeit</label><input name="time" type="time" required></div>
+        </div>
+        <div class="availability-week-grid">
+          <label class="availability-day-row"><input type="checkbox" name="availabilityDays" value="Montag" data-availability-day><span>Montag</span><select name="availabilityMondayFrom" data-availability-time><option value="08:00">08:00</option><option value="09:00" selected>09:00</option><option value="10:00">10:00</option><option value="11:00">11:00</option><option value="12:00">12:00</option><option value="13:00">13:00</option><option value="14:00">14:00</option><option value="15:00">15:00</option><option value="16:00">16:00</option><option value="17:00">17:00</option><option value="18:00">18:00</option><option value="19:00">19:00</option><option value="20:00">20:00</option></select><select name="availabilityMondayTo" data-availability-time><option value="10:00">10:00</option><option value="11:00">11:00</option><option value="12:00">12:00</option><option value="13:00">13:00</option><option value="14:00">14:00</option><option value="15:00">15:00</option><option value="16:00">16:00</option><option value="17:00" selected>17:00</option><option value="18:00">18:00</option><option value="19:00">19:00</option><option value="20:00">20:00</option><option value="21:00">21:00</option><option value="22:00">22:00</option></select></label>
+          <label class="availability-day-row"><input type="checkbox" name="availabilityDays" value="Dienstag" data-availability-day><span>Dienstag</span><select name="availabilityTuesdayFrom" data-availability-time><option value="08:00">08:00</option><option value="09:00" selected>09:00</option><option value="10:00">10:00</option><option value="11:00">11:00</option><option value="12:00">12:00</option><option value="13:00">13:00</option><option value="14:00">14:00</option><option value="15:00">15:00</option><option value="16:00">16:00</option><option value="17:00">17:00</option><option value="18:00">18:00</option><option value="19:00">19:00</option><option value="20:00">20:00</option></select><select name="availabilityTuesdayTo" data-availability-time><option value="10:00">10:00</option><option value="11:00">11:00</option><option value="12:00">12:00</option><option value="13:00">13:00</option><option value="14:00">14:00</option><option value="15:00">15:00</option><option value="16:00">16:00</option><option value="17:00" selected>17:00</option><option value="18:00">18:00</option><option value="19:00">19:00</option><option value="20:00">20:00</option><option value="21:00">21:00</option><option value="22:00">22:00</option></select></label>
+          <label class="availability-day-row"><input type="checkbox" name="availabilityDays" value="Mittwoch" data-availability-day><span>Mittwoch</span><select name="availabilityWednesdayFrom" data-availability-time><option value="08:00">08:00</option><option value="09:00" selected>09:00</option><option value="10:00">10:00</option><option value="11:00">11:00</option><option value="12:00">12:00</option><option value="13:00">13:00</option><option value="14:00">14:00</option><option value="15:00">15:00</option><option value="16:00">16:00</option><option value="17:00">17:00</option><option value="18:00">18:00</option><option value="19:00">19:00</option><option value="20:00">20:00</option></select><select name="availabilityWednesdayTo" data-availability-time><option value="10:00">10:00</option><option value="11:00">11:00</option><option value="12:00">12:00</option><option value="13:00">13:00</option><option value="14:00">14:00</option><option value="15:00">15:00</option><option value="16:00">16:00</option><option value="17:00" selected>17:00</option><option value="18:00">18:00</option><option value="19:00">19:00</option><option value="20:00">20:00</option><option value="21:00">21:00</option><option value="22:00">22:00</option></select></label>
+          <label class="availability-day-row"><input type="checkbox" name="availabilityDays" value="Donnerstag" data-availability-day><span>Donnerstag</span><select name="availabilityThursdayFrom" data-availability-time><option value="08:00">08:00</option><option value="09:00" selected>09:00</option><option value="10:00">10:00</option><option value="11:00">11:00</option><option value="12:00">12:00</option><option value="13:00">13:00</option><option value="14:00">14:00</option><option value="15:00">15:00</option><option value="16:00">16:00</option><option value="17:00">17:00</option><option value="18:00">18:00</option><option value="19:00">19:00</option><option value="20:00">20:00</option></select><select name="availabilityThursdayTo" data-availability-time><option value="10:00">10:00</option><option value="11:00">11:00</option><option value="12:00">12:00</option><option value="13:00">13:00</option><option value="14:00">14:00</option><option value="15:00">15:00</option><option value="16:00">16:00</option><option value="17:00" selected>17:00</option><option value="18:00">18:00</option><option value="19:00">19:00</option><option value="20:00">20:00</option><option value="21:00">21:00</option><option value="22:00">22:00</option></select></label>
+          <label class="availability-day-row"><input type="checkbox" name="availabilityDays" value="Freitag" data-availability-day><span>Freitag</span><select name="availabilityFridayFrom" data-availability-time><option value="08:00">08:00</option><option value="09:00" selected>09:00</option><option value="10:00">10:00</option><option value="11:00">11:00</option><option value="12:00">12:00</option><option value="13:00">13:00</option><option value="14:00">14:00</option><option value="15:00">15:00</option><option value="16:00">16:00</option><option value="17:00">17:00</option><option value="18:00">18:00</option><option value="19:00">19:00</option><option value="20:00">20:00</option></select><select name="availabilityFridayTo" data-availability-time><option value="10:00">10:00</option><option value="11:00">11:00</option><option value="12:00">12:00</option><option value="13:00">13:00</option><option value="14:00">14:00</option><option value="15:00">15:00</option><option value="16:00">16:00</option><option value="17:00" selected>17:00</option><option value="18:00">18:00</option><option value="19:00">19:00</option><option value="20:00">20:00</option><option value="21:00">21:00</option><option value="22:00">22:00</option></select></label>
+          <label class="availability-day-row"><input type="checkbox" name="availabilityDays" value="Samstag" data-availability-day><span>Samstag</span><select name="availabilitySaturdayFrom" data-availability-time><option value="08:00">08:00</option><option value="09:00" selected>09:00</option><option value="10:00">10:00</option><option value="11:00">11:00</option><option value="12:00">12:00</option><option value="13:00">13:00</option><option value="14:00">14:00</option><option value="15:00">15:00</option><option value="16:00">16:00</option><option value="17:00">17:00</option><option value="18:00">18:00</option><option value="19:00">19:00</option><option value="20:00">20:00</option></select><select name="availabilitySaturdayTo" data-availability-time><option value="10:00">10:00</option><option value="11:00">11:00</option><option value="12:00">12:00</option><option value="13:00">13:00</option><option value="14:00">14:00</option><option value="15:00">15:00</option><option value="16:00">16:00</option><option value="17:00" selected>17:00</option><option value="18:00">18:00</option><option value="19:00">19:00</option><option value="20:00">20:00</option><option value="21:00">21:00</option><option value="22:00">22:00</option></select></label>
+          <label class="availability-day-row"><input type="checkbox" name="availabilityDays" value="Sonntag" data-availability-day><span>Sonntag</span><select name="availabilitySundayFrom" data-availability-time><option value="08:00">08:00</option><option value="09:00" selected>09:00</option><option value="10:00">10:00</option><option value="11:00">11:00</option><option value="12:00">12:00</option><option value="13:00">13:00</option><option value="14:00">14:00</option><option value="15:00">15:00</option><option value="16:00">16:00</option><option value="17:00">17:00</option><option value="18:00">18:00</option><option value="19:00">19:00</option><option value="20:00">20:00</option></select><select name="availabilitySundayTo" data-availability-time><option value="10:00">10:00</option><option value="11:00">11:00</option><option value="12:00">12:00</option><option value="13:00">13:00</option><option value="14:00">14:00</option><option value="15:00">15:00</option><option value="16:00">16:00</option><option value="17:00" selected>17:00</option><option value="18:00">18:00</option><option value="19:00">19:00</option><option value="20:00">20:00</option><option value="21:00">21:00</option><option value="22:00">22:00</option></select></label>
+        </div>
+      </div>
+
+      <div class="inquiry-block">
+        <h3>5. Wo soll der Auftrag ausgeführt werden?</h3>
+        <div class="booking-field-row">
+          <div class="booking-field"><label>Straße und Hausnummer</label><input name="street" type="text" required placeholder="Musterstraße 12"></div>
+          <div class="booking-field"><label>PLZ</label><input name="zip" type="text" required placeholder="22765"></div>
+        </div>
+        <div class="booking-field-row">
+          <div class="booking-field"><label>Stadt / Stadtteil</label><input name="city" type="text" required placeholder="z.B. Hamburg Altona"></div>
+          <div class="booking-field"><label>Hinweise zum Ort</label><input name="locationNotes" type="text" placeholder="z.B. Hinterhof, 3. Etage, Parkplatz"></div>
+        </div>
+      </div>
+
+      <div class="inquiry-block">
+        <h3>Kontakt</h3>
+        <div class="booking-field-row">
+          <div class="booking-field"><label>Vorname</label><input name="firstName" type="text" required placeholder="Vorname"></div>
+          <div class="booking-field"><label>Nachname</label><input name="lastName" type="text" required placeholder="Nachname"></div>
+        </div>
+        <div class="booking-field-row">
+          <div class="booking-field"><label>Telefon</label><input name="phone" type="tel" required placeholder="+49 ..."></div>
+          <div class="booking-field"><label>E-Mail</label><input name="email" type="email" required placeholder="deine@email.de"></div>
+        </div>
+      </div>
+
+      <button class="btn-primary inquiry-submit" type="submit">Heinzelchen anfragen</button>
+      <p class="inquiry-note">Unverbindlich: Wir prüfen zuerst, ob ein passender Helfer verfügbar ist.</p>
+    </form>
   </section>
 </main>
 <footer>
@@ -238,6 +237,123 @@
     <span>Gemacht für Menschen, die Hilfe brauchen.</span>
   </div>
 </footer>
+<script>
+  let selectedGooglePlace = false;
+
+  function initAddressAutocomplete() {
+    const streetInput = document.querySelector('[name="street"]');
+    const zipInput = document.querySelector('[name="zip"]');
+    const cityInput = document.querySelector('[name="city"]');
+    const countryInput = document.querySelector('[name="country"]');
+    const submitButton = document.querySelector(".inquiry-submit");
+    const form = document.querySelector("[data-inquiry-form]");
+
+    if (!streetInput || !submitButton || !form || !window.google?.maps?.places) return;
+
+    submitButton.disabled = true;
+
+    const error = document.createElement("p");
+    error.className = "address-error";
+    error.style.color = "#9f1239";
+    error.style.fontSize = ".9rem";
+    error.style.marginTop = ".45rem";
+    error.hidden = true;
+    error.textContent = "Bitte wähle eine echte Adresse mit Hausnummer aus den Vorschlägen aus.";
+    streetInput.insertAdjacentElement("afterend", error);
+
+    const autocomplete = new google.maps.places.Autocomplete(streetInput, {
+      componentRestrictions: { country: "de" },
+      fields: ["address_components", "formatted_address", "name"],
+      types: ["address"],
+    });
+
+    const lockAddress = (locked) => {
+      if (zipInput) zipInput.readOnly = locked;
+      if (cityInput) cityInput.readOnly = locked;
+      if (countryInput) countryInput.readOnly = locked;
+    };
+
+    const resetAddressValidation = () => {
+      selectedGooglePlace = false;
+      submitButton.disabled = true;
+      error.hidden = false;
+      lockAddress(false);
+    };
+
+    streetInput.addEventListener("input", resetAddressValidation);
+
+    form.addEventListener("submit", (event) => {
+      if (selectedGooglePlace) return;
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      submitButton.disabled = true;
+      error.hidden = false;
+      streetInput.focus();
+    }, true);
+
+    form.addEventListener("reset", () => {
+      window.setTimeout(() => {
+        selectedGooglePlace = false;
+        submitButton.disabled = true;
+        error.hidden = true;
+        lockAddress(false);
+      }, 0);
+    });
+
+    autocomplete.addListener("place_changed", () => {
+      const place = autocomplete.getPlace();
+
+      if (!place.address_components?.length) {
+        resetAddressValidation();
+        return;
+      }
+
+      const getComponent = (type, key = "long_name") =>
+        place.address_components.find((component) => component.types.includes(type))?.[key] || "";
+
+      const formattedAddress = place.formatted_address || "";
+      const placeName = place.name || "";
+      const streetNumber =
+        getComponent("street_number") ||
+        placeName.match(/\b\d+[a-zA-Z]?\b/)?.[0] ||
+        formattedAddress.match(/\b\d+[a-zA-Z]?\b/)?.[0] ||
+        "";
+      const route = getComponent("route");
+      const zip =
+        getComponent("postal_code", "short_name") ||
+        formattedAddress.match(/\b\d{5}\b/)?.[0] ||
+        "";
+      const city =
+        getComponent("locality") ||
+        getComponent("postal_town") ||
+        getComponent("administrative_area_level_3");
+
+      if (!route || !streetNumber || !/^\d{5}$/.test(zip)) {
+        selectedGooglePlace = false;
+        submitButton.disabled = true;
+        error.hidden = false;
+        lockAddress(false);
+        return;
+      }
+
+      streetInput.value = [route, streetNumber].filter(Boolean).join(" ") || place.formatted_address || "";
+      if (zipInput) zipInput.value = zip;
+      if (cityInput) cityInput.value = city;
+      if (countryInput) countryInput.value = "Deutschland";
+
+      selectedGooglePlace = true;
+      submitButton.disabled = false;
+      error.hidden = true;
+      lockAddress(true);
+    });
+  }
+</script>
+<script
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAIZ2m6CrxYmJzUgHvU5yaC5h3iKr9SGVE&libraries=places&callback=initAddressAutocomplete"
+  async
+  defer
+></script>
+<script src="assets/inquiry.js"></script>
 <script src="assets/main.js"></script>
 </body>
 </html>

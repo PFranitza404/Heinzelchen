@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vermittlung | Heinzelchen</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/styles.css">
+<style>
+  body{background:#f7f7f5}
+  .dispatch-page{padding:112px 5% 5rem}
+  .dispatch-shell{max-width:1280px;margin:0 auto}
+  .dispatch-head{display:flex;align-items:end;justify-content:space-between;gap:1.5rem;margin-bottom:2rem}
+  .dispatch-head h1{margin:0;font-size:clamp(2rem,4vw,3.2rem)}
+  .dispatch-head p{max-width:640px;margin:.6rem 0 0;color:#6e6e73;line-height:1.65}
+  .dispatch-refresh{width:auto;min-width:140px}
+  .dispatch-grid{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(320px,.65fr);gap:1.2rem;align-items:start}
+  .dispatch-panel{background:rgba(253,253,251,.9);border:1px solid rgba(29,29,31,.08);border-radius:18px;box-shadow:0 16px 40px rgba(29,29,31,.045);overflow:hidden}
+  .dispatch-panel h2{font-size:1.35rem;margin:0}
+  .dispatch-panel-head{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1.25rem 1.35rem;border-bottom:1px solid rgba(29,29,31,.08)}
+  .dispatch-count{display:inline-flex;align-items:center;justify-content:center;min-width:2rem;height:2rem;padding:0 .65rem;border-radius:999px;background:#e8f7f0;color:#176c53;font-weight:700}
+  .dispatch-table-wrap{overflow:auto}
+  .dispatch-table{width:100%;border-collapse:collapse;min-width:860px}
+  .dispatch-table th,.dispatch-table td{padding:1rem .9rem;border-bottom:1px solid rgba(29,29,31,.07);text-align:left;vertical-align:top}
+  .dispatch-table th{font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:#6e6e73;background:#fbfbf8}
+  .dispatch-table td{font-size:.94rem;color:#1d1d1f}
+  .dispatch-muted{display:block;margin-top:.22rem;color:#6e6e73;font-size:.82rem;line-height:1.35}
+  .dispatch-tags{display:flex;flex-wrap:wrap;gap:.35rem}
+  .dispatch-tag{display:inline-flex;padding:.22rem .5rem;border-radius:999px;background:#eef2ff;color:#3730a3;font-size:.78rem}
+  .dispatch-status{display:inline-flex;align-items:center;justify-content:center;min-width:86px;padding:.28rem .62rem;border-radius:999px;background:#f1f1ef;color:#1d1d1f;font-size:.78rem;font-weight:700}
+  .dispatch-status[data-status="Zugewiesen"],.dispatch-status[data-status="aktiv"]{background:#e8f7f0;color:#176c53}
+  .dispatch-status[data-status="abgelehnt"]{background:#ffe4e6;color:#9f1239}
+  .dispatch-select{min-width:210px;padding:.7rem .8rem;border-radius:10px;background:#fff}
+  .worker-list{display:grid;gap:.8rem;padding:1rem}
+  .worker-card{border:1px solid rgba(29,29,31,.08);border-radius:14px;background:#fff;padding:1rem}
+  .worker-card-head{display:flex;align-items:start;justify-content:space-between;gap:.8rem;margin-bottom:.75rem}
+  .worker-card h3{font-family:Lato,sans-serif;font-size:1rem;margin:0;color:#1d1d1f}
+  .worker-status-button{width:auto;padding:.45rem .7rem;border:0;border-radius:999px;background:#1d1d1f;color:#fff;font:inherit;font-size:.78rem;font-weight:700;cursor:pointer}
+  .worker-status-button:hover{background:#1d9a74}
+  .dispatch-message{margin-bottom:1rem;padding:.85rem 1rem;border-radius:12px;background:#e8f7f0;color:#176c53;font-weight:700}
+  .dispatch-message[hidden]{display:none}
+  @media(max-width:980px){.dispatch-grid{grid-template-columns:1fr}.dispatch-head{align-items:start;flex-direction:column}.dispatch-refresh{width:100%}}
+</style>
+</head>
+<body>
+<nav>
+  <a class="nav-logo" href="index.html">Heinzelchen</a>
+  <button class="nav-toggle" type="button" aria-label="Menü öffnen">☰</button>
+  <ul class="nav-links">
+    <li><a href="leistungen.html">Heinzelchen buchen</a></li>
+    <li><a href="anbieter-werden.html">Heinzelchen werden</a></li>
+    <li><a href="kontakt.html">Über uns</a></li>
+  </ul>
+</nav>
+<main class="dispatch-page">
+  <div class="dispatch-shell">
+    <header class="dispatch-head">
+      <div>
+        <div class="section-label">Intern</div>
+        <h1>Vermittlung</h1>
+        <p>Buchungen prüfen, passende Heinzelchen zuweisen und Bewerberstatus verwalten.</p>
+      </div>
+      <button class="btn-primary dispatch-refresh" type="button" data-refresh>Aktualisieren</button>
+    </header>
+
+    <div class="dispatch-message" data-message hidden></div>
+
+    <div class="dispatch-grid">
+      <section class="dispatch-panel">
+        <div class="dispatch-panel-head">
+          <h2>Buchungen</h2>
+          <span class="dispatch-count" data-booking-count>0</span>
+        </div>
+        <div class="dispatch-table-wrap">
+          <table class="dispatch-table">
+            <thead>
+              <tr>
+                <th>Kunde</th>
+                <th>Dienstleistung</th>
+                <th>Stadt</th>
+                <th>Datum</th>
+                <th>Status</th>
+                <th>Zuweisen</th>
+              </tr>
+            </thead>
+            <tbody data-bookings></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="dispatch-panel">
+        <div class="dispatch-panel-head">
+          <h2>Heinzelchen</h2>
+          <span class="dispatch-count" data-worker-count>0</span>
+        </div>
+        <div class="worker-list" data-workers></div>
+      </section>
+    </div>
+  </div>
+</main>
+<script>
+(() => {
+  const state = { bookings: [], workers: [] };
+  const bookingsEl = document.querySelector("[data-bookings]");
+  const workersEl = document.querySelector("[data-workers]");
+  const messageEl = document.querySelector("[data-message]");
+  const bookingCountEl = document.querySelector("[data-booking-count]");
+  const workerCountEl = document.querySelector("[data-worker-count]");
+  const statusOrder = ["neu", "geprüft", "aktiv", "abgelehnt"];
+
+  const escapeHtml = (value) => `${value || ""}`.replace(/[&<>"']/g, (char) => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#039;",
+  }[char]));
+
+  const api = async (path, options = {}) => {
+    const response = await fetch(path, {
+      ...options,
+      headers: {
+        "Content-Type": "application/json",
+        ...(options.headers || {}),
+      },
+    });
+    const payload = await response.json().catch(() => ({}));
+    if (!response.ok) throw new Error(payload.error || "Anfrage fehlgeschlagen.");
+    return payload;
+  };
+
+  const showMessage = (text) => {
+    messageEl.textContent = text;
+    messageEl.hidden = false;
+    window.setTimeout(() => { messageEl.hidden = true; }, 3200);
+  };
+
+  const customerName = (booking) => [booking.customer?.firstName, booking.customer?.lastName].filter(Boolean).join(" ") || "Kunde";
+  const services = (booking) => booking.services?.length ? booking.services : [booking.extraTask || "Alltagshilfe"];
+  const workerStatus = (worker) => worker.status || (worker.active === false ? "neu" : "aktiv");
+  const workerArea = (worker) => worker.serviceArea || worker.localAreas?.join(", ") || worker.city || "-";
+  const normalize = (value) => `${value || ""}`.trim().toLowerCase();
+
+  const cityMatches = (worker, booking) => {
+    const bookingCity = normalize(booking.customer?.city);
+    const workerCity = normalize(workerArea(worker));
+    if (!bookingCity || !workerCity) return true;
+    return bookingCity.includes(workerCity) || workerCity.includes(bookingCity);
+  };
+
+  const skillMatches = (worker, booking) => {
+    const bookingServices = booking.services || [];
+    return !bookingServices.length || bookingServices.some((service) => (worker.skills || []).includes(service));
+  };
+
+  const matchingWorkers = (booking) => state.workers
+    .filter((worker) => worker.active !== false && workerStatus(worker) === "aktiv")
+    .filter((worker) => skillMatches(worker, booking) && cityMatches(worker, booking));
+
+  const renderBookings = () => {
+    bookingCountEl.textContent = state.bookings.length;
+    bookingsEl.innerHTML = state.bookings.length ? state.bookings.map((booking) => {
+      const matches = matchingWorkers(booking);
+      const assigned = state.workers.find((worker) => worker.id === booking.assignedWorkerId);
+      const options = matches.map((worker) => `<option value="${escapeHtml(worker.id)}"${worker.id === booking.assignedWorkerId ? " selected" : ""}>${escapeHtml(worker.name || worker.id)}</option>`).join("");
+      const assignedOption = assigned && !matches.some((worker) => worker.id === assigned.id)
+        ? `<option value="${escapeHtml(assigned.id)}" selected>${escapeHtml(assigned.name || assigned.id)}</option>`
+        : "";
+      return `<tr>
+        <td><strong>${escapeHtml(customerName(booking))}</strong><span class="dispatch-muted">${escapeHtml(booking.customer?.email || "")}${booking.customer?.phone ? " · " + escapeHtml(booking.customer.phone) : ""}</span></td>
+        <td><div class="dispatch-tags">${services(booking).map((service) => `<span class="dispatch-tag">${escapeHtml(service)}</span>`).join("")}</div></td>
+        <td>${escapeHtml(booking.customer?.city || "-")}</td>
+        <td>${escapeHtml(booking.appointment?.date || "-")}<span class="dispatch-muted">${escapeHtml(booking.appointment?.time || "")}</span></td>
+        <td><span class="dispatch-status" data-status="${escapeHtml(booking.status || "Neu")}">${escapeHtml(booking.status || "Neu")}</span></td>
+        <td>
+          <select class="dispatch-select" data-assign-booking="${escapeHtml(booking.id)}" ${matches.length || assigned ? "" : "disabled"}>
+            <option value="">${matches.length || assigned ? "Heinzelchen wählen" : "Keine passenden Treffer"}</option>
+            ${assignedOption}${options}
+          </select>
+        </td>
+      </tr>`;
+    }).join("") : `<tr><td colspan="6">Keine Buchungen vorhanden.</td></tr>`;
+  };
+
+  const renderWorkers = () => {
+    workerCountEl.textContent = state.workers.length;
+    workersEl.innerHTML = state.workers.length ? state.workers.map((worker) => {
+      const status = workerStatus(worker);
+      const nextStatus = statusOrder[(statusOrder.indexOf(status) + 1) % statusOrder.length] || "neu";
+      return `<article class="worker-card">
+        <div class="worker-card-head">
+          <div>
+            <h3>${escapeHtml(worker.name || worker.id)}</h3>
+            <span class="dispatch-muted">${escapeHtml(workerArea(worker))}</span>
+          </div>
+          <button class="worker-status-button" type="button" data-worker-status="${escapeHtml(worker.id)}" data-next-status="${escapeHtml(nextStatus)}">${escapeHtml(status)} → ${escapeHtml(nextStatus)}</button>
+        </div>
+        <div class="dispatch-tags">${(worker.skills || []).map((skill) => `<span class="dispatch-tag">${escapeHtml(skill)}</span>`).join("") || `<span class="dispatch-muted">Keine Skills</span>`}</div>
+      </article>`;
+    }).join("") : `<p class="dispatch-muted">Keine Heinzelchen vorhanden.</p>`;
+  };
+
+  const render = () => {
+    renderBookings();
+    renderWorkers();
+  };
+
+  const load = async () => {
+    const payload = await api("/api/vermittlung");
+    state.bookings = payload.bookings || [];
+    state.workers = payload.workers || [];
+    render();
+  };
+
+  document.querySelector("[data-refresh]").addEventListener("click", async () => {
+    await load();
+    showMessage("Daten aktualisiert.");
+  });
+
+  document.addEventListener("change", async (event) => {
+    const select = event.target.closest("[data-assign-booking]");
+    if (!select || !select.value) return;
+    await api(`/api/bookings/${encodeURIComponent(select.dataset.assignBooking)}/assignment`, {
+      method: "PATCH",
+      body: JSON.stringify({ workerId: select.value }),
+    });
+    await load();
+    showMessage("Buchung wurde zugewiesen.");
+  });
+
+  document.addEventListener("click", async (event) => {
+    const button = event.target.closest("[data-worker-status]");
+    if (!button) return;
+    await api(`/api/workers/${encodeURIComponent(button.dataset.workerStatus)}/status`, {
+      method: "PATCH",
+      body: JSON.stringify({ status: button.dataset.nextStatus }),
+    });
+    await load();
+    showMessage("Heinzelchen-Status aktualisiert.");
+  });
+
+  load().catch((error) => {
+    messageEl.textContent = error.message;
+    messageEl.hidden = false;
+  });
+})();
+</script>
+<script src="assets/main.js"></script>
+</body>
+</html>

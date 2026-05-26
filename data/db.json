@@ -1,6 +1,34 @@
 {
   "workers": [
     {
+      "id": "worker-1779792296400",
+      "name": "Paul",
+      "email": "paul.franitza@icloud.com",
+      "phone": "+49 1739949168",
+      "city": "Bendestorf",
+      "serviceArea": "Blankeneese",
+      "radiusKm": "bis 20 km",
+      "leadTime": "Nach Absprache",
+      "skills": [
+        "Gartenarbeit",
+        "Babysitting"
+      ],
+      "extraSkills": "",
+      "localAreas": [
+        "Blankeneese"
+      ],
+      "areaNotes": "",
+      "availability": {
+        "Montag": [
+          "09:00-17:00"
+        ],
+        "Mittwoch": [
+          "09:00-17:00"
+        ]
+      },
+      "active": true
+    },
+    {
       "id": "worker-1",
       "name": "Max Beispiel",
       "email": "max@helfende-haende.de",
@@ -22,7 +50,8 @@
           "09:00-16:00"
         ]
       },
-      "active": true
+      "active": false,
+      "status": "geprüft"
     }
   ],
   "bookings": []

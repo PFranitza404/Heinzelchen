@@ -29,7 +29,7 @@ function renderWorkerPortal() {
   const assignmentsEl = document.querySelector("#workerAssignments");
   if (!form || !assignmentsEl) return;
 
-  assignmentsEl.innerHTML = "<p>Aufträge werden dir später per E-Mail bestätigt. Dieser Bereich zeigt keine Admin-Daten.</p>";
+  assignmentsEl.innerHTML = "<p>Aufträge werden dir später per E-Mail bestätigt. Dieser Bereich zeigt keine internen Daten.</p>";
 
   form.addEventListener("submit", async (event) => {
     event.preventDefault();

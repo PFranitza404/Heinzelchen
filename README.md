@@ -25,7 +25,6 @@ Lokale URLs:
 - Arbeiter Registrierung: `http://localhost:3001/arbeiter-registrierung`
 - Arbeiter Login: `http://localhost:3001/arbeiter-login`
 - Arbeiter Dashboard: `http://localhost:3001/arbeiter-dashboard`
-- Admin: `http://localhost:3001/admin`
 
 ## Environment Variablen
 
@@ -37,7 +36,6 @@ SUPABASE_SERVICE_ROLE_KEY=
 RESEND_API_KEY=
 EMAIL_FROM=
 MAIL_FROM=
-ADMIN_EMAIL=
 PUBLIC_URL=
 SUPABASE_ID_CARD_BUCKET=worker-documents
 FORCE_HTTPS=true
@@ -49,7 +47,6 @@ Wichtig:
 - `SUPABASE_SERVICE_ROLE_KEY` niemals ins Frontend kopieren.
 - `.env` ist in `.gitignore` und darf nicht auf GitHub.
 - Arbeiter-Passwoerter werden nicht im Projekt gespeichert, sondern ueber Supabase Auth verwaltet.
-- `/admin` ist aktuell ohne Passwort erreichbar, bis der Schutz wieder eingebaut wird.
 
 ## Supabase einrichten
 
@@ -76,21 +73,9 @@ EMAIL_FROM=Helfende Haende <noreply@deine-domain.de>
 
 Ohne `RESEND_API_KEY` werden Emails nicht echt verschickt, sondern als Konsolen-Vorschau protokolliert.
 
-## Verwaltung
-
-Die interne Verwaltung passiert ueber `/admin` im normalen Website-Server. Supabase bleibt die Datenquelle:
-
-- Bewerbungen: Tabelle `workers`
-- Buchungen: Tabelle `bookings`
-- Verfuegbarkeiten: Tabelle `verfuegbarkeiten`
-- Email-Logs: Tabelle `email_logs`
-- Aktionslogs: Tabelle `action_logs`
-- Ausweise: Storage Bucket `worker-documents`
-
 ## Live-Gang Checkliste
 
 - [ ] Korrekte Supabase Keys in `.env` gesetzt.
-- [ ] Admin-Schutz fuer `/admin` vor Live-Gang wieder aktivieren.
 - [ ] `supabase-schema.sql` im Supabase SQL Editor ausgefuehrt.
 - [ ] Storage Bucket `worker-documents` ist privat.
 - [ ] Resend Domain verifiziert.
