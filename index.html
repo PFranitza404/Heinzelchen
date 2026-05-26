@@ -8,7 +8,6 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/styles.css">
-<link rel="stylesheet" href="assets/lava.css">
 </head>
 <body class="home">
 <nav>
@@ -21,18 +20,7 @@
   </ul>
 </nav>
 <main>
-<div class="color-ribbon" aria-hidden="true">
-    <span class="ribbon-line ribbon-one"></span>
-    <span class="ribbon-line ribbon-two"></span>
-    <span class="ribbon-line ribbon-three"></span>
-    <span class="ribbon-line ribbon-four"></span>
-</div><section class="hero">
-  <div class="lava-lamp" aria-hidden="true">
-    <span class="lava-bubble bubble-a"></span>
-    <span class="lava-bubble bubble-b"></span>
-    <span class="lava-bubble bubble-c"></span>
-    <span class="lava-bubble bubble-d"></span>
-  </div>
+<section class="hero">
   <div class="hero-inner">
     <div class="hero-left">
       <div class="hero-badge">Geprüfte Helfer in deiner Nähe</div>
@@ -48,16 +36,6 @@
         <div class="trust-item"><strong>98 %</strong><span>Zufriedene Kunden</span></div>
       </div>
     </div>
-    <div class="hero-worker-scene" aria-hidden="true">
-      <span class="work-spark spark-one"></span>
-      <span class="work-spark spark-two"></span>
-      <span class="work-spark spark-three"></span>
-      <img class="hero-worker" src="assets/hinzelmaennchen.svg" alt="">
-      <span class="worker-broom"></span>
-      <span class="worker-dust dust-one"></span>
-      <span class="worker-dust dust-two"></span>
-      <span class="worker-box"></span>
-    </div>
   </div>
 </section>
 <section class="stats-bar">
@@ -66,55 +44,6 @@
     <div class="stat"><strong>8</strong><span>Leistungskategorien</span></div>
     <div class="stat"><strong>24 h</strong><span>Buchung bis Einsatz</span></div>
     <div class="stat"><strong>100 %</strong><span>Versicherte Helfer</span></div>
-  </div>
-</section>
-<section class="hamburg-map-section" aria-labelledby="hamburg-map-title">
-  <div class="hamburg-map-inner">
-    <div class="hamburg-map-copy">
-      <div class="section-label">Hamburg aktiv</div>
-      <h2 id="hamburg-map-title">Unsere Helfer sind schon in deiner Nähe unterwegs.</h2>
-      <p class="section-sub">Ein Beispielblick auf ausgedachte Kundenanfragen in Hamburg: von Einkauf in Altona bis Gartenhilfe in Winterhude.</p>
-      <div class="map-stats">
-        <span><strong>14</strong> Stadtteile</span>
-        <span><strong>38</strong> offene Anfragen</span>
-        <span><strong>Heute</strong> neue Einsätze</span>
-      </div>
-    </div>
-    <div class="hamburg-map-card" aria-label="Illustrative Karte von Hamburg mit Kundenstandorten">
-      <div class="map-water map-water-one"></div>
-      <div class="map-water map-water-two"></div>
-      <div class="map-route map-route-one"></div>
-      <div class="map-route map-route-two"></div>
-      <div class="map-district district-north">Nord</div>
-      <div class="map-district district-west">Altona</div>
-      <div class="map-district district-center">Mitte</div>
-      <div class="map-district district-east">Wandsbek</div>
-      <div class="map-district district-south">Harburg</div>
-      <div class="map-pin pin-altona">
-        <span></span>
-        <div><strong>Altona</strong><small>Einkauf</small></div>
-      </div>
-      <div class="map-pin pin-eimsbuettel">
-        <span></span>
-        <div><strong>Eimsbüttel</strong><small>Nachhilfe</small></div>
-      </div>
-      <div class="map-pin pin-winterhude">
-        <span></span>
-        <div><strong>Winterhude</strong><small>Garten</small></div>
-      </div>
-      <div class="map-pin pin-st-georg">
-        <span></span>
-        <div><strong>St. Georg</strong><small>Technik</small></div>
-      </div>
-      <div class="map-pin pin-harburg">
-        <span></span>
-        <div><strong>Harburg</strong><small>Reinigung</small></div>
-      </div>
-      <div class="map-pin pin-blankenese">
-        <span></span>
-        <div><strong>Blankenese</strong><small>Begleitung</small></div>
-      </div>
-    </div>
   </div>
 </section>
 <section class="how page-section" id="so-funktionierts">
@@ -140,68 +69,6 @@
         <h3>Entspannt genießen</h3>
         <p>Der Helfer kommt pünktlich. Danach bewertest du den Einsatz transparent.</p>
       </article>
-    </div>
-  </div>
-</section>
-<section class="service-carousel-section" aria-labelledby="service-carousel-title">
-  <div class="service-carousel-inner">
-    <div class="section-header reveal">
-      <h2 id="service-carousel-title">Wähle, wobei du Hilfe brauchst</h2>
-      <p class="section-sub">Ein schneller Überblick über die häufigsten Aufgaben, die unsere Studenten für dich übernehmen.</p>
-    </div>
-    <div class="service-carousel" data-service-carousel tabindex="0">
-      <div class="service-carousel-stage">
-        <button class="service-carousel-arrow service-carousel-up" type="button" data-service-prev aria-label="Vorherige Dienstleistung">↑</button>
-        <div class="service-carousel-track">
-          <article class="service-carousel-card" data-index="0" data-name="Garten" data-description="Rasenmähen, Hecken schneiden, Gartenarbeit" data-price="ab 18€/Std.">
-            <div class="service-carousel-icon">🌿</div>
-          </article>
-          <article class="service-carousel-card" data-index="1" data-name="Einkauf" data-description="Besorgungen & Lieferungen" data-price="ab 12€/Auftrag">
-            <div class="service-carousel-icon">🛒</div>
-          </article>
-          <article class="service-carousel-card" data-index="2" data-name="Nachhilfe" data-description="Lernhilfe für Schüler & Studenten" data-price="ab 22€/Std.">
-            <div class="service-carousel-icon">📚</div>
-          </article>
-          <article class="service-carousel-card" data-index="3" data-name="Maler" data-description="Streichen & Renovieren" data-price="ab 20€/Std.">
-            <div class="service-carousel-icon">🎨</div>
-          </article>
-          <article class="service-carousel-card" data-index="4" data-name="Technik" data-description="IT Support & Geräte einrichten" data-price="ab 25€/Std.">
-            <div class="service-carousel-icon">💻</div>
-          </article>
-          <article class="service-carousel-card" data-index="5" data-name="Babysitting" data-description="Kinderbetreuung" data-price="ab 15€/Std.">
-            <div class="service-carousel-icon">👶</div>
-          </article>
-          <article class="service-carousel-card" data-index="6" data-name="Hund" data-description="Gassi gehen & Betreuung" data-price="ab 14€/Std.">
-            <div class="service-carousel-icon">🐕</div>
-          </article>
-          <article class="service-carousel-card" data-index="7" data-name="Reinigung" data-description="Haus & Büro reinigen" data-price="ab 16€/Std.">
-            <div class="service-carousel-icon">🧹</div>
-          </article>
-        </div>
-        <button class="service-carousel-arrow service-carousel-down" type="button" data-service-next aria-label="Nächste Dienstleistung">↓</button>
-      </div>
-      <div class="service-carousel-content">
-        <div class="service-carousel-controls">
-          <button class="service-carousel-arrow" type="button" data-service-prev>↑</button>
-          <button class="service-carousel-arrow" type="button" data-service-next>↓</button>
-        </div>
-        <div class="service-carousel-info">
-          <h3 data-service-name>Garten</h3>
-          <p data-service-description>Rasenmähen, Hecken schneiden, Gartenarbeit</p>
-          <strong data-service-price>ab 18€/Std.</strong>
-        </div>
-        <div class="service-carousel-dots" aria-label="Dienstleistung auswählen">
-          <button class="active" type="button" data-service-dot="0" aria-label="Garten"></button>
-          <button type="button" data-service-dot="1" aria-label="Einkauf"></button>
-          <button type="button" data-service-dot="2" aria-label="Nachhilfe"></button>
-          <button type="button" data-service-dot="3" aria-label="Maler"></button>
-          <button type="button" data-service-dot="4" aria-label="Technik"></button>
-          <button type="button" data-service-dot="5" aria-label="Babysitting"></button>
-          <button type="button" data-service-dot="6" aria-label="Hund"></button>
-          <button type="button" data-service-dot="7" aria-label="Reinigung"></button>
-        </div>
-        <a class="btn-primary" href="leistungen.html">Hilfe buchen</a>
-      </div>
     </div>
   </div>
 </section>
@@ -241,6 +108,5 @@
   </div>
 </footer>
 <script src="assets/main.js"></script>
-<script src="assets/service-carousel.js"></script>
 </body>
 </html>

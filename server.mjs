@@ -100,6 +100,11 @@ function radiusToInteger(radiusKm) {
   return match ? Number(match[0]) : null;
 }
 
+function durationToInteger(duration) {
+  const match = `${duration || ""}`.match(/\d+/);
+  return match ? Number(match[0]) : null;
+}
+
 function bookingToRow(booking) {
   return {
     id: booking.id,
@@ -107,6 +112,17 @@ function bookingToRow(booking) {
     assigned_worker_id: booking.assignedWorkerId,
     appointment_date: booking.appointment?.date || null,
     city: booking.customer?.city || "",
+    first_name: booking.customer?.firstName || "",
+    last_name: booking.customer?.lastName || "",
+    email: booking.customer?.email || "",
+    phone: booking.customer?.phone || "",
+    street: booking.customer?.street || "",
+    zip: booking.customer?.zip || "",
+    services: Array.isArray(booking.services) ? booking.services : [],
+    date: booking.appointment?.date || null,
+    time: booking.appointment?.time || "",
+    frequency: booking.frequency || "",
+    duration: durationToInteger(booking.duration),
     created_at: booking.createdAt,
     data: booking,
   };
