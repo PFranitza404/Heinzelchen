@@ -12,18 +12,17 @@
 <body class="home">
 <nav>
   <a class="nav-logo" href="index.html">Heinzelchen</a>
-  <button class="nav-toggle" type="button" aria-label="Menü öffnen">☰</button>
+  <button class="nav-toggle" type="button" aria-label="Menü öffnen" aria-expanded="false">☰</button>
   <ul class="nav-links">
-    <li><a class="" href="buchen.html">Heinzelchen buchen</a></li>
-    <li><a class="" href="anbieter-werden.html">Heinzelchen werden</a></li>
-    <li><a class="" href="kontakt.html">Über uns</a></li>
+    <li><a href="buchen.html">Heinzelchen buchen</a></li>
+    <li><a href="anbieter-werden.html">Heinzelchen werden</a></li>
+    <li><a href="kontakt.html">Über uns</a></li>
   </ul>
 </nav>
 <main>
 <section class="hero">
   <div class="hero-inner">
     <div class="hero-left">
-      <img class="home-hero-logo" src="assets/heinzelchen-logo-transparent.png" alt="Heinzelchen Logo">
       <div class="hero-badge">Geprüfte Helfer in deiner Nähe</div>
       <h1>Alltagshilfe, die sich <em>wirklich</em> kümmert.</h1>
       <p class="hero-sub">Ob Gartenarbeit, Einkauf oder Nachhilfe: Bei uns findest du zuverlässige Menschen, die dir den Alltag erleichtern. Schnell gebucht, persönlich betreut.</p>
@@ -50,16 +49,20 @@
 <section class="service-marquee-section" id="dienstleistungen">
   <div class="service-marquee" aria-label="Unsere Dienstleistungen">
     <div class="service-marquee-track">
-      <span>Gartenarbeit</span>
-      <span>Einkaufsservice</span>
-      <span>Nachhilfe</span>
-      <span>Technik-Hilfe</span>
-      <span>Putzen & Reinigen</span>
-      <span>Gartenarbeit</span>
-      <span>Einkaufsservice</span>
-      <span>Nachhilfe</span>
-      <span>Technik-Hilfe</span>
-      <span>Putzen & Reinigen</span>
+      <button type="button" data-service-target="gartenarbeit">Gartenarbeit</button>
+      <button type="button" data-service-target="putzen-reinigen">Reinigung & Putzen</button>
+      <button type="button" data-service-target="nachhilfe">Nachhilfe</button>
+      <button type="button" data-service-target="betreuung">Betreuung</button>
+      <button type="button" data-service-target="aufbau">Aufbau</button>
+      <button type="button" data-service-target="malerarbeiten">Malereiarbeiten</button>
+      <button type="button" data-service-target="sonstiges">Sonstiges</button>
+      <button type="button" data-service-target="gartenarbeit">Gartenarbeit</button>
+      <button type="button" data-service-target="putzen-reinigen">Reinigung & Putzen</button>
+      <button type="button" data-service-target="nachhilfe">Nachhilfe</button>
+      <button type="button" data-service-target="betreuung">Betreuung</button>
+      <button type="button" data-service-target="aufbau">Aufbau</button>
+      <button type="button" data-service-target="malerarbeiten">Malereiarbeiten</button>
+      <button type="button" data-service-target="sonstiges">Sonstiges</button>
     </div>
   </div>
 </section>
@@ -70,52 +73,113 @@
       <h2 id="home-services-title">Wobei wir dich unterstützen</h2>
     </div>
     <div class="home-service-list-grid">
-      <article class="home-service-item">
+      <article class="home-service-item" data-service-card="gartenarbeit">
         <div class="home-service-media" aria-hidden="true">🌿</div>
         <h3>Gartenarbeit</h3>
         <details class="home-service-details">
           <summary>Mehr erfahren</summary>
-          <p>Text folgt.</p>
+          <p class="service-copy-intro">Ihre Heinzelchen nehmen Ihnen die alltägliche Gartenpflege ab:</p>
+          <ul>
+            <li>Rasenpflege wie Mähen, Kantenschneiden etc.</li>
+            <li>Unkrautentfernung</li>
+            <li>Beetpflege</li>
+            <li>Harken, Pusten und Grünabfallentsorgung</li>
+          </ul>
+          <p class="service-copy-heading">Können aber auch:</p>
+          <ul>
+            <li>Hochdruckreinigung, Poolreinigung etc.</li>
+            <li>Heckenschnitt</li>
+            <li>Urlaubsservice: Bewässerung und generelle Pflege</li>
+          </ul>
+          <p class="service-copy-closing">Und vieles mehr – fragen Sie einfach an.</p>
         </details>
       </article>
-      <article class="home-service-item">
-        <div class="home-service-media" aria-hidden="true">🛒</div>
-        <h3>Einkaufsservice</h3>
+      <article class="home-service-item" data-service-card="putzen-reinigen">
+        <div class="home-service-media" aria-hidden="true">🧹</div>
+        <h3>Reinigung & Putzen</h3>
         <details class="home-service-details">
           <summary>Mehr erfahren</summary>
-          <p>Text folgt.</p>
+          <p class="service-copy-intro">Ihre Heinzelchen halten Ihr Haus sauber:</p>
+          <ul>
+            <li>Fensterreinigung</li>
+            <li>Regelmäßige Grundreinigung: Staubsaugen und Wischen</li>
+            <li>Küche und Badezimmerreinigung: vom Herd bis zum Spiegel</li>
+          </ul>
+          <p class="service-copy-closing">Bis in die letzte, kleinste Ecke.</p>
         </details>
       </article>
-      <article class="home-service-item">
+      <article class="home-service-item" data-service-card="nachhilfe">
         <div class="home-service-media" aria-hidden="true">📚</div>
         <h3>Nachhilfe</h3>
         <details class="home-service-details">
           <summary>Mehr erfahren</summary>
-          <p>Text folgt.</p>
+          <p class="service-copy-intro">Ihre Heinzelchen sind selbst vor kurzem den Weg zum erfolgreichen Abitur gegangen und sind die besten Wegweiser für Ihre Kinder:</p>
+          <ul>
+            <li>Hauptfächer: Mathematik und Deutsch</li>
+            <li>Naturwissenschaften: Chemie, Physik und Biologie</li>
+            <li>Sprachen: Englisch, Französisch, Spanisch, Latein</li>
+            <li>Nebenfächer: Geschichte, Politik & Wirtschaft, Religion, Erdkunde, Informatik etc.</li>
+            <li>Gezielte Prüfungsvorbereitung</li>
+            <li>Hausaufgabenbegleitung</li>
+          </ul>
+          <p class="service-copy-heading">Und weiterführend:</p>
+          <ul>
+            <li>Gap-Year Beratung</li>
+            <li>Beratung und Assistenz bei Uni-Bewerbung in Deutschland, United Kingdom und europäischen Business Schools</li>
+          </ul>
+          <p class="service-copy-closing">Unterstützen Sie Ihr Kind mit erfahrener Hilfe.</p>
         </details>
       </article>
-      <article class="home-service-item">
-        <div class="home-service-media" aria-hidden="true">📺</div>
-        <h3>Technik-Hilfe</h3>
+      <article class="home-service-item" data-service-card="betreuung">
+        <div class="home-service-media" aria-hidden="true">🧸</div>
+        <h3>Betreuung</h3>
         <details class="home-service-details">
           <summary>Mehr erfahren</summary>
-          <p>Text folgt.</p>
+          <p class="service-copy-intro">Ihre Heinzelchen kümmern sich um Ihre Liebsten, wenn Sie das mal nicht können:</p>
+          <p class="service-copy-heading">Kinderbetreuung:</p>
+          <p>Vorlesen und im Garten spielen, statt Fernsehen und PlayStation.</p>
+          <p class="service-copy-heading">Haustierbetreuung:</p>
+          <ul>
+            <li>Gassi gehen</li>
+            <li>Füttern</li>
+          </ul>
+          <p class="service-copy-closing">Wissen Sie Ihre Liebsten in sicheren Händen.</p>
         </details>
       </article>
-      <article class="home-service-item">
-        <div class="home-service-media" aria-hidden="true">🧹</div>
-        <h3>Putzen & Reinigen</h3>
-        <details class="home-service-details">
-          <summary>Mehr erfahren</summary>
-          <p>Text folgt.</p>
-        </details>
-      </article>
-      <article class="home-service-item">
+      <article class="home-service-item" data-service-card="aufbau">
         <div class="home-service-media" aria-hidden="true">🧰</div>
-        <h3>Allrounder</h3>
+        <h3>Aufbau</h3>
         <details class="home-service-details">
           <summary>Mehr erfahren</summary>
-          <p>Text folgt.</p>
+          <p class="service-copy-intro">Ihre Heinzelchen bauen Ihnen vom neuen Ikea-Nachttisch über den Fernseher bis hin zu Festzelten alles auf:</p>
+          <ul>
+            <li>Möbel</li>
+            <li>Technische Geräte: Anschluss von Waschmaschinen, WLAN-Routern etc.</li>
+            <li>Außenbauten: Zäune, Gartenhäuser, Sichtschutz etc.</li>
+          </ul>
+          <p class="service-copy-closing">Sparen Sie sich den Weg vom Kauf zur Vollendung.</p>
+        </details>
+      </article>
+      <article class="home-service-item" data-service-card="malerarbeiten">
+        <div class="home-service-media" aria-hidden="true">🎨</div>
+        <h3>Malereiarbeiten</h3>
+        <details class="home-service-details">
+          <summary>Mehr erfahren</summary>
+          <p class="service-copy-intro">Ihre Heinzelchen verpassen Ihrem Umfeld einen neuen Anstrich:</p>
+          <ul>
+            <li>Farbauswahl und Beratung in Kooperation mit <a href="https://www.farrow-ball.com/de-de" target="_blank" rel="noopener">Farrow & Ball</a></li>
+            <li>Innenmalereien und Tapezierung</li>
+            <li>Außenmalereien</li>
+          </ul>
+          <p class="service-copy-closing">Werden Sie kreativ und realisieren Sie Ihre Vorstellung.</p>
+        </details>
+      </article>
+      <article class="home-service-item" data-service-card="sonstiges">
+        <div class="home-service-media" aria-hidden="true">✨</div>
+        <h3>Sonstiges</h3>
+        <details class="home-service-details">
+          <summary>Mehr erfahren</summary>
+          <p class="service-copy-closing">Ihre Heinzelchen erfüllen auch Ihre speziellen Aufgaben – vom Weihnachtsmann-Spielen an Heilig Abend bis hin zur Arztbegleitung.</p>
         </details>
       </article>
     </div>
@@ -130,14 +194,17 @@
     </div>
     <div class="footer-col">
       <h4>Leistungen</h4>
-      <a href="buchen.html">Alle Dienste</a>
-      <a href="leistungen.html#gartenarbeit">Gartenarbeit</a>
-      <a href="leistungen.html#einkaufsservice">Einkaufsservice</a>
-      <a href="leistungen.html#nachhilfe">Nachhilfe</a>
+      <a href="index.html#dienstleistungen">Gartenarbeit</a>
+      <a href="index.html#dienstleistungen">Reinigung & Putzen</a>
+      <a href="index.html#dienstleistungen">Nachhilfe</a>
+      <a href="index.html#dienstleistungen">Betreuung</a>
+      <a href="index.html#dienstleistungen">Aufbau</a>
+      <a href="index.html#dienstleistungen">Malereiarbeiten</a>
+      <a href="index.html#dienstleistungen">Sonstiges</a>
     </div>
     <div class="footer-col">
       <h4>Unternehmen</h4>
-      <a href="anbieter-werden.html">Dienstleister werden</a>
+      <a href="anbieter-werden.html">Heinzelchen werden</a>
       <a href="kontakt.html">Kontakt</a>
       <a href="presse.html">Presse</a>
     </div>

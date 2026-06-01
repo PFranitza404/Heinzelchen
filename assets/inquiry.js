@@ -24,12 +24,13 @@
   const detailText = () => {
     const labels = {
       detailGardenSize: "Gartenfläche",
-      detailGardenCustom: "Weitere Gartenarbeit",
+      detailGardenCustom: "Weitere Aufgaben",
       detailShoppingType: "Einkauf",
       detailShoppingNotes: "Einkauf Hinweise",
       detailTutoringSubject: "Nachhilfe Fach",
       detailTutoringLevel: "Nachhilfe Klasse/Niveau",
       detailTutoringTopic: "Nachhilfe Thema",
+      detailOtherCustom: "Sonstige Aufgabe",
       detailPaintingArea: "Maler Bereich",
       detailPaintingMaterial: "Maler Material",
       detailTechDevice: "Technik Gerät",
@@ -40,8 +41,8 @@
       detailDogTask: "Hund Aufgabe",
       detailCleaningRooms: "Reinigung Räume",
       detailCleaningScope: "Reinigung Umfang",
-      detailCleaningSize: "Wohnfläche",
-      detailCleaningCustom: "Weitere Reinigungswünsche",
+      detailCleaningSize: "Fläche",
+      detailCleaningCustom: "Weitere Aufgaben",
     };
     const textDetails = Object.entries(labels)
       .map(([name, label]) => {
@@ -53,6 +54,14 @@
     if (gardenTasks.length) textDetails.unshift(`Garten Aufgaben: ${gardenTasks.join(", ")}`);
     const cleaningTasks = checkedValues("detailCleaningTasks");
     if (cleaningTasks.length) textDetails.unshift(`Reinigung Dienste: ${cleaningTasks.join(", ")}`);
+    const tutoringTasks = checkedValues("detailTutoringTasks");
+    if (tutoringTasks.length) textDetails.unshift(`Nachhilfe Angebote: ${tutoringTasks.join(", ")}`);
+    const careTasks = checkedValues("detailCareTasks");
+    if (careTasks.length) textDetails.unshift(`Betreuung Aufgaben: ${careTasks.join(", ")}`);
+    const buildTasks = checkedValues("detailBuildTasks");
+    if (buildTasks.length) textDetails.unshift(`Aufbau Aufgaben: ${buildTasks.join(", ")}`);
+    const paintingTasks = checkedValues("detailPaintingTasks");
+    if (paintingTasks.length) textDetails.unshift(`Malereiarbeiten: ${paintingTasks.join(", ")}`);
     return textDetails.join("\n");
   };
   const fullName = () => [value("firstName"), value("lastName")].filter(Boolean).join(" ");
@@ -78,11 +87,24 @@
       level: value("detailTutoringLevel"),
       subject: value("detailTutoringSubject"),
       topic: value("detailTutoringTopic"),
+      tasks: checkedValues("detailTutoringTasks"),
+    },
+    care: {
+      tasks: checkedValues("detailCareTasks"),
+    },
+    build: {
+      tasks: checkedValues("detailBuildTasks"),
+    },
+    painting: {
+      tasks: checkedValues("detailPaintingTasks"),
     },
     cleaning: {
       tasks: checkedValues("detailCleaningTasks"),
       size: value("detailCleaningSize"),
       custom: value("detailCleaningCustom"),
+    },
+    other: {
+      custom: value("detailOtherCustom"),
     },
   });
   const availabilityText = () => availabilityRows
@@ -115,11 +137,15 @@
       Gartenarbeit: 1.5,
       Einkaufsservice: 1,
       Nachhilfe: 2,
+      Betreuung: 2,
+      Aufbau: 2,
+      Malereiarbeiten: 3,
       Malerarbeiten: 3,
       "Technik-Hilfe": 1.5,
       Babysitting: 3,
       Hundeservice: 1,
       "Putzen & Reinigen": 2,
+      Sonstiges: 1.5,
     };
 
     let hours = selectedServices.reduce((sum, service) => sum + (baseHours[service] || 1.5), 0);
@@ -136,6 +162,11 @@
     if (value("detailCleaningSize")) hours += 0.5;
     if (value("detailCleaningCustom")) hours += 0.5;
     if (value("detailTutoringTopic")) hours += 0.5;
+    if (checkedValues("detailTutoringTasks").length) hours += 0.5;
+    if (checkedValues("detailCareTasks").length) hours += 0.5;
+    if (checkedValues("detailBuildTasks").length) hours += 0.5;
+    if (checkedValues("detailPaintingTasks").length) hours += 0.5;
+    if (value("detailOtherCustom")) hours += 0.5;
     return Math.min(12, Math.max(1, Math.ceil(hours)));
   };
   const updateDurationEstimate = () => {
@@ -267,7 +298,10 @@
   form.querySelectorAll('[name="detailCleaningTasks"]').forEach((input) => {
     input.addEventListener("change", updateCleaningTaskSummary);
   });
-  ["detailGardenSize", "detailGardenCustom", "detailCleaningSize", "detailCleaningCustom", "detailTutoringTopic"].forEach((name) => {
+  form.querySelectorAll('[name="detailTutoringTasks"], [name="detailCareTasks"], [name="detailBuildTasks"], [name="detailPaintingTasks"]').forEach((input) => {
+    input.addEventListener("change", updateDurationEstimate);
+  });
+  ["detailGardenSize", "detailGardenCustom", "detailCleaningSize", "detailCleaningCustom", "detailTutoringTopic", "detailOtherCustom"].forEach((name) => {
     form.querySelector(`[name="${name}"]`)?.addEventListener("input", updateDurationEstimate);
   });
   updateDetailCards();

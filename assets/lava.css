@@ -34,14 +34,14 @@
   background:
     radial-gradient(
       ellipse 95% 90% at 72% 18%,
-      rgba(60, 130, 255, 0.55),
-      rgba(125, 85, 255, 0.32) 42%,
-      rgba(253, 88, 180, 0.14) 68%,
+      rgba(93,173,226,0.55),
+      rgba(93,173,226,0.32) 42%,
+      rgba(93,173,226,0.14) 68%,
       transparent 92%
     ),
     radial-gradient(
       ellipse 70% 65% at 58% 28%,
-      rgba(147, 72, 255, 0.28),
+      rgba(93,173,226,0.28),
       transparent 76%
     );
   animation: lavaFloatA 13.75s ease-in-out infinite alternate;
@@ -55,14 +55,14 @@
   background:
     radial-gradient(
       ellipse 100% 95% at 68% 22%,
-      rgba(253, 72, 184, 0.48),
-      rgba(147, 72, 255, 0.36) 38%,
-      rgba(72, 48, 225, 0.2) 62%,
+      rgba(93,173,226,0.48),
+      rgba(93,173,226,0.36) 38%,
+      rgba(93,173,226,0.2) 62%,
       transparent 93%
     ),
     radial-gradient(
       ellipse 75% 70% at 45% 40%,
-      rgba(255, 56, 82, 0.18),
+      rgba(93,173,226,0.18),
       transparent 74%
     );
   animation: lavaFloatB 16.25s ease-in-out infinite alternate;
@@ -78,14 +78,14 @@
   background:
     radial-gradient(
       ellipse 105% 100% at 78% 35%,
-      rgba(255, 56, 82, 0.42),
-      rgba(253, 72, 184, 0.3) 44%,
-      rgba(90, 120, 255, 0.16) 66%,
+      rgba(93,173,226,0.42),
+      rgba(93,173,226,0.3) 44%,
+      rgba(93,173,226,0.16) 66%,
       transparent 94%
     ),
     radial-gradient(
       ellipse 65% 60% at 52% 48%,
-      rgba(174, 65, 255, 0.22),
+      rgba(93,173,226,0.22),
       transparent 78%
     );
   animation: lavaFloatC 12.5s ease-in-out infinite alternate;
@@ -100,14 +100,14 @@
   background:
     radial-gradient(
       ellipse 95% 88% at 62% 18%,
-      rgba(90, 120, 255, 0.38),
-      rgba(147, 72, 255, 0.28) 48%,
-      rgba(253, 72, 184, 0.14) 72%,
+      rgba(93,173,226,0.38),
+      rgba(93,173,226,0.28) 48%,
+      rgba(93,173,226,0.14) 72%,
       transparent 95%
     ),
     radial-gradient(
       ellipse 80% 72% at 82% 55%,
-      rgba(253, 88, 180, 0.16),
+      rgba(93,173,226,0.16),
       transparent 80%
     );
   animation: lavaFloatD 10s ease-in-out infinite alternate;
@@ -116,14 +116,14 @@
 .hero .hero-left h1,
 .hero .hero-left .hero-sub,
 .hero .hero-left .hero-trust span {
-  color: #6a6a71;
+  color: #2C3E50;
   transition: color 0.24s ease;
 }
 
 .hero.lava-overlap .hero-left h1,
 .hero.lava-overlap .hero-left .hero-sub,
 .hero.lava-overlap .hero-left .hero-trust span {
-  color: #000;
+  color: #2C3E50;
 }
 
 @keyframes lavaFloatA {
@@ -205,19 +205,19 @@ body.home .lava-lamp {
 }
 
 body.home .bubble-a {
-  background: radial-gradient(ellipse 95% 90% at 72% 18%,rgba(44,132,76,0.28),rgba(44,132,76,0.13) 48%,transparent 86%);
+  background: radial-gradient(ellipse 95% 90% at 72% 18%,rgba(46,134,193,0.28),rgba(46,134,193,0.13) 48%,transparent 86%);
 }
 
 body.home .bubble-b {
-  background: radial-gradient(ellipse 100% 95% at 68% 22%,rgba(198,55,48,0.18),rgba(198,55,48,0.08) 45%,transparent 88%);
+  background: radial-gradient(ellipse 100% 95% at 68% 22%,rgba(93,173,226,0.18),rgba(93,173,226,0.08) 45%,transparent 88%);
 }
 
 body.home .bubble-c {
-  background: radial-gradient(ellipse 105% 100% at 78% 35%,rgba(48,105,185,0.14),rgba(48,105,185,0.06) 48%,transparent 90%);
+  background: radial-gradient(ellipse 105% 100% at 78% 35%,rgba(93,173,226,0.14),rgba(93,173,226,0.06) 48%,transparent 90%);
 }
 
 body.home .bubble-d {
-  background: radial-gradient(ellipse 95% 88% at 62% 18%,rgba(44,132,76,0.16),rgba(198,55,48,0.06) 58%,transparent 92%);
+  background: radial-gradient(ellipse 95% 88% at 62% 18%,rgba(46,134,193,0.16),rgba(93,173,226,0.06) 58%,transparent 92%);
 }
 
 @media (max-width: 620px) {
