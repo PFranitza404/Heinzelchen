@@ -15,7 +15,7 @@ npm install
 3. Website-Server starten:
 
 ```bash
-env PORT=3001 node server.mjs
+env PORT=3001 node index.js
 ```
 
 Lokale URLs:
