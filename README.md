@@ -12,10 +12,17 @@ npm install
 
 2. `.env` aus `.env.example` befuellen.
 
-3. Website-Server starten:
+3. Website lokal starten:
 
 ```bash
-env PORT=3001 node index.js
+env PORT=3001 npm run dev
+```
+
+Production-Build:
+
+```bash
+npm run build
+npm start
 ```
 
 Lokale URLs:

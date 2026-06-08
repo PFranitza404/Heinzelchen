@@ -2,9 +2,11 @@
   "name": "dienstleistungsprojekt",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "pages/index.js",
   "scripts": {
-    "start": "node index.js"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
   },
   "repository": {
     "type": "git",
@@ -16,12 +18,13 @@
   "engines": {
     "node": ">=18.0.0"
   },
-  "type": "commonjs",
   "bugs": {
     "url": "https://github.com/PFranitza404/Dienstleistung-Projekt-/issues"
   },
   "homepage": "https://github.com/PFranitza404/Dienstleistung-Projekt-#readme",
   "dependencies": {
-    "express": "^4.18.0"
+    "next": "^14.2.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   }
 }
