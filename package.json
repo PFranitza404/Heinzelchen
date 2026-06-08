@@ -2,11 +2,9 @@
   "name": "dienstleistungsprojekt",
   "version": "1.0.0",
   "description": "",
-  "main": "server.mjs",
+  "main": "index.js",
   "scripts": {
-    "start": "node server.mjs",
-    "build": "echo 'No build needed'",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
@@ -24,6 +22,6 @@
   },
   "homepage": "https://github.com/PFranitza404/Dienstleistung-Projekt-#readme",
   "dependencies": {
-    "resend": "^6.12.3"
+    "express": "^4.18.0"
   }
 }
