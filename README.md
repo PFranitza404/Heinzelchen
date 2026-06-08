@@ -23,7 +23,6 @@ Lokale URLs:
 - Website: `http://localhost:3001`
 - Buchung: `http://localhost:3001/leistungen.html`
 - Arbeiter Registrierung: `http://localhost:3001/arbeiter-registrierung`
-- Arbeiter Login: `http://localhost:3001/arbeiter-login`
 - Arbeiter Dashboard: `http://localhost:3001/arbeiter-dashboard`
 
 ## Environment Variablen

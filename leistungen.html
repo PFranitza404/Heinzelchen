@@ -47,26 +47,26 @@
             <label class="request-service-option service-choice-card"><input type="checkbox" name="requested-services" value="Gartenarbeit"><span><i aria-hidden="true">🌿</i><strong>Garten</strong><small>Rasen, Beete, Laub und Außenarbeiten</small></span></label>
             <article class="service-detail-card inline-service-detail" data-service-detail="Gartenarbeit" hidden>
               <strong>Garten Details</strong>
-              <details class="garden-task-dropdown">
-                <summary>Gartenaufgaben auswählen</summary>
-                <div class="garden-task-grid">
-                  <label><input type="checkbox" name="detailGardenTasks" value="Rasenpflege (Mähen, Kantenschneiden etc.)"><span>Rasenpflege (Mähen, Kantenschneiden etc.)</span></label>
-                  <label><input type="checkbox" name="detailGardenTasks" value="Unkrautentfernung"><span>Unkrautentfernung</span></label>
-                  <label><input type="checkbox" name="detailGardenTasks" value="Beetpflege"><span>Beetpflege</span></label>
-                  <label><input type="checkbox" name="detailGardenTasks" value="Harken, Pusten und Grünabfallentsorgung"><span>Harken, Pusten und Grünabfallentsorgung</span></label>
-                  <label><input type="checkbox" name="detailGardenTasks" value="Hochdruckreinigung, Poolreinigung etc."><span>Hochdruckreinigung, Poolreinigung etc.</span></label>
-                  <label><input type="checkbox" name="detailGardenTasks" value="Heckenschnitt"><span>Heckenschnitt</span></label>
-                  <label><input type="checkbox" name="detailGardenTasks" value="Urlaubsservice: Bewässerung und generelle Pflege"><span>Urlaubsservice: Bewässerung und generelle Pflege</span></label>
-                </div>
-              </details>
-              <div class="selected-task-list" data-selected-garden-tasks hidden></div>
+              <div class="booking-field">
+                <label>Dienste auswählen</label>
+                <select name="detailGardenTask" data-multi-select="detailGardenTask">
+                  <option value="">Bitte auswählen</option>
+                  <option value="Rasenpflege (Mähen, Kantenschneiden etc.)">Rasenpflege (Mähen, Kantenschneiden etc.)</option>
+                  <option value="Unkrautentfernung">Unkrautentfernung</option>
+                  <option value="Beetpflege">Beetpflege</option>
+                  <option value="Harken, Pusten und Grünabfallentsorgung">Harken, Pusten und Grünabfallentsorgung</option>
+                  <option value="Hochdruckreinigung / Poolreinigung">Hochdruckreinigung / Poolreinigung</option>
+                  <option value="Heckenschnitt">Heckenschnitt</option>
+                  <option value="Urlaubsservice: Bewässerung und generelle Pflege">Urlaubsservice: Bewässerung und generelle Pflege</option>
+                </select>
+                <div class="selected-task-list" data-multi-select-list="detailGardenTask" hidden></div>
+              </div>
               <div class="booking-field-row">
                 <div class="booking-field"><label>Ungefähre Fläche</label><input name="detailGardenSize" type="text" placeholder="z.B. 80 qm oder kleiner Vorgarten"></div>
                 <div class="booking-field"><label>Weitere Aufgaben</label><input name="detailGardenCustom" type="text" placeholder="z.B. Terrasse fegen, Blumenkästen bepflanzen"></div>
               </div>
             </article>
           </div>
-          <label class="request-service-option service-choice-card"><input type="checkbox" name="requested-services" value="Einkaufsservice"><span><i aria-hidden="true">🛒</i><strong>Einkauf</strong><small>Besorgungen und Lieferungen</small></span></label>
           <div class="service-choice-with-detail">
             <label class="request-service-option service-choice-card"><input type="checkbox" name="requested-services" value="Nachhilfe"><span><i aria-hidden="true">📚</i><strong>Nachhilfe</strong><small>Lernhilfe und Prüfungsvorbereitung</small></span></label>
             <article class="service-detail-card inline-service-detail" data-service-detail="Nachhilfe" hidden>
@@ -115,70 +115,79 @@
                 <label>Thema optional</label>
                 <input name="detailTutoringTopic" type="text" placeholder="z.B. Bruchrechnung, Gedichtanalyse, Prüfungsvorbereitung">
               </div>
-              <details class="garden-task-dropdown">
-                <summary>Weitere Nachhilfe-Angebote auswählen</summary>
-                <div class="garden-task-grid">
-                  <label><input type="checkbox" name="detailTutoringTasks" value="Gap-Year Beratung"><span>Gap-Year Beratung</span></label>
-                  <label><input type="checkbox" name="detailTutoringTasks" value="Beratung und Assistenz bei Uni-Bewerbung in Deutschland, United Kingdom und europäischen Business Schools"><span>Beratung und Assistenz bei Uni-Bewerbung in Deutschland, United Kingdom und europäischen Business Schools</span></label>
-                </div>
-              </details>
+              <div class="booking-field">
+                <label>Dienste auswählen</label>
+                <select name="detailTutoringTask" data-multi-select="detailTutoringTask">
+                  <option value="">Bitte auswählen</option>
+                  <option value="Gap-Year Beratung">Gap-Year Beratung</option>
+                  <option value="Beratung und Assistenz bei Uni-Bewerbung (Deutschland, UK, europäische Business Schools)">Beratung und Assistenz bei Uni-Bewerbung (Deutschland, UK, europäische Business Schools)</option>
+                </select>
+                <div class="selected-task-list" data-multi-select-list="detailTutoringTask" hidden></div>
+              </div>
             </article>
           </div>
           <div class="service-choice-with-detail">
             <label class="request-service-option service-choice-card"><input type="checkbox" name="requested-services" value="Betreuung"><span><i aria-hidden="true">👶</i><strong>Betreuung</strong><small>Kinder und Haustiere</small></span></label>
             <article class="service-detail-card inline-service-detail" data-service-detail="Betreuung" hidden>
               <strong>Betreuung Details</strong>
-              <details class="garden-task-dropdown">
-                <summary>Betreuungsaufgaben auswählen</summary>
-                <div class="garden-task-grid">
-                  <label><input type="checkbox" name="detailCareTasks" value="Vorlesen und im Garten spielen, statt Fernsehen und Playstation"><span><strong>Kinderbetreuung:</strong> Vorlesen und im Garten spielen, statt Fernsehen und Playstation</span></label>
-                  <label><input type="checkbox" name="detailCareTasks" value="Gassi gehen"><span><strong>Haustierbetreuung:</strong> Gassi gehen</span></label>
-                  <label><input type="checkbox" name="detailCareTasks" value="Füttern"><span><strong>Haustierbetreuung:</strong> Füttern</span></label>
-                </div>
-              </details>
+              <div class="booking-field">
+                <label>Dienste auswählen</label>
+                <select name="detailCareTask" data-multi-select="detailCareTask">
+                  <option value="">Bitte auswählen</option>
+                  <option value="Kinderbetreuung: Vorlesen und im Garten spielen">Kinderbetreuung: Vorlesen und im Garten spielen</option>
+                  <option value="Haustierbetreuung: Gassi gehen">Haustierbetreuung: Gassi gehen</option>
+                  <option value="Haustierbetreuung: Füttern">Haustierbetreuung: Füttern</option>
+                </select>
+                <div class="selected-task-list" data-multi-select-list="detailCareTask" hidden></div>
+              </div>
             </article>
           </div>
           <div class="service-choice-with-detail">
             <label class="request-service-option service-choice-card"><input type="checkbox" name="requested-services" value="Aufbau"><span><i aria-hidden="true">🔧</i><strong>Aufbau</strong><small>Möbel, Geräte und Außenbauten</small></span></label>
             <article class="service-detail-card inline-service-detail" data-service-detail="Aufbau" hidden>
               <strong>Aufbau Details</strong>
-              <details class="garden-task-dropdown">
-                <summary>Aufbauaufgaben auswählen</summary>
-                <div class="garden-task-grid">
-                  <label><input type="checkbox" name="detailBuildTasks" value="Möbel"><span>Möbel</span></label>
-                  <label><input type="checkbox" name="detailBuildTasks" value="Technische Geräte: Anschluss von Waschmaschinen, WLAN-Routern etc."><span>Technische Geräte: Anschluss von Waschmaschinen, WLAN-Routern etc.</span></label>
-                  <label><input type="checkbox" name="detailBuildTasks" value="Außenbauten: Zäune, Gartenhäuser, Sichtschutz etc."><span>Außenbauten: Zäune, Gartenhäuser, Sichtschutz etc.</span></label>
-                </div>
-              </details>
+              <div class="booking-field">
+                <label>Dienste auswählen</label>
+                <select name="detailBuildTask" data-multi-select="detailBuildTask">
+                  <option value="">Bitte auswählen</option>
+                  <option value="Möbel">Möbel</option>
+                  <option value="Technische Geräte: Anschluss von Waschmaschinen, WLAN-Routern etc.">Technische Geräte: Anschluss von Waschmaschinen, WLAN-Routern etc.</option>
+                  <option value="Außenbauten: Zäune, Gartenhäuser, Sichtschutz etc.">Außenbauten: Zäune, Gartenhäuser, Sichtschutz etc.</option>
+                </select>
+                <div class="selected-task-list" data-multi-select-list="detailBuildTask" hidden></div>
+              </div>
             </article>
           </div>
           <div class="service-choice-with-detail">
             <label class="request-service-option service-choice-card"><input type="checkbox" name="requested-services" value="Malereiarbeiten"><span><i aria-hidden="true">🖌️</i><strong>Malereiarbeiten</strong><small>Streichen, Tapezieren und Beratung</small></span></label>
             <article class="service-detail-card inline-service-detail" data-service-detail="Malereiarbeiten" hidden>
               <strong>Malereiarbeiten Details</strong>
-              <details class="garden-task-dropdown">
-                <summary>Malereiarbeiten auswählen</summary>
-                <div class="garden-task-grid">
-                  <label><input type="checkbox" name="detailPaintingTasks" value="Farbauswahl und Beratung in Kooperation mit Farrow & Ball"><span>Farbauswahl und Beratung in Kooperation mit <a href="https://www.farrow-ball.com" target="_blank" rel="noopener">Farrow &amp; Ball</a></span></label>
-                  <label><input type="checkbox" name="detailPaintingTasks" value="Innenmalereien und Tapezierung"><span>Innenmalereien und Tapezierung</span></label>
-                  <label><input type="checkbox" name="detailPaintingTasks" value="Außenmalereien"><span>Außenmalereien</span></label>
-                </div>
-              </details>
+              <div class="booking-field">
+                <label>Dienste auswählen</label>
+                <select name="detailPaintingTask" data-multi-select="detailPaintingTask">
+                  <option value="">Bitte auswählen</option>
+                  <option value="Farbauswahl und Beratung (Farrow & Ball)">Farbauswahl und Beratung (Farrow &amp; Ball)</option>
+                  <option value="Innenmalereien und Tapezierung">Innenmalereien und Tapezierung</option>
+                  <option value="Außenmalereien">Außenmalereien</option>
+                </select>
+                <div class="selected-task-list" data-multi-select-list="detailPaintingTask" hidden></div>
+              </div>
             </article>
           </div>
           <div class="service-choice-with-detail">
             <label class="request-service-option service-choice-card"><input type="checkbox" name="requested-services" value="Putzen & Reinigen"><span><i aria-hidden="true">🧹</i><strong>Reinigung/Putzen</strong><small>Wohnung, Bad, Küche und Büro</small></span></label>
             <article class="service-detail-card inline-service-detail" data-service-detail="Putzen & Reinigen" hidden>
               <strong>Reinigung Details</strong>
-              <details class="garden-task-dropdown">
-                <summary>Reinigungsdienste auswählen</summary>
-                <div class="garden-task-grid">
-                  <label><input type="checkbox" name="detailCleaningTasks" value="Fensterreinigung"><span>Fensterreinigung</span></label>
-                  <label><input type="checkbox" name="detailCleaningTasks" value="Regelmäßige Grundreinigung: Staubsaugen und Wischen"><span>Regelmäßige Grundreinigung: Staubsaugen und Wischen</span></label>
-                  <label><input type="checkbox" name="detailCleaningTasks" value="Küchen- und Badezimmerreinigung: vom Herd bis zum Spiegel"><span>Küchen- und Badezimmerreinigung: vom Herd bis zum Spiegel</span></label>
-                </div>
-              </details>
-              <div class="selected-task-list" data-selected-cleaning-tasks hidden></div>
+              <div class="booking-field">
+                <label>Dienste auswählen</label>
+                <select name="detailCleaningTask" data-multi-select="detailCleaningTask">
+                  <option value="">Bitte auswählen</option>
+                  <option value="Fensterreinigung">Fensterreinigung</option>
+                  <option value="Regelmäßige Grundreinigung: Staubsaugen und Wischen">Regelmäßige Grundreinigung: Staubsaugen und Wischen</option>
+                  <option value="Küchen- und Badezimmerreinigung: vom Herd bis zum Spiegel">Küchen- und Badezimmerreinigung: vom Herd bis zum Spiegel</option>
+                </select>
+                <div class="selected-task-list" data-multi-select-list="detailCleaningTask" hidden></div>
+              </div>
               <div class="booking-field-row">
                 <div class="booking-field"><label>Fläche</label><input name="detailCleaningSize" type="text" placeholder="z.B. 75 qm"></div>
                 <div class="booking-field"><label>Weitere Aufgaben</label><input name="detailCleaningCustom" type="text" placeholder="z.B. Kühlschrank, Balkon, Treppenhaus"></div>
@@ -190,7 +199,14 @@
             <article class="service-detail-card inline-service-detail" data-service-detail="Sonstiges" hidden>
               <strong>Sonstiges Details</strong>
               <p>Ihre Heinzelchen erfüllen auch Ihre speziellen Aufgaben — über das Weihnachtsmann-Spielen an Heilig Abend bis hin zur Arztbegleitung.</p>
-              <div class="booking-field"><label>Weitere Aufgaben</label><input name="detailOtherCustom" type="text" placeholder="Beschreibe kurz deine Aufgabe"></div>
+              <div class="booking-field">
+                <label>Dienst auswählen</label>
+                <select name="detailOtherTask">
+                  <option value="">Bitte auswählen</option>
+                  <option value="Freie Eingabe">Freie Eingabe</option>
+                </select>
+              </div>
+              <div class="booking-field" data-other-custom-field hidden><label>Weitere Aufgaben</label><input name="detailOtherCustom" type="text" placeholder="Beschreibe kurz deine Aufgabe"></div>
             </article>
           </div>
         </div>
@@ -266,13 +282,13 @@
     </div>
     <div class="footer-col">
       <h4>Leistungen</h4>
-      <a href="index.html#dienstleistungen">Gartenarbeit</a>
-      <a href="index.html#dienstleistungen">Reinigung & Putzen</a>
-      <a href="index.html#dienstleistungen">Nachhilfe</a>
-      <a href="index.html#dienstleistungen">Betreuung</a>
-      <a href="index.html#dienstleistungen">Aufbau</a>
-      <a href="index.html#dienstleistungen">Malereiarbeiten</a>
-      <a href="index.html#dienstleistungen">Sonstiges</a>
+      <a href="index.html#gartenarbeit">Gartenarbeit</a>
+      <a href="index.html#putzen-reinigen">Reinigung & Putzen</a>
+      <a href="index.html#nachhilfe">Nachhilfe</a>
+      <a href="index.html#betreuung">Betreuung</a>
+      <a href="index.html#aufbau">Aufbau</a>
+      <a href="index.html#malerarbeiten">Malereiarbeiten</a>
+      <a href="index.html#sonstiges">Sonstiges</a>
     </div>
     <div class="footer-col">
       <h4>Unternehmen</h4>

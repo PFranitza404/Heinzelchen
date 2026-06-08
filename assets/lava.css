@@ -205,7 +205,7 @@ body.home .lava-lamp {
 }
 
 body.home .bubble-a {
-  background: radial-gradient(ellipse 95% 90% at 72% 18%,rgba(46,134,193,0.28),rgba(46,134,193,0.13) 48%,transparent 86%);
+  background: radial-gradient(ellipse 95% 90% at 72% 18%,rgba(30,58,95,0.28),rgba(30,58,95,0.13) 48%,transparent 86%);
 }
 
 body.home .bubble-b {
@@ -217,7 +217,7 @@ body.home .bubble-c {
 }
 
 body.home .bubble-d {
-  background: radial-gradient(ellipse 95% 88% at 62% 18%,rgba(46,134,193,0.16),rgba(93,173,226,0.06) 58%,transparent 92%);
+  background: radial-gradient(ellipse 95% 88% at 62% 18%,rgba(30,58,95,0.16),rgba(93,173,226,0.06) 58%,transparent 92%);
 }
 
 @media (max-width: 620px) {

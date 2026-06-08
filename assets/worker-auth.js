@@ -1,6 +1,4 @@
 const workerSessionKey = "hh_worker_session";
-const workerLoginStartedKey = "hh_worker_login_started";
-const workerSessionMs = 8 * 60 * 60 * 1000;
 
 function readWorkerSession() {
   try {
@@ -10,14 +8,8 @@ function readWorkerSession() {
   }
 }
 
-function saveWorkerSession(session) {
-  localStorage.setItem(workerSessionKey, JSON.stringify(session));
-  localStorage.setItem(workerLoginStartedKey, String(Date.now()));
-}
-
 function clearWorkerSession() {
   localStorage.removeItem(workerSessionKey);
-  localStorage.removeItem(workerLoginStartedKey);
 }
 
 async function workerApi(path, options = {}) {
@@ -71,30 +63,6 @@ function initWorkerRegistration() {
   });
 }
 
-function initWorkerLogin() {
-  const form = document.querySelector("#workerLoginForm");
-  if (!form) return;
-  const message = document.querySelector("#workerLoginMessage");
-
-  form.addEventListener("submit", async (event) => {
-    event.preventDefault();
-    const data = new FormData(form);
-    try {
-      const session = await workerApi("/api/worker/login", {
-        method: "POST",
-        body: JSON.stringify({
-          email: data.get("email"),
-          password: data.get("password"),
-        }),
-      });
-      saveWorkerSession(session);
-      window.location.href = "arbeiter-dashboard";
-    } catch (error) {
-      message.textContent = error.message;
-    }
-  });
-}
-
 async function initWorkerDashboard() {
   const greeting = document.querySelector("#workerGreeting");
   if (!greeting) return;
@@ -107,12 +75,12 @@ async function initWorkerDashboard() {
   const availabilityMessage = document.querySelector("#availabilityMessage");
   const cancelButton = document.querySelector("#availabilityCancelButton");
   const session = readWorkerSession();
-  const loginStarted = Number(localStorage.getItem(workerLoginStartedKey) || 0);
   let calendar;
 
-  if (!session?.access_token || !loginStarted || Date.now() - loginStarted > workerSessionMs) {
+  if (!session?.access_token) {
     clearWorkerSession();
-    window.location.href = "arbeiter-login";
+    greeting.textContent = "Kein aktiver Helferzugang";
+    logoutButton?.remove();
     return;
   }
 
@@ -121,13 +89,15 @@ async function initWorkerDashboard() {
     greeting.textContent = `Hallo ${payload.worker.name || "und willkommen"}`;
   } catch {
     clearWorkerSession();
-    window.location.href = "arbeiter-login";
+    greeting.textContent = "Kein aktiver Helferzugang";
+    logoutButton?.remove();
     return;
   }
 
   logoutButton?.addEventListener("click", () => {
     clearWorkerSession();
-    window.location.href = "arbeiter-login";
+    greeting.textContent = "Kein aktiver Helferzugang";
+    logoutButton.remove();
   });
 
   async function loadAvailability() {
@@ -242,5 +212,4 @@ async function initWorkerDashboard() {
 }
 
 initWorkerRegistration();
-initWorkerLogin();
 initWorkerDashboard();
