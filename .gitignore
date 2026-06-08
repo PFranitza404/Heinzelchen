@@ -1,5 +1,6 @@
-.env
-node_modules/
 .next/
+node_modules/
+website.zip
+index.html.zip
+.env
 .DS_Store
-data/db.json
