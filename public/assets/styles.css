@@ -4148,8 +4148,9 @@ body:not(.home) .footer-bottom{
   --color-primary:#1E3A5F;
   --color-primary-deep:#1E3A5F;
   --color-navbar:#1E3A5F;
-  --color-navbar-hover:#2D6A9F;
+  --color-navbar-hover:#EAF4FB;
   --color-navbar-text:#FFFFFF;
+  --color-navbar-active-text:#1E3A5F;
   --color-primary-rgb:30,58,95;
 }
 
@@ -4176,12 +4177,12 @@ body > nav .nav-links a{
 
 body > nav .nav-links a:hover{
   background:var(--color-navbar-hover)!important;
-  color:var(--color-navbar-text)!important;
+  color:var(--color-navbar-active-text)!important;
 }
 
 body > nav .nav-links a.active{
   background:var(--color-navbar-hover)!important;
-  color:var(--color-navbar-text)!important;
+  color:var(--color-navbar-active-text)!important;
 }
 
 body > nav .nav-toggle{
@@ -4198,12 +4199,12 @@ body > nav .nav-toggle{
 
   body > nav .nav-links a:hover{
     background:var(--color-navbar-hover)!important;
-    color:var(--color-navbar-text)!important;
+    color:var(--color-navbar-active-text)!important;
   }
 
   body > nav .nav-links a.active{
     background:var(--color-navbar-hover)!important;
-    color:var(--color-navbar-text)!important;
+    color:var(--color-navbar-active-text)!important;
   }
 }
 
