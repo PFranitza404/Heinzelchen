@@ -3868,7 +3868,7 @@ nav .nav-logo span{
 }
 
 /* Unified shared navbar */
-body > nav{
+body nav{
   position:fixed!important;
   inset:0 0 auto!important;
   z-index:200!important;
@@ -4154,55 +4154,55 @@ body:not(.home) .footer-bottom{
   --color-primary-rgb:30,58,95;
 }
 
-body > nav{
+body nav{
   background:var(--color-navbar)!important;
   border-bottom:1px solid rgba(255,255,255,.18)!important;
   box-shadow:none!important;
 }
 
-body > nav .nav-logo,
-body > nav .nav-logo span,
-body > nav .nav-links a,
-body > nav .nav-toggle,
-body > nav a.nav-logo:not(.btn-primary):not(.btn-book):not(.btn-book-main):not(.nav-cta),
-body > nav .nav-links li a:not(.btn-primary):not(.btn-book):not(.btn-book-main):not(.nav-cta){
+body nav .nav-logo,
+body nav .nav-logo span,
+body nav .nav-links a,
+body nav .nav-toggle,
+body nav a.nav-logo:not(.btn-primary):not(.btn-book):not(.btn-book-main):not(.nav-cta),
+body nav .nav-links li a:not(.btn-primary):not(.btn-book):not(.btn-book-main):not(.nav-cta){
   color:var(--color-navbar-text)!important;
 }
 
-body > nav .nav-links a{
+body nav .nav-links a{
   border-radius:999px!important;
   padding:.55rem .85rem!important;
   transition:background-color .2s ease,color .2s ease!important;
 }
 
-body > nav .nav-links a:hover{
+body nav .nav-links a:hover{
   background:var(--color-navbar-hover)!important;
   color:var(--color-navbar-active-text)!important;
 }
 
-body > nav .nav-links a.active{
+body nav .nav-links a.active{
   background:var(--color-navbar-hover)!important;
   color:var(--color-navbar-active-text)!important;
 }
 
-body > nav .nav-toggle{
+body nav .nav-toggle{
   background:transparent!important;
   border:0!important;
 }
 
 @media(max-width:960px){
-  body > nav .nav-links{
+  body nav .nav-links{
     background:var(--color-navbar)!important;
     border-bottom:1px solid rgba(255,255,255,.18)!important;
     box-shadow:0 18px 36px rgba(30,58,95,.18)!important;
   }
 
-  body > nav .nav-links a:hover{
+  body nav .nav-links a:hover{
     background:var(--color-navbar-hover)!important;
     color:var(--color-navbar-active-text)!important;
   }
 
-  body > nav .nav-links a.active{
+  body nav .nav-links a.active{
     background:var(--color-navbar-hover)!important;
     color:var(--color-navbar-active-text)!important;
   }
