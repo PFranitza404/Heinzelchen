@@ -1,4 +1,4 @@
-# Helfende Haende
+# Heinzelchen
 
 Website fuer einen Studenten-Helfer-Service mit Kundenbuchung, Arbeiter-Registrierung, Ausweis-Upload, Arbeiter-Kalender, Supabase und Resend Emails.
 
@@ -74,7 +74,7 @@ Wichtig:
 4. Absender setzen:
 
 ```env
-EMAIL_FROM=Helfende Haende <noreply@deine-domain.de>
+MAIL_FROM=Heinzelchen <noreply@deine-domain.de>
 ```
 
 Ohne `RESEND_API_KEY` werden Emails nicht echt verschickt, sondern als Konsolen-Vorschau protokolliert.
