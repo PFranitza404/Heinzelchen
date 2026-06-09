@@ -4148,9 +4148,9 @@ body:not(.home) .footer-bottom{
   --color-primary:#1E3A5F;
   --color-primary-deep:#1E3A5F;
   --color-navbar:#1E3A5F;
-  --color-navbar-hover:#EAF4FB;
+  --color-navbar-hover:#5DADE2;
   --color-navbar-text:#FFFFFF;
-  --color-navbar-active-text:#1E3A5F;
+  --color-navbar-active-text:#FFFFFF;
   --color-primary-rgb:30,58,95;
 }
 
