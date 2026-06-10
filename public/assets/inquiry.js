@@ -31,6 +31,7 @@
   };
   const detailCards = [...form.querySelectorAll("[data-service-detail]")];
   const availabilityRows = [...form.querySelectorAll(".availability-day-row")];
+  const appointmentContainer = form.querySelector("[data-service-appointments]");
   const gardenTaskSummary = form.querySelector("[data-selected-garden-tasks]");
   const cleaningTaskSummary = form.querySelector("[data-selected-cleaning-tasks]");
   const multiSelectLists = [...form.querySelectorAll("[data-multi-select-list]")];
@@ -42,6 +43,19 @@
     '"': "&quot;",
     "'": "&#039;",
   }[char]));
+  const toDateInputValue = (date) => {
+    const year = date.getFullYear();
+    const month = `${date.getMonth() + 1}`.padStart(2, "0");
+    const day = `${date.getDate()}`.padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  };
+  const today = new Date();
+  const maxAppointmentDate = new Date();
+  maxAppointmentDate.setDate(today.getDate() + 28);
+  const minAppointmentValue = toDateInputValue(today);
+  const maxAppointmentValue = toDateInputValue(maxAppointmentDate);
+  let appointmentDateCounter = 0;
+  let appointmentTimeCounter = 0;
   const detailText = () => {
     const labels = {
       detailGardenSize: "Gartenfläche",
@@ -124,6 +138,131 @@
       return `${day} ${times[0].value}-${times[1].value} Uhr`;
     })
     .join(", ");
+  const serviceAppointmentRows = () => appointmentContainer
+    ? [...appointmentContainer.querySelectorAll("[data-service-appointment-time-row]")]
+    : [];
+  const serviceAppointments = () => {
+    const appointments = {};
+    serviceAppointmentRows().forEach((row) => {
+      const dateGroup = row.closest("[data-service-appointment-date]");
+      const service = dateGroup?.dataset.service;
+      const dateSlot = dateGroup?.dataset.appointmentDate;
+      const timeSlot = row.dataset.appointmentTime;
+      const date = dateGroup?.querySelector(`[name="appointment-${dateSlot}-date"]`)?.value || "";
+      const from = row.querySelector(`[name="appointment-${timeSlot}-from"]`)?.value || "";
+      const to = row.querySelector(`[name="appointment-${timeSlot}-to"]`)?.value || "";
+      if (!service) return;
+      if (!appointments[service]) appointments[service] = [];
+      appointments[service].push({
+        dateSlot,
+        timeSlot,
+        date,
+        from,
+        to,
+      });
+    });
+    return appointments;
+  };
+  const flatServiceAppointments = () => Object.entries(serviceAppointments())
+    .flatMap(([service, windows]) => windows.map((window) => ({ service, ...window })));
+  const hasMissingAppointment = () => {
+    const selected = services();
+    if (!selected.length) return false;
+    const appointments = serviceAppointments();
+    return selected.some((service) => {
+      const windows = appointments[service] || [];
+      return !windows.length || windows.some((appointment) => !appointment.date || !appointment.from || !appointment.to);
+    });
+  };
+  const hasInvalidAppointmentTime = () => flatServiceAppointments()
+    .some((appointment) => appointment.date && appointment.from && appointment.to && appointment.from >= appointment.to);
+  const hasInvalidAppointmentDate = () => flatServiceAppointments()
+    .some((appointment) => appointment.date && (appointment.date < minAppointmentValue || appointment.date > maxAppointmentValue));
+  const appointmentSummaryText = () => flatServiceAppointments()
+    .filter((appointment) => appointment.date && appointment.from && appointment.to)
+    .map((appointment) => `${appointment.service}: ${appointment.date} ${appointment.from}-${appointment.to} Uhr`)
+    .join(", ");
+  const createAppointmentTime = (from = "", to = "") => ({
+    timeSlot: `time-${appointmentTimeCounter++}`,
+    from,
+    to,
+  });
+  const createAppointmentDate = (service, date = "", windows = []) => ({
+    dateSlot: `date-${appointmentDateCounter++}`,
+    date,
+    service,
+    windows: windows.length
+      ? windows.map((window) => createAppointmentTime(window.from, window.to))
+      : [createAppointmentTime()],
+  });
+  const groupedAppointmentDates = (appointments) => {
+    const groups = [];
+    appointments.forEach((appointment) => {
+      const key = appointment.date || `empty-${groups.length}`;
+      let group = groups.find((entry) => entry.key === key);
+      if (!group) {
+        group = { key, date: appointment.date, windows: [] };
+        groups.push(group);
+      }
+      group.windows.push({ from: appointment.from, to: appointment.to });
+    });
+    return groups;
+  };
+  const renderAppointmentTimeRow = ({ timeSlot, from = "", to = "", removable = false }) => `
+    <div class="service-appointment-time-row" data-service-appointment-time-row data-appointment-time="${timeSlot}">
+      <div class="booking-field appointment-time-field">
+        <label>Uhrzeit Von</label>
+        <input name="appointment-${timeSlot}-from" type="time" value="${escapeHtml(from)}" required>
+      </div>
+      <div class="booking-field appointment-time-field">
+        <label>Bis</label>
+        <input name="appointment-${timeSlot}-to" type="time" value="${escapeHtml(to)}" required>
+      </div>
+      ${removable ? '<button class="appointment-remove-button" type="button" data-remove-appointment aria-label="Zeitfenster entfernen">×</button>' : '<span class="appointment-remove-placeholder" aria-hidden="true"></span>'}
+    </div>
+  `;
+  const renderAppointmentDateGroup = ({ service, dateSlot, date = "", windows = [], removable = false }) => `
+    <div class="service-appointment-date" data-service-appointment-date data-service="${escapeHtml(service)}" data-appointment-date="${dateSlot}">
+      <div class="service-appointment-date-head">
+        <div class="booking-field">
+          <label>Datum wählen</label>
+          <input name="appointment-${dateSlot}-date" type="date" min="${minAppointmentValue}" max="${maxAppointmentValue}" value="${escapeHtml(date)}" required>
+        </div>
+        ${removable ? '<button class="appointment-remove-date-button" type="button" data-remove-appointment-date>Datum entfernen</button>' : ""}
+      </div>
+      <div class="service-appointment-times" data-appointment-times>
+        ${windows.map((window, index) => renderAppointmentTimeRow({ ...window, removable: index > 0 })).join("")}
+      </div>
+      <button class="appointment-time-add-button" type="button" data-add-appointment-time>+ Weitere Uhrzeit für dieses Datum</button>
+    </div>
+  `;
+  const renderServiceAppointments = () => {
+    if (!appointmentContainer) return;
+    const selected = services();
+    if (!selected.length) {
+      appointmentContainer.innerHTML = '<p class="form-help">Wähle zuerst oben mindestens eine Dienstleistung aus. Danach kannst du pro Dienst ein Zeitfenster angeben.</p>';
+      return;
+    }
+
+    const existing = serviceAppointments();
+    appointmentContainer.innerHTML = `
+      <p class="appointment-global-note">Wir melden uns zur Bestätigung – ein größeres Zeitfenster erhöht die Verfügbarkeit</p>
+      ${selected.map((service) => {
+      const dateGroups = existing[service]?.length
+        ? groupedAppointmentDates(existing[service]).map((group) => createAppointmentDate(service, group.date, group.windows))
+        : [createAppointmentDate(service)];
+      return `
+        <article class="service-appointment-card" data-service-appointment-card="${escapeHtml(service)}">
+          <h4>${escapeHtml(service)}</h4>
+          <div class="service-appointment-rows" data-appointment-rows>
+            ${dateGroups.map((dateGroup, index) => renderAppointmentDateGroup({ ...dateGroup, removable: index > 0 })).join("")}
+          </div>
+          <button class="appointment-add-button" type="button" data-add-appointment="${escapeHtml(service)}">+ Weiteres Datum hinzufügen</button>
+        </article>
+      `;
+    }).join("")}
+    `;
+  };
   const hasInvalidAvailabilityTime = () => availabilityRows.some((row) => {
     const checkbox = row.querySelector("[data-availability-day]");
     if (!checkbox?.checked) return false;
@@ -187,6 +326,7 @@
     updateCleaningTaskSummary();
     updateOtherCustomField();
     updateDurationEstimate();
+    renderServiceAppointments();
   };
   const updateGardenTaskSummary = () => {
     if (!gardenTaskSummary) return;
@@ -247,16 +387,20 @@
       showError("Bitte wähle aus, ob du einmalig oder dauerhaft Hilfe suchst.");
       return;
     }
-    if (!availabilityText()) {
-      showError("Bitte wähle mindestens einen Wochentag aus, an dem der Auftrag möglich ist.");
+    if (hasMissingAppointment()) {
+      showError("Bitte gib für jede ausgewählte Dienstleistung ein Datum sowie eine Von- und Bis-Uhrzeit an.");
       return;
     }
-    if (hasInvalidAvailabilityTime()) {
+    if (hasInvalidAppointmentDate()) {
+      showError("Bitte wähle Termine ab heute und maximal vier Wochen in die Zukunft.");
+      return;
+    }
+    if (hasInvalidAppointmentTime() || hasInvalidAvailabilityTime()) {
       showError("Bitte achte darauf, dass die Bis-Uhrzeit nach der Von-Uhrzeit liegt.");
       return;
     }
-    if (!value("firstName") || !value("lastName") || !value("street") || !value("zip") || !value("city") || !value("phone") || !value("email") || !value("date") || !value("time")) {
-      showError("Bitte gib Name, Kontakt, vollständige Adresse sowie Datum und Uhrzeit an.");
+    if (!value("firstName") || !value("lastName") || !value("street") || !value("zip") || !value("city") || !value("phone") || !value("email")) {
+      showError("Bitte gib Name, Kontakt und vollständige Adresse an.");
       return;
     }
     if (!value("email").includes("@")) {
@@ -275,7 +419,11 @@
           services: services(),
           extraTask: detailText(),
           locationNotes: value("locationNotes"),
-          availability: availabilityData(),
+          availability: {
+            ...availabilityData(),
+            serviceAppointments: serviceAppointments(),
+            summary: appointmentSummaryText(),
+          },
           detailNotes: detailNotes(),
           name: fullName(),
           address: fullAddress(),
@@ -289,8 +437,8 @@
           city: value("city"),
           phone: value("phone"),
           email: value("email"),
-          date: value("date"),
-          time: value("time"),
+          date: flatServiceAppointments()[0]?.date || "",
+          time: flatServiceAppointments()[0]?.from || "",
         }),
       });
       if (!response.ok) throw new Error("Anfrage konnte nicht gespeichert werden.");
@@ -303,6 +451,7 @@
       updateDetailCards();
       updateDurationEstimate();
       updateAvailabilityRows();
+      renderServiceAppointments();
     } catch (err) {
       showError("Die Anfrage konnte nicht gesendet werden. Bitte versuche es später erneut.");
     } finally {
@@ -328,6 +477,44 @@
     });
   });
   form.addEventListener("click", (event) => {
+    const addAppointmentButton = event.target.closest("[data-add-appointment]");
+    if (addAppointmentButton && appointmentContainer?.contains(addAppointmentButton)) {
+      const card = addAppointmentButton.closest("[data-service-appointment-card]");
+      const rows = card?.querySelector("[data-appointment-rows]");
+      const service = addAppointmentButton.dataset.addAppointment;
+      if (rows) {
+        rows.insertAdjacentHTML("beforeend", renderAppointmentDateGroup({ ...createAppointmentDate(service), removable: true }));
+      }
+      return;
+    }
+
+    const addAppointmentTimeButton = event.target.closest("[data-add-appointment-time]");
+    if (addAppointmentTimeButton && appointmentContainer?.contains(addAppointmentTimeButton)) {
+      const dateGroup = addAppointmentTimeButton.closest("[data-service-appointment-date]");
+      const rows = dateGroup?.querySelector("[data-appointment-times]");
+      if (rows) {
+        rows.insertAdjacentHTML("beforeend", renderAppointmentTimeRow({ ...createAppointmentTime(), removable: true }));
+      }
+      return;
+    }
+
+    const removeAppointmentButton = event.target.closest("[data-remove-appointment]");
+    if (removeAppointmentButton && appointmentContainer?.contains(removeAppointmentButton)) {
+      const row = removeAppointmentButton.closest("[data-service-appointment-time-row]");
+      const dateGroup = row?.closest("[data-service-appointment-date]");
+      row?.remove();
+      if (dateGroup && !dateGroup.querySelector("[data-service-appointment-time-row]")) {
+        dateGroup.remove();
+      }
+      return;
+    }
+
+    const removeAppointmentDateButton = event.target.closest("[data-remove-appointment-date]");
+    if (removeAppointmentDateButton && appointmentContainer?.contains(removeAppointmentDateButton)) {
+      removeAppointmentDateButton.closest("[data-service-appointment-date]")?.remove();
+      return;
+    }
+
     const removeButton = event.target.closest("[data-remove-task]");
     if (!removeButton) return;
     const name = removeButton.dataset.removeTaskList;
@@ -355,4 +542,5 @@
   updateDetailCards();
   updateMultiSelectLists();
   updateAvailabilityRows();
+  renderServiceAppointments();
 })();
