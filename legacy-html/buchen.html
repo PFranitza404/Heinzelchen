@@ -27,7 +27,7 @@
         <h1>Verlässliche Alltagshilfe, persönlich vermittelt.</h1>
         <p>Beschreibe kurz, wobei du Unterstützung brauchst. Wir prüfen deine Anfrage, gleichen Dienstleistung, Ort und Verfügbarkeit ab und melden uns mit einem passenden Heinzelchen.</p>
         <div class="booking-intro-actions">
-          <a class="btn-primary" href="leistungen.html">Buchungsanfrage stellen</a>
+          <a class="btn-primary" href="#buchen">Buchungsanfrage stellen</a>
         </div>
       </div>
       <div class="booking-intro-panel" aria-label="Ablauf">
@@ -37,7 +37,7 @@
         </div>
         <div class="intro-panel-row">
           <span>2</span>
-          <div><strong>Wir prüfen passend</strong><small>Skill, Einsatzgebiet und Verfügbarkeit werden abgeglichen</small></div>
+          <div><strong>Wir prüfen</strong><small>Gefragte Leistung und Einsatzgebiet werden mit Verfügbarkeit abgeglichen</small></div>
         </div>
         <div class="intro-panel-row">
           <span>3</span>
@@ -46,22 +46,268 @@
       </div>
     </div>
   </section>
+<section class="booking-flow-section page-section">
+    <form class="inquiry-card reveal" id="buchen" data-inquiry-form>
+      <div class="inquiry-intro">
+        <div class="section-label">Anfrage prüfen lassen</div>
+        <h2>Beschreibe kurz, wobei du Hilfe brauchst.</h2>
+        <p class="form-help">Du buchst hier noch nichts verbindlich und es wird nichts bezahlt. Wir prüfen deine Anfrage und melden uns persönlich mit einem passenden Vorschlag.</p>
+      </div>
+      <div class="booking-alert" data-inquiry-error hidden></div>
+      <div class="booking-confirmation inquiry-confirmation" data-inquiry-confirmation hidden>
+        <strong>Anfrage erhalten.</strong>
+        <p>Wir prüfen dein Anliegen und melden uns bei dir mit einer Einschätzung.</p>
+      </div>
 
-  <section class="booking-services page-section">
-    <div class="section-header reveal">
-      <div class="section-label">Unsere Dienstleistungen</div>
-      <h2>Wofür du Heinzelchen buchen kannst</h2>
-      <p class="section-sub">Von kleinen Aufgaben bis regelmäßiger Unterstützung: Wähle den Bereich aus, der zu deinem Anliegen passt.</p>
+      <div class="inquiry-progress" aria-label="Fortschritt">
+        <button class="inquiry-progress-step active" type="button" data-step-jump="1"><span>1</span>Dienstleistung</button>
+        <button class="inquiry-progress-step" type="button" data-step-jump="2"><span>2</span>Termin & Zeit</button>
+        <button class="inquiry-progress-step" type="button" data-step-jump="3"><span>3</span>Deine Angaben</button>
+      </div>
+
+      <div class="inquiry-step-panel active" data-inquiry-step="1">
+      <div class="inquiry-block">
+        <h3>1. Dienstleistung auswählen</h3>
+        <div class="request-service-grid service-choice-grid inquiry-service-grid">
+          <div class="service-choice-with-detail">
+            <label class="request-service-option service-choice-card"><input type="checkbox" name="requested-services" value="Gartenarbeit"><span><i aria-hidden="true">🌿</i><strong>Garten</strong><small>Rasen, Beete, Laub und Außenarbeiten</small></span></label>
+            <article class="service-detail-card inline-service-detail" data-service-detail="Gartenarbeit" hidden>
+              <strong>Garten Details</strong>
+              <div class="booking-field">
+                <label>Dienste auswählen</label>
+                <select name="detailGardenTask" data-multi-select="detailGardenTask">
+                  <option value="">Bitte auswählen</option>
+                  <option value="Rasenpflege (Mähen, Kantenschneiden etc.)">Rasenpflege (Mähen, Kantenschneiden etc.)</option>
+                  <option value="Unkrautentfernung">Unkrautentfernung</option>
+                  <option value="Beetpflege">Beetpflege</option>
+                  <option value="Harken, Pusten und Grünabfallentsorgung">Harken, Pusten und Grünabfallentsorgung</option>
+                  <option value="Hochdruckreinigung / Poolreinigung">Hochdruckreinigung / Poolreinigung</option>
+                  <option value="Heckenschnitt">Heckenschnitt</option>
+                  <option value="Urlaubsservice: Bewässerung und generelle Pflege">Urlaubsservice: Bewässerung und generelle Pflege</option>
+                </select>
+                <div class="selected-task-list" data-multi-select-list="detailGardenTask" hidden></div>
+              </div>
+              <div class="booking-field-row">
+                <div class="booking-field"><label>Ungefähre Fläche</label><input name="detailGardenSize" type="text" placeholder="z.B. 80 qm oder kleiner Vorgarten"></div>
+                <div class="booking-field"><label>Weitere Aufgaben</label><input name="detailGardenCustom" type="text" placeholder="z.B. Terrasse fegen, Blumenkästen bepflanzen"></div>
+              </div>
+            </article>
+          </div>
+          <div class="service-choice-with-detail">
+            <label class="request-service-option service-choice-card"><input type="checkbox" name="requested-services" value="Nachhilfe"><span><i aria-hidden="true">📚</i><strong>Nachhilfe</strong><small>Lernhilfe und Prüfungsvorbereitung</small></span></label>
+            <article class="service-detail-card inline-service-detail" data-service-detail="Nachhilfe" hidden>
+              <strong>Nachhilfe Details</strong>
+              <div class="tutoring-request-list" data-tutoring-request-list>
+                <div class="tutoring-request-block" data-tutoring-request>
+                  <div class="booking-field">
+                    <label>Klasse</label>
+                    <select data-tutoring-grade>
+                      <option value="">Bitte auswählen</option>
+                      <option value="1. Klasse">1. Klasse</option>
+                      <option value="2. Klasse">2. Klasse</option>
+                      <option value="3. Klasse">3. Klasse</option>
+                      <option value="4. Klasse">4. Klasse</option>
+                      <option value="5. Klasse">5. Klasse</option>
+                      <option value="6. Klasse">6. Klasse</option>
+                      <option value="7. Klasse">7. Klasse</option>
+                      <option value="8. Klasse">8. Klasse</option>
+                      <option value="9. Klasse">9. Klasse</option>
+                      <option value="10. Klasse">10. Klasse</option>
+                      <option value="11. Klasse">11. Klasse</option>
+                      <option value="12. Klasse">12. Klasse</option>
+                      <option value="13. Klasse">13. Klasse</option>
+                      <option value="Abiturvorbereitung">Abiturvorbereitung</option>
+                      <option value="Studium">Studium</option>
+                    </select>
+                  </div>
+                  <div class="booking-field">
+                    <label>Fach auswählen</label>
+                    <select data-tutoring-subject-select>
+                      <option value="">Bitte auswählen</option>
+                      <option value="Mathematik">Mathematik</option>
+                      <option value="Deutsch">Deutsch</option>
+                      <option value="Englisch">Englisch</option>
+                      <option value="Französisch">Französisch</option>
+                      <option value="Spanisch">Spanisch</option>
+                      <option value="Physik">Physik</option>
+                      <option value="Chemie">Chemie</option>
+                      <option value="Biologie">Biologie</option>
+                      <option value="Geschichte">Geschichte</option>
+                      <option value="Informatik">Informatik</option>
+                      <option value="Anderes Fach">Anderes Fach</option>
+                    </select>
+                  </div>
+                  <div class="tutoring-subject-list" data-tutoring-subject-list hidden></div>
+                </div>
+              </div>
+              <button class="appointment-time-add-button tutoring-add-button" type="button" data-add-tutoring-request>+ Weitere Nachhilfe hinzufügen</button>
+            </article>
+          </div>
+          <div class="service-choice-with-detail">
+            <label class="request-service-option service-choice-card"><input type="checkbox" name="requested-services" value="Betreuung"><span><i aria-hidden="true">👶</i><strong>Betreuung</strong><small>Kinder und Haustiere</small></span></label>
+            <article class="service-detail-card inline-service-detail" data-service-detail="Betreuung" hidden>
+              <strong>Betreuung Details</strong>
+              <div class="booking-field">
+                <label>Dienste auswählen</label>
+                <select name="detailCareTask" data-multi-select="detailCareTask">
+                  <option value="">Bitte auswählen</option>
+                  <option value="Kinderbetreuung">Kinderbetreuung</option>
+                  <option value="Tierbetreuung">Tierbetreuung</option>
+                </select>
+                <div class="selected-task-list" data-multi-select-list="detailCareTask" hidden></div>
+              </div>
+              <div class="booking-field">
+                <label>Weitere Hinweise</label>
+                <input name="detailCareCustom" type="text" placeholder="z.B. Gassi gehen beim Hund">
+              </div>
+            </article>
+          </div>
+          <div class="service-choice-with-detail">
+            <label class="request-service-option service-choice-card"><input type="checkbox" name="requested-services" value="Aufbau"><span><i aria-hidden="true">🔧</i><strong>Aufbau</strong><small>Möbel, Geräte und Außenbauten</small></span></label>
+            <article class="service-detail-card inline-service-detail" data-service-detail="Aufbau" hidden>
+              <strong>Aufbau Details</strong>
+              <div class="booking-field">
+                <label>Dienste auswählen</label>
+                <select name="detailBuildTask" data-multi-select="detailBuildTask">
+                  <option value="">Bitte auswählen</option>
+                  <option value="Möbel">Möbel</option>
+                  <option value="Technische Geräte">Technische Geräte</option>
+                  <option value="Außenbauten">Außenbauten</option>
+                </select>
+                <div class="selected-task-list" data-multi-select-list="detailBuildTask" hidden></div>
+              </div>
+            </article>
+          </div>
+          <div class="service-choice-with-detail">
+            <label class="request-service-option service-choice-card"><input type="checkbox" name="requested-services" value="Malereiarbeiten"><span><i aria-hidden="true">🖌️</i><strong>Malereiarbeiten</strong><small>Streichen, Tapezieren und Beratung</small></span></label>
+            <article class="service-detail-card inline-service-detail" data-service-detail="Malereiarbeiten" hidden>
+              <strong>Malereiarbeiten Details</strong>
+              <div class="booking-field">
+                <label>Dienste auswählen</label>
+                <select name="detailPaintingTask" data-multi-select="detailPaintingTask">
+                  <option value="">Bitte auswählen</option>
+                  <option value="Farbauswahl und Beratung (Farrow & Ball)">Farbauswahl und Beratung (Farrow &amp; Ball)</option>
+                  <option value="Innenmalereien und Tapezierung">Innenmalereien und Tapezierung</option>
+                  <option value="Außenmalereien">Außenmalereien</option>
+                </select>
+                <div class="selected-task-list" data-multi-select-list="detailPaintingTask" hidden></div>
+              </div>
+            </article>
+          </div>
+          <div class="service-choice-with-detail">
+            <label class="request-service-option service-choice-card"><input type="checkbox" name="requested-services" value="Putzen & Reinigen"><span><i aria-hidden="true">🧹</i><strong>Reinigung/Putzen</strong><small>Wohnung, Bad, Küche und Büro</small></span></label>
+            <article class="service-detail-card inline-service-detail" data-service-detail="Putzen & Reinigen" hidden>
+              <strong>Reinigung Details</strong>
+              <div class="booking-field">
+                <label>Dienste auswählen</label>
+                <select name="detailCleaningTask" data-multi-select="detailCleaningTask">
+                  <option value="">Bitte auswählen</option>
+                  <option value="Fensterreinigung">Fensterreinigung</option>
+                  <option value="Regelmäßige Grundreinigung: Staubsaugen und Wischen">Regelmäßige Grundreinigung: Staubsaugen und Wischen</option>
+                  <option value="Küchen- und Badezimmerreinigung: vom Herd bis zum Spiegel">Küchen- und Badezimmerreinigung: vom Herd bis zum Spiegel</option>
+                </select>
+                <div class="selected-task-list" data-multi-select-list="detailCleaningTask" hidden></div>
+              </div>
+              <div class="booking-field-row">
+                <div class="booking-field"><label>Fläche</label><input name="detailCleaningSize" type="text" placeholder="z.B. 75 qm"></div>
+                <div class="booking-field"><label>Weitere Aufgaben</label><input name="detailCleaningCustom" type="text" placeholder="z.B. Kühlschrank, Balkon, Treppenhaus"></div>
+              </div>
+            </article>
+          </div>
+          <div class="service-choice-with-detail">
+            <label class="request-service-option service-choice-card"><input type="checkbox" name="requested-services" value="Wäscheservice"><span><i aria-hidden="true">👕</i><strong>Wäscheservice</strong><small>Bügeln und Wäsche zusammenlegen</small></span></label>
+            <article class="service-detail-card inline-service-detail" data-service-detail="Wäscheservice" hidden>
+              <strong>Wäscheservice Details</strong>
+              <p class="form-help">Der Wäscheservice umfasst immer Bügeln und Zusammenlegen.</p>
+            </article>
+          </div>
+          <div class="service-choice-with-detail">
+            <label class="request-service-option service-choice-card"><input type="checkbox" name="requested-services" value="Sonstiges"><span><i aria-hidden="true">✨</i><strong>Sonstiges</strong><small>Spezielle Aufgaben nach Absprache</small></span></label>
+            <article class="service-detail-card inline-service-detail" data-service-detail="Sonstiges" hidden>
+              <strong>Sonstiges Details</strong>
+              <p>Ihre Heinzelchen erfüllen auch Ihre speziellen Aufgaben — über das Weihnachtsmann-Spielen an Heilig Abend bis hin zur Arztbegleitung.</p>
+              <div class="booking-field"><label>Weitere Aufgaben</label><input name="detailOtherCustom" type="text" placeholder="Beschreibe kurz deine Aufgabe"></div>
+            </article>
+          </div>
+        </div>
+      </div>
+      </div>
+
+      <div class="inquiry-step-panel" data-inquiry-step="2" hidden>
+        <div class="inquiry-block">
+          <h3>2. Termin & Zeit</h3>
+          <div class="service-appointment-list" data-service-appointments>
+            <p class="form-help">Wähle zuerst mindestens eine Dienstleistung aus. Danach kannst du pro Dienst Dauer, Zeitfenster und Häufigkeit angeben.</p>
+          </div>
+          <p class="appointment-global-note">Wir melden uns zur Bestätigung – ein größeres Zeitfenster erhöht die Verfügbarkeit.</p>
+        </div>
+      </div>
+
+      <div class="inquiry-step-panel" data-inquiry-step="3" hidden>
+      <div class="inquiry-block">
+        <h3>Wo soll die Hilfe stattfinden?</h3>
+        <div class="booking-field-row">
+          <div class="booking-field"><label>Straße und Hausnummer</label><input name="street" type="text" required placeholder="Musterstraße 12"></div>
+          <div class="booking-field"><label>PLZ</label><input name="zip" type="text" required placeholder="22765"></div>
+        </div>
+        <div class="booking-field-row">
+          <div class="booking-field"><label>Stadt / Stadtteil</label><input name="city" type="text" required placeholder="z.B. Hamburg Altona"></div>
+          <div class="booking-field"><label>Hinweise zum Ort</label><input name="locationNotes" type="text" placeholder="z.B. Hinterhof, 3. Etage, Parkplatz"></div>
+        </div>
+      </div>
+
+      <div class="inquiry-block">
+        <h3>Kontakt</h3>
+        <div class="booking-field-row">
+          <div class="booking-field"><label>Vorname</label><input name="firstName" type="text" required placeholder="Vorname"></div>
+          <div class="booking-field"><label>Nachname</label><input name="lastName" type="text" required placeholder="Nachname"></div>
+        </div>
+        <div class="booking-field-row">
+          <div class="booking-field"><label>Telefon</label><input name="phone" type="tel" required placeholder="+49 ..."></div>
+          <div class="booking-field"><label>E-Mail</label><input name="email" type="email" required placeholder="deine@email.de"></div>
+        </div>
+      </div>
+
+      <p class="inquiry-note">Unverbindlich: Wir prüfen zuerst ob ein passender Helfer verfügbar ist.</p>
+      </div>
+
+      <div class="inquiry-actions">
+        <button class="btn-secondary inquiry-back" type="button" data-inquiry-back hidden>Zurück</button>
+        <button class="btn-primary inquiry-next" type="button" data-inquiry-next>Weiter</button>
+        <button class="btn-primary inquiry-submit" type="submit" hidden>Heinzelchen anfragen</button>
+      </div>
+    </form>
+  </section>
+  <section class="content page-section anbieter-faq">
+    <div class="anbieter-faq-head reveal">
+      <div class="section-label">Kurz geklärt</div>
+      <h2>Häufige Fragen</h2>
     </div>
-    <div class="booking-service-grid">
-      <article class="booking-service-card reveal"><span>Gartenarbeit</span><p>Rasen, Beete, Laub, Pflanzen und einfache Außenarbeiten.</p></article>
-      <article class="booking-service-card reveal"><span>Einkaufsservice</span><p>Besorgungen, Einkäufe und kleine Erledigungen in deiner Nähe.</p></article>
-      <article class="booking-service-card reveal"><span>Nachhilfe</span><p>Geduldige Unterstützung für Schule, Prüfung oder Grundlagen.</p></article>
-      <article class="booking-service-card reveal"><span>Malerarbeiten</span><p>Streichen, Ausbessern und einfache Renovierungsarbeiten.</p></article>
-      <article class="booking-service-card reveal"><span>Technik-Hilfe</span><p>Einrichtung von Geräten, WLAN, Handy, Fernseher und Software.</p></article>
-      <article class="booking-service-card reveal"><span>Babysitting</span><p>Verlässliche Betreuung nach Absprache und mit klaren Angaben.</p></article>
-      <article class="booking-service-card reveal"><span>Hundeservice</span><p>Gassi gehen, Füttern und kurze Betreuung für deinen Hund.</p></article>
-      <article class="booking-service-card reveal"><span>Putzen & Reinigen</span><p>Wohnung, Küche, Bad, Fenster oder regelmäßige Reinigung.</p></article>
+    <div class="anbieter-faq-list">
+      <details class="anbieter-faq-item reveal">
+        <summary>Ist meine Anfrage direkt verbindlich?</summary>
+        <p>Nein. Mit dem Formular stellst du zunächst eine unverbindliche Anfrage. Wir prüfen, ob Aufgabe, Ort und Zeitfenster zu einem verfügbaren Heinzelchen passen, bevor ein Termin bestätigt wird.</p>
+      </details>
+      <details class="anbieter-faq-item reveal">
+        <summary>Was passiert nach dem Absenden?</summary>
+        <p>Wir schauen uns deine Angaben an und melden uns persönlich bei dir. Falls etwas unklar ist, fragen wir nach; wenn alles passt, erhältst du einen Vorschlag für die Hilfe.</p>
+      </details>
+      <details class="anbieter-faq-item reveal">
+        <summary>Wie genau muss ich die Aufgabe beschreiben?</summary>
+        <p>Je konkreter, desto besser: Dienstleistung, ungefährer Umfang, Adresse, gewünschtes Zeitfenster und besondere Hinweise helfen uns, schneller ein passendes Heinzelchen zu finden.</p>
+      </details>
+      <details class="anbieter-faq-item reveal">
+        <summary>Kann ich mehrere Dienstleistungen gleichzeitig anfragen?</summary>
+        <p>Ja. Du kannst mehrere Aufgabenbereiche auswählen, zum Beispiel Gartenarbeit und Reinigung. Gib pro Bereich am besten kurz an, was genau erledigt werden soll.</p>
+      </details>
+      <details class="anbieter-faq-item reveal">
+        <summary>Was kostet ein Einsatz?</summary>
+        <p>Der Preis hängt von Aufgabe, Umfang und dem jeweiligen Heinzelchen ab. Viele Helfer orientieren sich an Stundenpreisen; bevor ein Einsatz zustande kommt, bekommst du eine persönliche Rückmeldung.</p>
+      </details>
+      <details class="anbieter-faq-item reveal">
+        <summary>Kann ich regelmäßige Hilfe anfragen?</summary>
+        <p>Ja. Wenn du wiederkehrende Unterstützung brauchst, kannst du das in der Anfrage angeben. Wir prüfen dann, ob ein Heinzelchen regelmäßig zu deinem gewünschten Zeitraum verfügbar ist.</p>
+      </details>
     </div>
   </section>
 </main>
@@ -100,5 +346,6 @@
   </div>
 </footer>
 <script src="assets/main.js"></script>
+<script src="assets/inquiry.js?v=painting-size"></script>
 </body>
 </html>

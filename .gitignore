@@ -3,4 +3,11 @@ node_modules/
 website.zip
 index.html.zip
 .env
+.env.*
+!.env.example
 .DS_Store
+*.log
+supabase/.temp/
+yachtins-static/
+pages/yachtins-preview.js
+tools/extract_yachtins_text.py

@@ -1,0 +1,18 @@
+alter table public.workers
+  add column if not exists status text not null default 'neu',
+  add column if not exists first_name text,
+  add column if not exists last_name text,
+  add column if not exists street text,
+  add column if not exists zip text,
+  add column if not exists birthdate date,
+  add column if not exists area_notes text,
+  add column if not exists lead_time text,
+  add column if not exists extra_skills text,
+  add column if not exists service_details jsonb not null default '[]'::jsonb,
+  add column if not exists childcare_certificate_name text,
+  add column if not exists qualification_confirmed boolean not null default false,
+  add column if not exists adult_self_employed_confirmed boolean not null default false,
+  add column if not exists terms_accepted boolean not null default false,
+  add column if not exists privacy_accepted boolean not null default false,
+  add column if not exists registration_type text,
+  add column if not exists raw_payload jsonb;

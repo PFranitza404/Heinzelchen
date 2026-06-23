@@ -18,7 +18,7 @@ export default function App({ Component, pageProps }) {
           href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Lato:wght@300;400;700&display=swap"
           rel="stylesheet"
         />
-        <link rel="stylesheet" href="/assets/styles.css" />
+        <link rel="stylesheet" href="/assets/styles.css?v=form-uniform-provider-progress" />
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.css" />
       </Head>
       <Component {...pageProps} />

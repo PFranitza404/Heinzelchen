@@ -68,6 +68,199 @@
     </div>
   </div>
 </section>
+<section class="provider-form-section page-section">
+  <form class="provider-form provider-step-form reveal" id="publicWorkerForm" novalidate>
+    <div class="provider-progress" aria-label="Fortschritt">
+      <button class="provider-progress-step active" type="button" data-provider-step-jump="1"><span>1</span>Dienstleistungen & Qualifikation</button>
+      <button class="provider-progress-step" type="button" data-provider-step-jump="2"><span>2</span>Persönliche Angaben</button>
+      <button class="provider-progress-step" type="button" data-provider-step-jump="3"><span>3</span>Verfügbarkeit & Einsatzgebiet</button>
+    </div>
+    <div class="provider-alert" id="publicWorkerFormError" hidden></div>
+
+    <div class="provider-step-panel active" data-provider-step="1">
+      <div class="form-block">
+        <div class="section-label">1. Dienstleistungen & Qualifikation</div>
+        <h2>Welche Dienstleistungen bietest Du zu welchem Stundenpreis an?</h2>
+        <p class="form-help">Heinzelchen verlangen durchschnittlich erfolgreich 20 EUR pro Stunde. Wähle eine Dienstleistung aus, ergänze die Details und bestätige sie anschließend über „Dienstleistung hinzufügen“.</p>
+        <input name="skills" type="hidden" data-provider-skills-value required>
+        <div class="provider-service-list">
+          <article class="provider-service-card" data-provider-service="Gartenarbeit">
+            <button class="provider-service-toggle" type="button" data-provider-service-toggle>
+              <span><strong>Gartenarbeit</strong><small>Rasenmähen, Beetpflege, Harken und vieles mehr an der frischen Luft</small></span><em data-provider-service-status></em>
+            </button>
+            <div class="provider-service-detail" data-provider-service-detail hidden>
+              <div class="provider-price-field"><label>Dein Stundenpreis</label><input name="priceGartenarbeit" type="number" min="5" max="80" step="1" placeholder="z.B. 20"><span>EUR / Stunde</span></div>
+              <button class="btn-primary provider-add-service" type="button" data-provider-add-service>Dienstleistung hinzufügen</button>
+            </div>
+          </article>
+          <article class="provider-service-card" data-provider-service="Reinigung">
+            <button class="provider-service-toggle" type="button" data-provider-service-toggle>
+              <span><strong>Reinigung</strong><small>Staubsaugen, Wischen und mehr Ordnungsschaffendes</small></span><em data-provider-service-status></em>
+            </button>
+            <div class="provider-service-detail" data-provider-service-detail hidden>
+              <div class="provider-price-field"><label>Dein Stundenpreis</label><input name="priceReinigung" type="number" min="5" max="80" step="1" placeholder="z.B. 20"><span>EUR / Stunde</span></div>
+              <button class="btn-primary provider-add-service" type="button" data-provider-add-service>Dienstleistung hinzufügen</button>
+            </div>
+          </article>
+          <article class="provider-service-card" data-provider-service="Nachhilfe">
+            <button class="provider-service-toggle" type="button" data-provider-service-toggle>
+              <span><strong>Nachhilfe</strong><small>Mathe, Sprachen, Naturwissenschaften und weitere Schulfächer</small></span><em data-provider-service-status></em>
+            </button>
+            <div class="provider-service-detail" data-provider-service-detail hidden>
+              <label>Für welche Klassen kannst Du Nachhilfe geben?</label>
+              <div class="provider-chip-grid provider-grade-grid" data-provider-tutoring-grades>
+                <label><input type="checkbox" name="tutoringGrades" value="1. Klasse"><span>1. Klasse</span></label>
+                <label><input type="checkbox" name="tutoringGrades" value="2. Klasse"><span>2. Klasse</span></label>
+                <label><input type="checkbox" name="tutoringGrades" value="3. Klasse"><span>3. Klasse</span></label>
+                <label><input type="checkbox" name="tutoringGrades" value="4. Klasse"><span>4. Klasse</span></label>
+                <label><input type="checkbox" name="tutoringGrades" value="5. Klasse"><span>5. Klasse</span></label>
+                <label><input type="checkbox" name="tutoringGrades" value="6. Klasse"><span>6. Klasse</span></label>
+                <label><input type="checkbox" name="tutoringGrades" value="7. Klasse"><span>7. Klasse</span></label>
+                <label><input type="checkbox" name="tutoringGrades" value="8. Klasse"><span>8. Klasse</span></label>
+                <label><input type="checkbox" name="tutoringGrades" value="9. Klasse"><span>9. Klasse</span></label>
+                <label><input type="checkbox" name="tutoringGrades" value="10. Klasse"><span>10. Klasse</span></label>
+                <label><input type="checkbox" name="tutoringGrades" value="11. Klasse"><span>11. Klasse</span></label>
+                <label><input type="checkbox" name="tutoringGrades" value="12. Klasse"><span>12. Klasse</span></label>
+                <label><input type="checkbox" name="tutoringGrades" value="13. Klasse"><span>13. Klasse</span></label>
+              </div>
+              <div class="provider-grade-panel" data-provider-grade-panel hidden>
+                <label>Fächer pro ausgewählter Klasse</label>
+                <div class="provider-tutoring-subjects-by-grade" data-provider-tutoring-subjects></div>
+              </div>
+              <div class="provider-price-field"><label>Dein Stundenpreis</label><input name="priceNachhilfe" type="number" min="5" max="100" step="1" placeholder="z.B. 20"><span>EUR / Stunde</span></div>
+              <button class="btn-primary provider-add-service" type="button" data-provider-add-service>Dienstleistung hinzufügen</button>
+            </div>
+          </article>
+          <article class="provider-service-card" data-provider-service="Kinderbetreuung">
+            <button class="provider-service-toggle" type="button" data-provider-service-toggle>
+              <span><strong>Kinderbetreuung</strong><small>Zuverlässige Betreuung mit erweitertem Führungszeugnis</small></span><em data-provider-service-status></em>
+            </button>
+            <div class="provider-service-detail" data-provider-service-detail hidden>
+              <div class="provider-upload-box">
+                <strong>Erweitertes Führungszeugnis</strong>
+                <p>Für die Vermittlung von Kinderbetreuung benötigen wir einmalig dein erweitertes Führungszeugnis (§ 72a SGB VIII). Du kannst es kostenlos bei deinem Einwohnermeldeamt beantragen.</p>
+                <input name="childcareCertificate" type="file" accept=".jpg,.jpeg,.png,.pdf" data-childcare-certificate>
+                <small>JPG, PNG oder PDF, max. 10 MB. Deine Daten werden vertraulich gespeichert und nicht an Dritte weitergegeben.</small>
+              </div>
+              <div class="provider-price-field"><label>Dein Stundenpreis</label><input name="priceKinderbetreuung" type="number" min="5" max="80" step="1" placeholder="z.B. 20"><span>EUR / Stunde</span></div>
+              <button class="btn-primary provider-add-service" type="button" data-provider-add-service>Dienstleistung hinzufügen</button>
+            </div>
+          </article>
+          <article class="provider-service-card" data-provider-service="Haustierbetreuung">
+            <button class="provider-service-toggle" type="button" data-provider-service-toggle>
+              <span><strong>Haustierbetreuung</strong><small>Gassigehen und mehr Schönes, wofür andere ein Haustier haben</small></span><em data-provider-service-status></em>
+            </button>
+            <div class="provider-service-detail" data-provider-service-detail hidden>
+              <div class="provider-price-field"><label>Dein Stundenpreis</label><input name="priceHaustierbetreuung" type="number" min="5" max="80" step="1" placeholder="z.B. 20"><span>EUR / Stunde</span></div>
+              <button class="btn-primary provider-add-service" type="button" data-provider-add-service>Dienstleistung hinzufügen</button>
+            </div>
+          </article>
+          <article class="provider-service-card" data-provider-service="Aufbau / Montage">
+            <button class="provider-service-toggle" type="button" data-provider-service-toggle>
+              <span><strong>Aufbau / Montage</strong><small>Statt Lego: Aufbau von z.B. Ikea-Möbeln und Fernsehern</small></span><em data-provider-service-status></em>
+            </button>
+            <div class="provider-service-detail" data-provider-service-detail hidden>
+              <div class="provider-price-field"><label>Dein Stundenpreis</label><input name="priceAufbauMontage" type="number" min="5" max="80" step="1" placeholder="z.B. 20"><span>EUR / Stunde</span></div>
+              <button class="btn-primary provider-add-service" type="button" data-provider-add-service>Dienstleistung hinzufügen</button>
+            </div>
+          </article>
+          <article class="provider-service-card" data-provider-service="Malerarbeiten">
+            <button class="provider-service-toggle" type="button" data-provider-service-toggle>
+              <span><strong>Malerarbeiten</strong><small>Hilf dabei, einem Umfeld einen neuen Anstrich zu geben</small></span><em data-provider-service-status></em>
+            </button>
+            <div class="provider-service-detail" data-provider-service-detail hidden>
+              <div class="provider-price-field"><label>Dein Stundenpreis</label><input name="priceMalerarbeiten" type="number" min="5" max="80" step="1" placeholder="z.B. 20"><span>EUR / Stunde</span></div>
+              <button class="btn-primary provider-add-service" type="button" data-provider-add-service>Dienstleistung hinzufügen</button>
+            </div>
+          </article>
+          <article class="provider-service-card" data-provider-service="Wäscheservice">
+            <button class="provider-service-toggle" type="button" data-provider-service-toggle>
+              <span><strong>Wäscheservice</strong><small>Bügeln und Wäsche zusammenlegen</small></span><em data-provider-service-status></em>
+            </button>
+            <div class="provider-service-detail" data-provider-service-detail hidden>
+              <div class="provider-price-field"><label>Dein Stundenpreis</label><input name="priceWäscheservice" type="number" min="5" max="80" step="1" placeholder="z.B. 20"><span>EUR / Stunde</span></div>
+              <button class="btn-primary provider-add-service" type="button" data-provider-add-service>Dienstleistung hinzufügen</button>
+            </div>
+          </article>
+          <article class="provider-service-card" data-provider-service="Sonstiges">
+            <button class="provider-service-toggle" type="button" data-provider-service-toggle>
+              <span><strong>Sonstiges</strong><small>Weitere nutzvolle Fähigkeiten nach Absprache</small></span><em data-provider-service-status></em>
+            </button>
+            <div class="provider-service-detail" data-provider-service-detail hidden>
+              <div class="field-spacer"><label>Hast Du sonst noch eine nutzvolle Fähigkeit die Du anbieten möchtest?</label><textarea name="extraSkills" placeholder="Beschreibe kurz, was Du anbieten möchtest."></textarea></div>
+              <div class="provider-price-field"><label>Dein Stundenpreis</label><input name="priceSonstiges" type="number" min="5" max="100" step="1" placeholder="z.B. 20"><span>EUR / Stunde</span></div>
+              <button class="btn-primary provider-add-service" type="button" data-provider-add-service>Dienstleistung hinzufügen</button>
+            </div>
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="provider-step-panel" data-provider-step="2" hidden>
+      <div class="form-block">
+        <div class="section-label">2. Persönliche Angaben</div>
+        <h2>Klassische Felder</h2>
+        <div class="form-grid">
+          <div><label>Vorname *</label><input name="firstName" type="text" required placeholder="Max"></div>
+          <div><label>Nachname *</label><input name="lastName" type="text" required placeholder="Mustermann"></div>
+          <div><label>E-Mail-Adresse *</label><input name="email" type="email" required placeholder="deine@email.de"></div>
+          <div><label>Telefonnummer *</label><input name="phone" type="tel" required placeholder="+49 ..."></div>
+          <div><label>Straße und Hausnummer *</label><input name="street" type="text" required placeholder="Musterstraße 12"></div>
+          <div><label>PLZ *</label><input name="zip" type="text" required placeholder="22765"></div>
+          <div><label>Stadt *</label><input name="city" type="text" required placeholder="Hamburg"></div>
+          <div><label>Geburtsdatum *</label><input name="birthdate" type="date" required></div>
+        </div>
+        <p class="provider-account-note">Aktuell registrierst Du Dich kostenlos und unverbindlich für passende Aufgabenanfragen. Deine Angaben werden an Heinzelchen übermittelt und intern passenden Aufgabenbereichen zugeordnet.</p>
+      </div>
+    </div>
+
+    <div class="provider-step-panel" data-provider-step="3" hidden>
+      <div class="form-block">
+        <div class="section-label">3. Verfügbarkeit & Einsatzgebiet</div>
+        <h2>Wo und wann möchtest Du Aufgaben erhalten?</h2>
+        <div class="form-grid">
+          <div><label>Maximaler Umkreis</label><select name="radiusKm"><option>bis 5 km</option><option>bis 10 km</option><option>bis 20 km</option><option>bis 50 km</option></select></div>
+          <div><label>Ortskreise / Stadtteile</label><input name="localAreasText" type="text" placeholder="z.B. Blankenese, Nienstedten, Othmarschen"></div>
+        </div>
+        <div class="field-spacer">
+          <label>Weitere Hinweise zum Einsatzgebiet</label>
+          <textarea name="areaNotes" placeholder="z.B. bevorzugt Blankenese und Umgebung, gut mit Fahrrad erreichbar, keine Einsätze außerhalb Hamburg-West ..."></textarea>
+        </div>
+        <div class="field-spacer">
+          <label>Typische freie Zeiten</label>
+          <p class="form-help">Nicht verbindlich, nur richtungsweisend. Du kannst trotzdem auch außerhalb dieser Zeiten Angebote bekommen.</p>
+          <div class="availability-week-grid">
+            <label class="availability-day-row"><input type="checkbox" name="days" value="Montag" data-provider-day><span>Montag</span><select name="MontagFrom" data-provider-time><option value="08:00">08:00</option><option value="09:00" selected>09:00</option><option value="10:00">10:00</option><option value="11:00">11:00</option><option value="12:00">12:00</option><option value="13:00">13:00</option><option value="14:00">14:00</option><option value="15:00">15:00</option><option value="16:00">16:00</option><option value="17:00">17:00</option><option value="18:00">18:00</option><option value="19:00">19:00</option><option value="20:00">20:00</option></select><select name="MontagUntil" data-provider-time><option value="10:00">10:00</option><option value="11:00">11:00</option><option value="12:00">12:00</option><option value="13:00">13:00</option><option value="14:00">14:00</option><option value="15:00">15:00</option><option value="16:00">16:00</option><option value="17:00" selected>17:00</option><option value="18:00">18:00</option><option value="19:00">19:00</option><option value="20:00">20:00</option><option value="21:00">21:00</option><option value="22:00">22:00</option></select></label>
+            <label class="availability-day-row"><input type="checkbox" name="days" value="Dienstag" data-provider-day><span>Dienstag</span><select name="DienstagFrom" data-provider-time><option value="08:00">08:00</option><option value="09:00" selected>09:00</option><option value="10:00">10:00</option><option value="11:00">11:00</option><option value="12:00">12:00</option><option value="13:00">13:00</option><option value="14:00">14:00</option><option value="15:00">15:00</option><option value="16:00">16:00</option><option value="17:00">17:00</option><option value="18:00">18:00</option><option value="19:00">19:00</option><option value="20:00">20:00</option></select><select name="DienstagUntil" data-provider-time><option value="10:00">10:00</option><option value="11:00">11:00</option><option value="12:00">12:00</option><option value="13:00">13:00</option><option value="14:00">14:00</option><option value="15:00">15:00</option><option value="16:00">16:00</option><option value="17:00" selected>17:00</option><option value="18:00">18:00</option><option value="19:00">19:00</option><option value="20:00">20:00</option><option value="21:00">21:00</option><option value="22:00">22:00</option></select></label>
+            <label class="availability-day-row"><input type="checkbox" name="days" value="Mittwoch" data-provider-day><span>Mittwoch</span><select name="MittwochFrom" data-provider-time><option value="08:00">08:00</option><option value="09:00" selected>09:00</option><option value="10:00">10:00</option><option value="11:00">11:00</option><option value="12:00">12:00</option><option value="13:00">13:00</option><option value="14:00">14:00</option><option value="15:00">15:00</option><option value="16:00">16:00</option><option value="17:00">17:00</option><option value="18:00">18:00</option><option value="19:00">19:00</option><option value="20:00">20:00</option></select><select name="MittwochUntil" data-provider-time><option value="10:00">10:00</option><option value="11:00">11:00</option><option value="12:00">12:00</option><option value="13:00">13:00</option><option value="14:00">14:00</option><option value="15:00">15:00</option><option value="16:00">16:00</option><option value="17:00" selected>17:00</option><option value="18:00">18:00</option><option value="19:00">19:00</option><option value="20:00">20:00</option><option value="21:00">21:00</option><option value="22:00">22:00</option></select></label>
+            <label class="availability-day-row"><input type="checkbox" name="days" value="Donnerstag" data-provider-day><span>Donnerstag</span><select name="DonnerstagFrom" data-provider-time><option value="08:00">08:00</option><option value="09:00" selected>09:00</option><option value="10:00">10:00</option><option value="11:00">11:00</option><option value="12:00">12:00</option><option value="13:00">13:00</option><option value="14:00">14:00</option><option value="15:00">15:00</option><option value="16:00">16:00</option><option value="17:00">17:00</option><option value="18:00">18:00</option><option value="19:00">19:00</option><option value="20:00">20:00</option></select><select name="DonnerstagUntil" data-provider-time><option value="10:00">10:00</option><option value="11:00">11:00</option><option value="12:00">12:00</option><option value="13:00">13:00</option><option value="14:00">14:00</option><option value="15:00">15:00</option><option value="16:00">16:00</option><option value="17:00" selected>17:00</option><option value="18:00">18:00</option><option value="19:00">19:00</option><option value="20:00">20:00</option><option value="21:00">21:00</option><option value="22:00">22:00</option></select></label>
+            <label class="availability-day-row"><input type="checkbox" name="days" value="Freitag" data-provider-day><span>Freitag</span><select name="FreitagFrom" data-provider-time><option value="08:00">08:00</option><option value="09:00" selected>09:00</option><option value="10:00">10:00</option><option value="11:00">11:00</option><option value="12:00">12:00</option><option value="13:00">13:00</option><option value="14:00">14:00</option><option value="15:00">15:00</option><option value="16:00">16:00</option><option value="17:00">17:00</option><option value="18:00">18:00</option><option value="19:00">19:00</option><option value="20:00">20:00</option></select><select name="FreitagUntil" data-provider-time><option value="10:00">10:00</option><option value="11:00">11:00</option><option value="12:00">12:00</option><option value="13:00">13:00</option><option value="14:00">14:00</option><option value="15:00">15:00</option><option value="16:00">16:00</option><option value="17:00" selected>17:00</option><option value="18:00">18:00</option><option value="19:00">19:00</option><option value="20:00">20:00</option><option value="21:00">21:00</option><option value="22:00">22:00</option></select></label>
+            <label class="availability-day-row"><input type="checkbox" name="days" value="Samstag" data-provider-day><span>Samstag</span><select name="SamstagFrom" data-provider-time><option value="08:00">08:00</option><option value="09:00" selected>09:00</option><option value="10:00">10:00</option><option value="11:00">11:00</option><option value="12:00">12:00</option><option value="13:00">13:00</option><option value="14:00">14:00</option><option value="15:00">15:00</option><option value="16:00">16:00</option><option value="17:00">17:00</option><option value="18:00">18:00</option><option value="19:00">19:00</option><option value="20:00">20:00</option></select><select name="SamstagUntil" data-provider-time><option value="10:00">10:00</option><option value="11:00">11:00</option><option value="12:00">12:00</option><option value="13:00">13:00</option><option value="14:00">14:00</option><option value="15:00">15:00</option><option value="16:00">16:00</option><option value="17:00" selected>17:00</option><option value="18:00">18:00</option><option value="19:00">19:00</option><option value="20:00">20:00</option><option value="21:00">21:00</option><option value="22:00">22:00</option></select></label>
+            <label class="availability-day-row"><input type="checkbox" name="days" value="Sonntag" data-provider-day><span>Sonntag</span><select name="SonntagFrom" data-provider-time><option value="08:00">08:00</option><option value="09:00" selected>09:00</option><option value="10:00">10:00</option><option value="11:00">11:00</option><option value="12:00">12:00</option><option value="13:00">13:00</option><option value="14:00">14:00</option><option value="15:00">15:00</option><option value="16:00">16:00</option><option value="17:00">17:00</option><option value="18:00">18:00</option><option value="19:00">19:00</option><option value="20:00">20:00</option></select><select name="SonntagUntil" data-provider-time><option value="10:00">10:00</option><option value="11:00">11:00</option><option value="12:00">12:00</option><option value="13:00">13:00</option><option value="14:00">14:00</option><option value="15:00">15:00</option><option value="16:00">16:00</option><option value="17:00" selected>17:00</option><option value="18:00">18:00</option><option value="19:00">19:00</option><option value="20:00">20:00</option><option value="21:00">21:00</option><option value="22:00">22:00</option></select></label>
+          </div>
+        </div>
+      </div>
+      <div class="form-block provider-consent-block">
+        <div class="section-label">Essenzielle Bestätigungen</div>
+        <label class="provider-consent-check"><input name="adultSelfEmployedConfirmed" type="checkbox" required><span>Ich bin volljährig (mindestens 18 Jahre alt), tätig als selbstständige Person und bin für die Erfüllung meiner steuerlichen Pflichten (inkl. ggf. Gewerbeanmeldung) selbst verantwortlich. Ich verfüge über eine Haftpflichtversicherung, die meine Tätigkeit über Heinzelchen abdeckt.*</span></label>
+        <label class="provider-consent-check"><input name="termsAccepted" type="checkbox" required><span>Ich akzeptiere die <a href="/agb">Nutzungsbedingungen</a>.*</span></label>
+        <label class="provider-consent-check"><input name="privacyAccepted" type="checkbox" required><span>Ich habe die <a href="datenschutz.html">Datenschutzerklärung</a> gelesen und stimme der Datenverarbeitung zu.*</span></label>
+      </div>
+      <div class="form-block profile-final-block">
+        <div class="section-label">Abschließende Anmeldung</div>
+        <h2>Jetzt kostenlos und unverbindlich registrieren</h2>
+        <p class="form-help">Du registrierst Dich für passende Aufgabenanfragen. Wir prüfen Deine Angaben und melden uns, sobald Aufgaben zu Deinen Dienstleistungen, Deinem Gebiet und Deiner Verfügbarkeit passen.</p>
+      </div>
+    </div>
+
+    <div class="provider-form-actions">
+      <button class="btn-secondary provider-back" type="button" data-provider-back hidden>Zurück</button>
+      <button class="btn-primary provider-next" type="button" data-provider-next>Weiter</button>
+      <button class="btn-primary form-submit" type="submit" hidden>Jetzt kostenlos und unverbindlich registrieren</button>
+    </div>
+    <p id="publicWorkerFormMessage" class="portal-message"></p>
+  </form>
+</section>
 <section class="content page-section anbieter-faq">
   <div class="anbieter-faq-head reveal">
     <div class="section-label">Kurz geklärt</div>
@@ -76,11 +269,39 @@
   <div class="anbieter-faq-list">
     <details class="anbieter-faq-item reveal">
       <summary>Kostet die Registrierung etwas?</summary>
-      <p>Nein. Ein Profil bei Helfende Hände anzulegen ist für dich kostenlos.</p>
+      <p>Nein. Ein Profil bei Heinzelchen anzulegen ist kostenlos und unverbindlich. Du zahlst keine Aufnahmegebühr und verpflichtest dich mit der Registrierung noch zu keinem Auftrag.</p>
     </details>
     <details class="anbieter-faq-item reveal">
       <summary>Muss ich jeden Auftrag annehmen?</summary>
       <p>Nein. Du entscheidest bei jeder Anfrage selbst, ob sie zu deiner Zeit, deinem Weg und deinen Fähigkeiten passt.</p>
+    </details>
+    <details class="anbieter-faq-item reveal">
+      <summary>Wie lege ich meinen Stundenlohn fest?</summary>
+      <p>Du gibst pro Dienstleistung deinen eigenen Stundenpreis an. Viele Heinzelchen orientieren sich an etwa 20 EUR pro Stunde, je nach Aufgabe, Erfahrung und Aufwand kann dein Preis aber darunter oder darüber liegen.</p>
+    </details>
+    <details class="anbieter-faq-item reveal">
+      <summary>Bin ich bei Heinzelchen angestellt?</summary>
+      <p>Nein. Du arbeitest selbstständig und entscheidest selbst, welche Aufgaben du annimmst. Deshalb bist du auch selbst für steuerliche Pflichten, mögliche Gewerbeanmeldung und eine passende Haftpflichtversicherung verantwortlich.</p>
+    </details>
+    <details class="anbieter-faq-item reveal">
+      <summary>Wo bekomme ich Aufgaben angeboten?</summary>
+      <p>Du bestimmst dein Einsatzgebiet selbst, zum Beispiel über Umkreis, Stadtteile oder Hinweise wie gute Fahrrad-Erreichbarkeit. Wir nutzen diese Angaben, um dir möglichst passende Anfragen in deiner Nähe zuzuordnen.</p>
+    </details>
+    <details class="anbieter-faq-item reveal">
+      <summary>Wie verbindlich sind meine freien Zeiten?</summary>
+      <p>Deine angegebenen Zeiten helfen uns bei der Vorauswahl, sind aber noch keine feste Zusage. Erst wenn du eine konkrete Anfrage annimmst, wird daraus ein verbindlicher Termin.</p>
+    </details>
+    <details class="anbieter-faq-item reveal">
+      <summary>Welche Aufgaben kann ich anbieten?</summary>
+      <p>Du kannst Aufgabenbereiche wie Gartenarbeit, Reinigung, Nachhilfe, Kinderbetreuung, Haustierbetreuung, Aufbau, Malerarbeiten, Wäscheservice oder eigene Fähigkeiten auswählen. Wichtig ist, dass du nur anbietest, was du zuverlässig und sorgfältig erledigen kannst.</p>
+    </details>
+    <details class="anbieter-faq-item reveal">
+      <summary>Warum brauche ich bei Kinderbetreuung ein Führungszeugnis?</summary>
+      <p>Bei Kinderbetreuung achten wir besonders auf Sicherheit und Vertrauen. Deshalb benötigen wir einmalig ein erweitertes Führungszeugnis. Deine hochgeladenen Dokumente werden vertraulich behandelt und nicht öffentlich angezeigt.</p>
+    </details>
+    <details class="anbieter-faq-item reveal">
+      <summary>Was passiert nach meiner Registrierung?</summary>
+      <p>Wir prüfen deine Angaben kurz und melden uns bei Rückfragen. Danach kannst du passende Aufgabenanfragen erhalten, die zu deinen Dienstleistungen, deinem Gebiet und deiner Verfügbarkeit passen.</p>
     </details>
     <details class="anbieter-faq-item reveal">
       <summary>Noch unsicher?</summary>
@@ -124,5 +345,6 @@
   </div>
 </footer>
 <script src="assets/main.js"></script>
+<script src="assets/provider-form.js"></script>
 </body>
 </html>

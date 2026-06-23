@@ -20,15 +20,34 @@
   </ul>
 </nav>
 <main>
-<section class="subhero subhero-leistungen">
-  <div class="subhero-inner reveal">
-    <div class="section-label">Unsere Leistungen</div>
-    <h1>Alles, was deinen Alltag leichter macht</h1>
-    <p>Von Gartenarbeit bis Technik-Hilfe: Wähle genau die Unterstützung, die du gerade brauchst.</p>
-  </div>
-</section>
+  <section class="booking-intro-hero">
+    <div class="booking-intro-inner reveal">
+      <div class="booking-intro-copy">
+        <div class="section-label">Heinzelchen buchen</div>
+        <h1>Verlässliche Alltagshilfe, persönlich vermittelt.</h1>
+        <p>Beschreibe kurz, wobei du Unterstützung brauchst. Wir prüfen deine Anfrage, gleichen Dienstleistung, Ort und Verfügbarkeit ab und melden uns mit einem passenden Heinzelchen.</p>
+        <div class="booking-intro-actions">
+          <a class="btn-primary" href="#buchen">Buchungsanfrage stellen</a>
+        </div>
+      </div>
+      <div class="booking-intro-panel" aria-label="Ablauf">
+        <div class="intro-panel-row">
+          <span>1</span>
+          <div><strong>Anfrage senden</strong><small>Dienstleistung, Adresse und Termin angeben</small></div>
+        </div>
+        <div class="intro-panel-row">
+          <span>2</span>
+          <div><strong>Wir prüfen</strong><small>Gefragte Leistung und Einsatzgebiet werden mit Verfügbarkeit abgeglichen</small></div>
+        </div>
+        <div class="intro-panel-row">
+          <span>3</span>
+          <div><strong>Hilfe kommt an</strong><small>Du erhältst eine Rückmeldung mit dem passenden Heinzelchen</small></div>
+        </div>
+      </div>
+    </div>
+  </section>
 <section class="booking-flow-section page-section">
-    <form class="inquiry-card reveal" data-inquiry-form>
+    <form class="inquiry-card reveal" id="buchen" data-inquiry-form>
       <div class="inquiry-intro">
         <div class="section-label">Anfrage prüfen lassen</div>
         <h2>Beschreibe kurz, wobei du Hilfe brauchst.</h2>
@@ -40,6 +59,13 @@
         <p>Wir prüfen dein Anliegen und melden uns bei dir mit einer Einschätzung.</p>
       </div>
 
+      <div class="inquiry-progress" aria-label="Fortschritt">
+        <button class="inquiry-progress-step active" type="button" data-step-jump="1"><span>1</span>Dienstleistung</button>
+        <button class="inquiry-progress-step" type="button" data-step-jump="2"><span>2</span>Termin & Zeit</button>
+        <button class="inquiry-progress-step" type="button" data-step-jump="3"><span>3</span>Deine Angaben</button>
+      </div>
+
+      <div class="inquiry-step-panel active" data-inquiry-step="1">
       <div class="inquiry-block">
         <h3>1. Dienstleistung auswählen</h3>
         <div class="request-service-grid service-choice-grid inquiry-service-grid">
@@ -71,59 +97,50 @@
             <label class="request-service-option service-choice-card"><input type="checkbox" name="requested-services" value="Nachhilfe"><span><i aria-hidden="true">📚</i><strong>Nachhilfe</strong><small>Lernhilfe und Prüfungsvorbereitung</small></span></label>
             <article class="service-detail-card inline-service-detail" data-service-detail="Nachhilfe" hidden>
               <strong>Nachhilfe Details</strong>
-              <div class="booking-field-row">
-                <div class="booking-field">
-                  <label>Klasse</label>
-                  <select name="detailTutoringLevel">
-                    <option value="">Bitte auswählen</option>
-                    <option value="1. Klasse">1. Klasse</option>
-                    <option value="2. Klasse">2. Klasse</option>
-                    <option value="3. Klasse">3. Klasse</option>
-                    <option value="4. Klasse">4. Klasse</option>
-                    <option value="5. Klasse">5. Klasse</option>
-                    <option value="6. Klasse">6. Klasse</option>
-                    <option value="7. Klasse">7. Klasse</option>
-                    <option value="8. Klasse">8. Klasse</option>
-                    <option value="9. Klasse">9. Klasse</option>
-                    <option value="10. Klasse">10. Klasse</option>
-                    <option value="11. Klasse">11. Klasse</option>
-                    <option value="12. Klasse">12. Klasse</option>
-                    <option value="13. Klasse">13. Klasse</option>
-                    <option value="Abiturvorbereitung">Abiturvorbereitung</option>
-                    <option value="Studium">Studium</option>
-                  </select>
+              <div class="tutoring-request-list" data-tutoring-request-list>
+                <div class="tutoring-request-block" data-tutoring-request>
+                  <div class="booking-field">
+                    <label>Klasse</label>
+                    <select data-tutoring-grade>
+                      <option value="">Bitte auswählen</option>
+                      <option value="1. Klasse">1. Klasse</option>
+                      <option value="2. Klasse">2. Klasse</option>
+                      <option value="3. Klasse">3. Klasse</option>
+                      <option value="4. Klasse">4. Klasse</option>
+                      <option value="5. Klasse">5. Klasse</option>
+                      <option value="6. Klasse">6. Klasse</option>
+                      <option value="7. Klasse">7. Klasse</option>
+                      <option value="8. Klasse">8. Klasse</option>
+                      <option value="9. Klasse">9. Klasse</option>
+                      <option value="10. Klasse">10. Klasse</option>
+                      <option value="11. Klasse">11. Klasse</option>
+                      <option value="12. Klasse">12. Klasse</option>
+                      <option value="13. Klasse">13. Klasse</option>
+                      <option value="Abiturvorbereitung">Abiturvorbereitung</option>
+                      <option value="Studium">Studium</option>
+                    </select>
+                  </div>
+                  <div class="booking-field">
+                    <label>Fach auswählen</label>
+                    <select data-tutoring-subject-select>
+                      <option value="">Bitte auswählen</option>
+                      <option value="Mathematik">Mathematik</option>
+                      <option value="Deutsch">Deutsch</option>
+                      <option value="Englisch">Englisch</option>
+                      <option value="Französisch">Französisch</option>
+                      <option value="Spanisch">Spanisch</option>
+                      <option value="Physik">Physik</option>
+                      <option value="Chemie">Chemie</option>
+                      <option value="Biologie">Biologie</option>
+                      <option value="Geschichte">Geschichte</option>
+                      <option value="Informatik">Informatik</option>
+                      <option value="Anderes Fach">Anderes Fach</option>
+                    </select>
+                  </div>
+                  <div class="tutoring-subject-list" data-tutoring-subject-list hidden></div>
                 </div>
-                <div class="booking-field">
-                  <label>Fach</label>
-                  <select name="detailTutoringSubject">
-                    <option value="">Bitte auswählen</option>
-                    <option value="Mathematik">Mathematik</option>
-                    <option value="Deutsch">Deutsch</option>
-                    <option value="Englisch">Englisch</option>
-                    <option value="Französisch">Französisch</option>
-                    <option value="Spanisch">Spanisch</option>
-                    <option value="Physik">Physik</option>
-                    <option value="Chemie">Chemie</option>
-                    <option value="Biologie">Biologie</option>
-                    <option value="Geschichte">Geschichte</option>
-                    <option value="Informatik">Informatik</option>
-                    <option value="Anderes Fach">Anderes Fach</option>
-                  </select>
-                </div>
               </div>
-              <div class="booking-field">
-                <label>Thema optional</label>
-                <input name="detailTutoringTopic" type="text" placeholder="z.B. Bruchrechnung, Gedichtanalyse, Prüfungsvorbereitung">
-              </div>
-              <div class="booking-field">
-                <label>Dienste auswählen</label>
-                <select name="detailTutoringTask" data-multi-select="detailTutoringTask">
-                  <option value="">Bitte auswählen</option>
-                  <option value="Gap-Year Beratung">Gap-Year Beratung</option>
-                  <option value="Beratung und Assistenz bei Uni-Bewerbung (Deutschland, UK, europäische Business Schools)">Beratung und Assistenz bei Uni-Bewerbung (Deutschland, UK, europäische Business Schools)</option>
-                </select>
-                <div class="selected-task-list" data-multi-select-list="detailTutoringTask" hidden></div>
-              </div>
+              <button class="appointment-time-add-button tutoring-add-button" type="button" data-add-tutoring-request>+ Weitere Nachhilfe hinzufügen</button>
             </article>
           </div>
           <div class="service-choice-with-detail">
@@ -134,11 +151,14 @@
                 <label>Dienste auswählen</label>
                 <select name="detailCareTask" data-multi-select="detailCareTask">
                   <option value="">Bitte auswählen</option>
-                  <option value="Kinderbetreuung: Vorlesen und im Garten spielen">Kinderbetreuung: Vorlesen und im Garten spielen</option>
-                  <option value="Haustierbetreuung: Gassi gehen">Haustierbetreuung: Gassi gehen</option>
-                  <option value="Haustierbetreuung: Füttern">Haustierbetreuung: Füttern</option>
+                  <option value="Kinderbetreuung">Kinderbetreuung</option>
+                  <option value="Tierbetreuung">Tierbetreuung</option>
                 </select>
                 <div class="selected-task-list" data-multi-select-list="detailCareTask" hidden></div>
+              </div>
+              <div class="booking-field">
+                <label>Weitere Hinweise</label>
+                <input name="detailCareCustom" type="text" placeholder="z.B. Gassi gehen beim Hund">
               </div>
             </article>
           </div>
@@ -151,8 +171,8 @@
                 <select name="detailBuildTask" data-multi-select="detailBuildTask">
                   <option value="">Bitte auswählen</option>
                   <option value="Möbel">Möbel</option>
-                  <option value="Technische Geräte: Anschluss von Waschmaschinen, WLAN-Routern etc.">Technische Geräte: Anschluss von Waschmaschinen, WLAN-Routern etc.</option>
-                  <option value="Außenbauten: Zäune, Gartenhäuser, Sichtschutz etc.">Außenbauten: Zäune, Gartenhäuser, Sichtschutz etc.</option>
+                  <option value="Technische Geräte">Technische Geräte</option>
+                  <option value="Außenbauten">Außenbauten</option>
                 </select>
                 <div class="selected-task-list" data-multi-select-list="detailBuildTask" hidden></div>
               </div>
@@ -199,44 +219,26 @@
             <article class="service-detail-card inline-service-detail" data-service-detail="Sonstiges" hidden>
               <strong>Sonstiges Details</strong>
               <p>Ihre Heinzelchen erfüllen auch Ihre speziellen Aufgaben — über das Weihnachtsmann-Spielen an Heilig Abend bis hin zur Arztbegleitung.</p>
-              <div class="booking-field">
-                <label>Dienst auswählen</label>
-                <select name="detailOtherTask">
-                  <option value="">Bitte auswählen</option>
-                  <option value="Freie Eingabe">Freie Eingabe</option>
-                </select>
-              </div>
-              <div class="booking-field" data-other-custom-field hidden><label>Weitere Aufgaben</label><input name="detailOtherCustom" type="text" placeholder="Beschreibe kurz deine Aufgabe"></div>
+              <div class="booking-field"><label>Weitere Aufgaben</label><input name="detailOtherCustom" type="text" placeholder="Beschreibe kurz deine Aufgabe"></div>
             </article>
           </div>
         </div>
       </div>
+      </div>
 
-      <div class="inquiry-block">
-        <h3>2. Dauer einschätzen</h3>
-        <div class="booking-field-row">
-          <div class="booking-field"><label>Dauer in vollen Stunden</label><input name="duration" type="number" min="1" step="1" placeholder="z.B. 3"><p class="ai-duration-note" data-ai-duration-estimate>KI-Einschätzung: Wähle eine Dienstleistung aus, dann schlägt unsere KI eine ungefähre Dauer vor.</p></div>
+      <div class="inquiry-step-panel" data-inquiry-step="2" hidden>
+        <div class="inquiry-block">
+          <h3>2. Termin & Zeit</h3>
+          <div class="service-appointment-list" data-service-appointments>
+            <p class="form-help">Wähle zuerst mindestens eine Dienstleistung aus. Danach kannst du pro Dienst Dauer, Zeitfenster und Häufigkeit angeben.</p>
+          </div>
+          <p class="appointment-global-note">Wir melden uns zur Bestätigung – ein größeres Zeitfenster erhöht die Verfügbarkeit.</p>
         </div>
       </div>
 
+      <div class="inquiry-step-panel" data-inquiry-step="3" hidden>
       <div class="inquiry-block">
-        <h3>3. Wann ist es möglich?</h3>
-        <div class="service-appointment-list" data-service-appointments>
-          <p class="form-help">Wähle zuerst oben mindestens eine Dienstleistung aus. Danach kannst du pro Dienst ein Zeitfenster angeben.</p>
-        </div>
-      </div>
-
-      <div class="inquiry-block">
-        <h3>4. Häufigkeit auswählen</h3>
-        <div class="frequency-options inquiry-frequency">
-          <label><input type="radio" name="frequency" value="Einmalig"><span><strong>Einmalig</strong><small>Für einen einzelnen Auftrag</small></span></label>
-          <label><input type="radio" name="frequency" value="Wöchentlich"><span><strong>Wöchentlich</strong><small>Regelmäßig jede Woche</small></span></label>
-          <label><input type="radio" name="frequency" value="2-wöchentlich"><span><strong>2-wöchentlich</strong><small>Alle zwei Wochen</small></span></label>
-        </div>
-      </div>
-
-      <div class="inquiry-block">
-        <h3>5. Wo soll der Auftrag ausgeführt werden?</h3>
+        <h3>Wo soll die Hilfe stattfinden?</h3>
         <div class="booking-field-row">
           <div class="booking-field"><label>Straße und Hausnummer</label><input name="street" type="text" required placeholder="Musterstraße 12"></div>
           <div class="booking-field"><label>PLZ</label><input name="zip" type="text" required placeholder="22765"></div>
@@ -259,8 +261,14 @@
         </div>
       </div>
 
-      <button class="btn-primary inquiry-submit" type="submit">Heinzelchen anfragen</button>
-      <p class="inquiry-note">Unverbindlich: Wir prüfen zuerst, ob ein passender Helfer verfügbar ist.</p>
+      <p class="inquiry-note">Unverbindlich: Wir prüfen zuerst ob ein passender Helfer verfügbar ist.</p>
+      </div>
+
+      <div class="inquiry-actions">
+        <button class="btn-secondary inquiry-back" type="button" data-inquiry-back hidden>Zurück</button>
+        <button class="btn-primary inquiry-next" type="button" data-inquiry-next>Weiter</button>
+        <button class="btn-primary inquiry-submit" type="submit" hidden>Heinzelchen anfragen</button>
+      </div>
     </form>
   </section>
 </main>
@@ -311,8 +319,6 @@
 
     if (!streetInput || !submitButton || !form || !window.google?.maps?.places) return;
 
-    submitButton.disabled = true;
-
     const error = document.createElement("p");
     error.className = "address-error";
     error.style.color = "var(--color-accent)";
@@ -336,26 +342,15 @@
 
     const resetAddressValidation = () => {
       selectedGooglePlace = false;
-      submitButton.disabled = true;
       error.hidden = false;
       lockAddress(false);
     };
 
     streetInput.addEventListener("input", resetAddressValidation);
 
-    form.addEventListener("submit", (event) => {
-      if (selectedGooglePlace) return;
-      event.preventDefault();
-      event.stopImmediatePropagation();
-      submitButton.disabled = true;
-      error.hidden = false;
-      streetInput.focus();
-    }, true);
-
     form.addEventListener("reset", () => {
       window.setTimeout(() => {
         selectedGooglePlace = false;
-        submitButton.disabled = true;
         error.hidden = true;
         lockAddress(false);
       }, 0);
@@ -391,7 +386,6 @@
 
       if (!route || !streetNumber || !/^\d{5}$/.test(zip)) {
         selectedGooglePlace = false;
-        submitButton.disabled = true;
         error.hidden = false;
         lockAddress(false);
         return;
@@ -403,7 +397,6 @@
       if (countryInput) countryInput.value = "Deutschland";
 
       selectedGooglePlace = true;
-      submitButton.disabled = false;
       error.hidden = true;
       lockAddress(true);
     });
@@ -414,7 +407,7 @@
   async
   defer
 ></script>
-<script src="assets/inquiry.js"></script>
+<script src="assets/inquiry.js?v=painting-size"></script>
 <script src="assets/main.js"></script>
 </body>
 </html>

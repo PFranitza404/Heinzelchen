@@ -4,13 +4,39 @@
 
   const error = form.querySelector("[data-inquiry-error]");
   const confirmation = form.querySelector("[data-inquiry-confirmation]");
-  const submit = form.querySelector(".inquiry-submit");
-  const durationEstimate = form.querySelector("[data-ai-duration-estimate]");
+  const panels = [...form.querySelectorAll("[data-inquiry-step]")];
+  const progress = [...form.querySelectorAll("[data-step-jump]")];
+  const backButton = form.querySelector("[data-inquiry-back]");
+  const nextButton = form.querySelector("[data-inquiry-next]");
+  const submitButton = form.querySelector(".inquiry-submit");
+  const appointmentContainer = form.querySelector("[data-service-appointments]");
+  const detailCards = [...form.querySelectorAll("[data-service-detail]")];
+  const multiSelectLists = [...form.querySelectorAll("[data-multi-select-list]")];
+  const durations = Array.from({ length: 24 }, (_, index) => (index + 1) * 0.5);
+  const frequencies = ["Einmalig", "Wöchentlich", "2-wöchentlich"];
+  const today = new Date();
+  const maxDate = new Date();
+  maxDate.setDate(today.getDate() + 28);
+  let step = 1;
+  let maxStep = 1;
 
+  const escapeHtml = (text) => `${text || ""}`.replace(/[&<>"']/g, (char) => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#039;",
+  }[char]));
   const value = (name) => form.querySelector(`[name="${name}"]`)?.value.trim() || "";
-  const services = () => [...form.querySelectorAll('[name="requested-services"]:checked')].map((input) => input.value);
-  const checkedValues = (name) => [...form.querySelectorAll(`[name="${name}"]:checked`)].map((input) => input.value);
-  const selectedValue = (name) => value(name);
+  const dateValue = (date) => {
+    const year = date.getFullYear();
+    const month = `${date.getMonth() + 1}`.padStart(2, "0");
+    const day = `${date.getDate()}`.padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  };
+  const minDateValue = dateValue(today);
+  const maxDateValue = dateValue(maxDate);
+  const selectedServices = () => [...form.querySelectorAll('[name="requested-services"]:checked')].map((input) => input.value);
   const selectedValues = (name) => {
     const list = form.querySelector(`[data-multi-select-list="${name}"]`);
     if (list) {
@@ -21,415 +47,578 @@
       }
     }
     const field = form.querySelector(`[name="${name}"]`);
-    if (field?.matches("select[multiple]")) {
-      return [...field.selectedOptions].map((option) => option.value).filter(Boolean);
-    }
-    const checked = checkedValues(name);
-    if (checked.length) return checked;
-    const selected = selectedValue(name);
-    return selected ? [selected] : [];
+    return field?.value ? [field.value] : [];
   };
-  const detailCards = [...form.querySelectorAll("[data-service-detail]")];
-  const availabilityRows = [...form.querySelectorAll(".availability-day-row")];
-  const appointmentContainer = form.querySelector("[data-service-appointments]");
-  const gardenTaskSummary = form.querySelector("[data-selected-garden-tasks]");
-  const cleaningTaskSummary = form.querySelector("[data-selected-cleaning-tasks]");
-  const multiSelectLists = [...form.querySelectorAll("[data-multi-select-list]")];
-  const otherCustomField = form.querySelector("[data-other-custom-field]");
-  const escapeHtml = (text) => text.replace(/[&<>"']/g, (char) => ({
-    "&": "&amp;",
-    "<": "&lt;",
-    ">": "&gt;",
-    '"': "&quot;",
-    "'": "&#039;",
-  }[char]));
-  const toDateInputValue = (date) => {
-    const year = date.getFullYear();
-    const month = `${date.getMonth() + 1}`.padStart(2, "0");
-    const day = `${date.getDate()}`.padStart(2, "0");
-    return `${year}-${month}-${day}`;
-  };
-  const today = new Date();
-  const maxAppointmentDate = new Date();
-  maxAppointmentDate.setDate(today.getDate() + 28);
-  const minAppointmentValue = toDateInputValue(today);
-  const maxAppointmentValue = toDateInputValue(maxAppointmentDate);
-  let appointmentDateCounter = 0;
-  let appointmentTimeCounter = 0;
-  const detailText = () => {
-    const labels = {
-      detailGardenSize: "Gartenfläche",
-      detailGardenCustom: "Weitere Aufgaben",
-      detailTutoringSubject: "Nachhilfe Fach",
-      detailTutoringLevel: "Nachhilfe Klasse/Niveau",
-      detailTutoringTopic: "Nachhilfe Thema",
-      detailOtherCustom: "Sonstige Aufgabe",
-      detailCleaningSize: "Fläche",
-      detailCleaningCustom: "Weitere Aufgaben",
-    };
-    const textDetails = Object.entries(labels)
-      .map(([name, label]) => {
-        const text = value(name);
-        return text ? `${label}: ${text}` : "";
-      })
-      .filter(Boolean);
-    const addSelectedDetails = (name, label) => {
-      const selected = selectedValues(name);
-      if (selected.length) textDetails.unshift(`${label}: ${selected.join(", ")}`);
-    };
-    addSelectedDetails("detailGardenTask", "Garten Dienste");
-    addSelectedDetails("detailCleaningTask", "Reinigung Dienste");
-    addSelectedDetails("detailTutoringTask", "Nachhilfe Angebote");
-    addSelectedDetails("detailCareTask", "Betreuung Aufgaben");
-    addSelectedDetails("detailBuildTask", "Aufbau Aufgaben");
-    addSelectedDetails("detailPaintingTask", "Malereiarbeiten");
-    addSelectedDetails("detailOtherTask", "Sonstiges");
-    return textDetails.join("\n");
-  };
-  const fullName = () => [value("firstName"), value("lastName")].filter(Boolean).join(" ");
-  const fullAddress = () => [value("city"), value("street"), value("zip")].filter(Boolean).join(", ");
-  const contactText = () => [value("email"), value("phone")].filter(Boolean).join(", ");
-  const availabilityData = () => availabilityRows.reduce((days, row) => {
-    const checkbox = row.querySelector("[data-availability-day]");
-    if (!checkbox?.checked) return days;
-    const times = row.querySelectorAll("[data-availability-time]");
-    days[checkbox.value] = {
-      from: times[0]?.value || "",
-      to: times[1]?.value || "",
-    };
-    return days;
-  }, {});
-  const detailNotes = () => ({
-    garden: {
-      tasks: selectedValues("detailGardenTask"),
-      size: value("detailGardenSize"),
-      custom: value("detailGardenCustom"),
-    },
-    tutoring: {
-      level: value("detailTutoringLevel"),
-      subject: value("detailTutoringSubject"),
-      topic: value("detailTutoringTopic"),
-      tasks: selectedValues("detailTutoringTask"),
-    },
-    care: {
-      tasks: selectedValues("detailCareTask"),
-    },
-    build: {
-      tasks: selectedValues("detailBuildTask"),
-    },
-    painting: {
-      tasks: selectedValues("detailPaintingTask"),
-    },
-    cleaning: {
-      tasks: selectedValues("detailCleaningTask"),
-      size: value("detailCleaningSize"),
-      custom: value("detailCleaningCustom"),
-    },
-    other: {
-      tasks: selectedValues("detailOtherTask"),
-      custom: value("detailOtherCustom"),
-    },
-  });
-  const availabilityText = () => availabilityRows
-    .filter((row) => row.querySelector("[data-availability-day]")?.checked)
-    .map((row) => {
-      const day = row.querySelector("[data-availability-day]").value;
-      const times = row.querySelectorAll("[data-availability-time]");
-      return `${day} ${times[0].value}-${times[1].value} Uhr`;
-    })
-    .join(", ");
-  const serviceAppointmentRows = () => appointmentContainer
-    ? [...appointmentContainer.querySelectorAll("[data-service-appointment-time-row]")]
-    : [];
-  const serviceAppointments = () => {
-    const appointments = {};
-    serviceAppointmentRows().forEach((row) => {
-      const dateGroup = row.closest("[data-service-appointment-date]");
-      const service = dateGroup?.dataset.service;
-      const dateSlot = dateGroup?.dataset.appointmentDate;
-      const timeSlot = row.dataset.appointmentTime;
-      const date = dateGroup?.querySelector(`[name="appointment-${dateSlot}-date"]`)?.value || "";
-      const from = row.querySelector(`[name="appointment-${timeSlot}-from"]`)?.value || "";
-      const to = row.querySelector(`[name="appointment-${timeSlot}-to"]`)?.value || "";
-      if (!service) return;
-      if (!appointments[service]) appointments[service] = [];
-      appointments[service].push({
-        dateSlot,
-        timeSlot,
-        date,
-        from,
-        to,
-      });
-    });
-    return appointments;
-  };
-  const flatServiceAppointments = () => Object.entries(serviceAppointments())
-    .flatMap(([service, windows]) => windows.map((window) => ({ service, ...window })));
-  const hasMissingAppointment = () => {
-    const selected = services();
-    if (!selected.length) return false;
-    const appointments = serviceAppointments();
-    return selected.some((service) => {
-      const windows = appointments[service] || [];
-      return !windows.length || windows.some((appointment) => !appointment.date || !appointment.from || !appointment.to);
-    });
-  };
-  const hasInvalidAppointmentTime = () => flatServiceAppointments()
-    .some((appointment) => appointment.date && appointment.from && appointment.to && appointment.from >= appointment.to);
-  const hasInvalidAppointmentDate = () => flatServiceAppointments()
-    .some((appointment) => appointment.date && (appointment.date < minAppointmentValue || appointment.date > maxAppointmentValue));
-  const appointmentSummaryText = () => flatServiceAppointments()
-    .filter((appointment) => appointment.date && appointment.from && appointment.to)
-    .map((appointment) => `${appointment.service}: ${appointment.date} ${appointment.from}-${appointment.to} Uhr`)
-    .join(", ");
-  const createAppointmentTime = (from = "", to = "") => ({
-    timeSlot: `time-${appointmentTimeCounter++}`,
-    from,
-    to,
-  });
-  const createAppointmentDate = (service, date = "", windows = []) => ({
-    dateSlot: `date-${appointmentDateCounter++}`,
-    date,
-    service,
-    windows: windows.length
-      ? windows.map((window) => createAppointmentTime(window.from, window.to))
-      : [createAppointmentTime()],
-  });
-  const groupedAppointmentDates = (appointments) => {
-    const groups = [];
-    appointments.forEach((appointment) => {
-      const key = appointment.date || `empty-${groups.length}`;
-      let group = groups.find((entry) => entry.key === key);
-      if (!group) {
-        group = { key, date: appointment.date, windows: [] };
-        groups.push(group);
+  const tutoringGradeOptions = (selected = "") => [
+    "",
+    "1. Klasse",
+    "2. Klasse",
+    "3. Klasse",
+    "4. Klasse",
+    "5. Klasse",
+    "6. Klasse",
+    "7. Klasse",
+    "8. Klasse",
+    "9. Klasse",
+    "10. Klasse",
+    "11. Klasse",
+    "12. Klasse",
+    "13. Klasse",
+    "Abiturvorbereitung",
+    "Studium",
+  ].map((grade) => `<option value="${escapeHtml(grade)}"${grade === selected ? " selected" : ""}>${grade ? escapeHtml(grade) : "Bitte auswählen"}</option>`).join("");
+  const tutoringSubjects = ["Mathematik", "Deutsch", "Englisch", "Französisch", "Spanisch", "Physik", "Chemie", "Biologie", "Geschichte", "Informatik", "Anderes Fach"];
+  const collectTutoringRequests = () => [...form.querySelectorAll("[data-tutoring-request]")].map((block) => ({
+    grade: block.querySelector("[data-tutoring-grade]")?.value || "",
+    subjects: [...block.querySelectorAll("[data-tutoring-subject-item]")].map((subject) => ({
+      subject: subject.dataset.tutoringSubjectItem || "",
+      topic: subject.querySelector("[data-tutoring-topic]")?.value.trim() || "",
+    })),
+  })).filter((request) => request.grade || request.subjects.length);
+  const tutoringSubjectOptions = () => ['<option value="">Bitte auswählen</option>']
+    .concat(tutoringSubjects.map((subject) => `<option value="${escapeHtml(subject)}">${escapeHtml(subject)}</option>`))
+    .join("");
+  const renderTutoringSubjectItem = (subject) => `
+    <div class="tutoring-subject-row" data-tutoring-subject-item="${escapeHtml(subject)}">
+      <span>${escapeHtml(subject)}</span>
+      <input type="text" data-tutoring-topic placeholder="${subject === "Anderes Fach" ? "Fach/Thema optional" : "Thema optional"}">
+      <button class="time-window-remove" type="button" data-remove-tutoring-subject aria-label="Fach entfernen">×</button>
+    </div>
+  `;
+  const renderTutoringRequest = () => `
+    <div class="tutoring-request-block" data-tutoring-request>
+      <div class="tutoring-request-head">
+        <strong>Weitere Nachhilfe</strong>
+        <button class="time-window-remove" type="button" data-remove-tutoring-request aria-label="Nachhilfe entfernen">×</button>
+      </div>
+      <div class="booking-field">
+        <label>Klasse</label>
+        <select data-tutoring-grade>${tutoringGradeOptions()}</select>
+      </div>
+      <div class="booking-field">
+        <label>Fach auswählen</label>
+        <select data-tutoring-subject-select>${tutoringSubjectOptions()}</select>
+      </div>
+      <div class="tutoring-subject-list" data-tutoring-subject-list hidden></div>
+    </div>
+  `;
+  const collectBuildTasks = () => [...form.querySelectorAll("[data-build-task-item]")].map((item) => ({
+    task: item.dataset.buildTaskItem || "",
+    note: item.querySelector("[data-build-task-note]")?.value.trim() || "",
+  })).filter((item) => item.task);
+  const renderBuildTaskItem = (task) => `
+    <div class="build-task-row" data-build-task-item="${escapeHtml(task)}">
+      <span>${escapeHtml(task)}</span>
+      <input type="text" data-build-task-note placeholder="${task === "Möbel" ? "z.B. Schrank, Schreibtisch oder Bett" : "Weitere Hinweise optional"}">
+      <button class="time-window-remove" type="button" data-remove-build-task aria-label="Aufgabe entfernen">×</button>
+    </div>
+  `;
+  const collectPaintingTasks = () => [...form.querySelectorAll("[data-painting-task-item]")].map((item) => ({
+    task: item.dataset.paintingTaskItem || "",
+    size: item.querySelector("[data-painting-task-size]")?.value.trim() || "",
+  })).filter((item) => item.task);
+  const renderPaintingTaskItem = (task) => `
+    <div class="painting-task-row" data-painting-task-item="${escapeHtml(task)}">
+      <span>${escapeHtml(task)}</span>
+      <input type="text" data-painting-task-size placeholder="z.B. ca. 20 qm Wandfläche">
+      <button class="time-window-remove" type="button" data-remove-painting-task aria-label="Maleraufgabe entfernen">×</button>
+    </div>
+  `;
+  const timeOptions = (selected = "") => {
+    const options = ['<option value="">Bitte wählen</option>'];
+    for (let hour = 0; hour < 24; hour += 1) {
+      for (const minute of [0, 30]) {
+        const time = `${hour}`.padStart(2, "0") + ":" + `${minute}`.padStart(2, "0");
+        options.push(`<option value="${time}"${time === selected ? " selected" : ""}>${time}</option>`);
       }
-      group.windows.push({ from: appointment.from, to: appointment.to });
-    });
-    return groups;
-  };
-  const renderAppointmentTimeRow = ({ timeSlot, from = "", to = "", removable = false }) => `
-    <div class="service-appointment-time-row" data-service-appointment-time-row data-appointment-time="${timeSlot}">
-      <div class="booking-field appointment-time-field">
-        <label>Uhrzeit Von</label>
-        <input name="appointment-${timeSlot}-from" type="time" value="${escapeHtml(from)}" required>
-      </div>
-      <div class="booking-field appointment-time-field">
-        <label>Bis</label>
-        <input name="appointment-${timeSlot}-to" type="time" value="${escapeHtml(to)}" required>
-      </div>
-      ${removable ? '<button class="appointment-remove-button" type="button" data-remove-appointment aria-label="Zeitfenster entfernen">×</button>' : '<span class="appointment-remove-placeholder" aria-hidden="true"></span>'}
-    </div>
-  `;
-  const renderAppointmentDateGroup = ({ service, dateSlot, date = "", windows = [], removable = false }) => `
-    <div class="service-appointment-date" data-service-appointment-date data-service="${escapeHtml(service)}" data-appointment-date="${dateSlot}">
-      <div class="service-appointment-date-head">
-        <div class="booking-field">
-          <label>Datum wählen</label>
-          <input name="appointment-${dateSlot}-date" type="date" min="${minAppointmentValue}" max="${maxAppointmentValue}" value="${escapeHtml(date)}" required>
-        </div>
-        ${removable ? '<button class="appointment-remove-date-button" type="button" data-remove-appointment-date>Datum entfernen</button>' : ""}
-      </div>
-      <div class="service-appointment-times" data-appointment-times>
-        ${windows.map((window, index) => renderAppointmentTimeRow({ ...window, removable: index > 0 })).join("")}
-      </div>
-      <button class="appointment-time-add-button" type="button" data-add-appointment-time>+ Weitere Uhrzeit für dieses Datum</button>
-    </div>
-  `;
-  const renderServiceAppointments = () => {
-    if (!appointmentContainer) return;
-    const selected = services();
-    if (!selected.length) {
-      appointmentContainer.innerHTML = '<p class="form-help">Wähle zuerst oben mindestens eine Dienstleistung aus. Danach kannst du pro Dienst ein Zeitfenster angeben.</p>';
-      return;
     }
+    return options.join("");
+  };
+  const formatDuration = (duration) => `${Number.isInteger(duration) ? duration : duration.toFixed(1)}h`;
+  const durationOptions = (selected = "0.5h") => durations
+    .map((duration) => {
+      const value = formatDuration(duration);
+      return `<option value="${value}"${value === selected ? " selected" : ""}>${formatDuration(duration)}</option>`;
+    })
+    .join("");
 
-    const existing = serviceAppointments();
-    appointmentContainer.innerHTML = `
-      <p class="appointment-global-note">Wir melden uns zur Bestätigung – ein größeres Zeitfenster erhöht die Verfügbarkeit</p>
-      ${selected.map((service) => {
-      const dateGroups = existing[service]?.length
-        ? groupedAppointmentDates(existing[service]).map((group) => createAppointmentDate(service, group.date, group.windows))
-        : [createAppointmentDate(service)];
-      return `
-        <article class="service-appointment-card" data-service-appointment-card="${escapeHtml(service)}">
-          <h4>${escapeHtml(service)}</h4>
-          <div class="service-appointment-rows" data-appointment-rows>
-            ${dateGroups.map((dateGroup, index) => renderAppointmentDateGroup({ ...dateGroup, removable: index > 0 })).join("")}
-          </div>
-          <button class="appointment-add-button" type="button" data-add-appointment="${escapeHtml(service)}">+ Weiteres Datum hinzufügen</button>
-        </article>
-      `;
-    }).join("")}
-    `;
-  };
-  const hasInvalidAvailabilityTime = () => availabilityRows.some((row) => {
-    const checkbox = row.querySelector("[data-availability-day]");
-    if (!checkbox?.checked) return false;
-    const times = row.querySelectorAll("[data-availability-time]");
-    return times[0].value >= times[1].value;
-  });
-  const updateAvailabilityRows = () => {
-    availabilityRows.forEach((row) => {
-      const checked = row.querySelector("[data-availability-day]")?.checked;
-      row.querySelectorAll("[data-availability-time]").forEach((select) => {
-        select.disabled = !checked;
-      });
-    });
-  };
-  const estimateHours = () => {
-    const selectedServices = services();
-    if (!selectedServices.length) return 0;
-
-    const baseHours = {
-      Gartenarbeit: 1.5,
-      Nachhilfe: 2,
-      Betreuung: 2,
-      Aufbau: 2,
-      Malereiarbeiten: 3,
-      Malerarbeiten: 3,
-      "Technik-Hilfe": 1.5,
-      Babysitting: 3,
-      Hundeservice: 1,
-      "Putzen & Reinigen": 2,
-      Sonstiges: 1.5,
-    };
-
-    let hours = selectedServices.reduce((sum, service) => sum + (baseHours[service] || 1.5), 0);
-    if (selectedServices.includes("Gartenarbeit")) hours += selectedValues("detailGardenTask").length * 0.5;
-    if (value("detailGardenSize")) hours += 0.5;
-    if (value("detailGardenCustom")) hours += 0.5;
-    if (selectedServices.includes("Putzen & Reinigen")) hours += selectedValues("detailCleaningTask").length * 0.35;
-    if (value("detailCleaningSize")) hours += 0.5;
-    if (value("detailCleaningCustom")) hours += 0.5;
-    if (value("detailTutoringTopic")) hours += 0.5;
-    hours += selectedValues("detailTutoringTask").length * 0.5;
-    hours += selectedValues("detailCareTask").length * 0.5;
-    hours += selectedValues("detailBuildTask").length * 0.5;
-    hours += selectedValues("detailPaintingTask").length * 0.5;
-    if (value("detailOtherCustom")) hours += 0.5;
-    return Math.min(12, Math.max(1, Math.ceil(hours)));
-  };
-  const updateDurationEstimate = () => {
-    if (!durationEstimate) return;
-    const hours = estimateHours();
-    durationEstimate.textContent = hours
-      ? `KI-Einschätzung: Unsere KI schlägt für diesen Auftrag ungefähr ${hours} Stunde${hours === 1 ? "" : "n"} vor.`
-      : "KI-Einschätzung: Wähle eine Dienstleistung aus, dann schlägt unsere KI eine ungefähre Dauer vor.";
-  };
-  const updateDetailCards = () => {
-    const selected = new Set(services());
-    detailCards.forEach((card) => {
-      card.hidden = !selected.has(card.dataset.serviceDetail);
-    });
-    updateGardenTaskSummary();
-    updateCleaningTaskSummary();
-    updateOtherCustomField();
-    updateDurationEstimate();
-    renderServiceAppointments();
-  };
-  const updateGardenTaskSummary = () => {
-    if (!gardenTaskSummary) return;
-    const tasks = selectedValues("detailGardenTask");
-    gardenTaskSummary.hidden = !tasks.length;
-    gardenTaskSummary.innerHTML = tasks.map((task) => `<span>${escapeHtml(task)}</span>`).join("");
-    updateDurationEstimate();
-  };
-  const updateMultiSelectList = (name) => {
-    const list = form.querySelector(`[data-multi-select-list="${name}"]`);
-    if (!list) return;
-    const tasks = selectedValues(name);
-    list.hidden = !tasks.length;
-    list.innerHTML = tasks
-      .map((task) => `<button type="button" data-remove-task="${escapeHtml(task)}" data-remove-task-list="${name}">${escapeHtml(task)} <span aria-hidden="true">×</span></button>`)
-      .join("");
-    updateDurationEstimate();
-  };
-  const updateMultiSelectLists = () => {
-    multiSelectLists.forEach((list) => updateMultiSelectList(list.dataset.multiSelectList));
-  };
-  const updateCleaningTaskSummary = () => {
-    if (!cleaningTaskSummary) return;
-    const tasks = selectedValues("detailCleaningTask");
-    cleaningTaskSummary.hidden = !tasks.length;
-    cleaningTaskSummary.innerHTML = tasks.map((task) => `<span>${escapeHtml(task)}</span>`).join("");
-    updateDurationEstimate();
-  };
-  const updateOtherCustomField = () => {
-    if (!otherCustomField) return;
-    otherCustomField.hidden = selectedValue("detailOtherTask") !== "Freie Eingabe";
-    updateDurationEstimate();
-  };
   const showError = (message) => {
     error.textContent = message;
     error.hidden = false;
     confirmation.hidden = true;
+    form.scrollIntoView({ behavior: "smooth", block: "start" });
   };
   const clearMessages = () => {
     error.hidden = true;
     error.textContent = "";
-    confirmation.hidden = true;
   };
 
+  const collectSchedules = () => {
+    const schedules = {};
+    appointmentContainer?.querySelectorAll("[data-service-schedule]").forEach((card) => {
+      const service = card.dataset.serviceSchedule;
+      schedules[service] = {
+        frequency: card.querySelector("[data-schedule-frequency]:checked")?.value || "",
+        windows: [...card.querySelectorAll("[data-date-group]")].map((group) => ({
+          date: group.querySelector("[data-window-date]")?.value || "",
+          times: [...group.querySelectorAll("[data-time-window]")].map((row) => ({
+            from: row.querySelector("[data-window-from]")?.value || "",
+            to: row.querySelector("[data-window-to]")?.value || "",
+          })),
+        })),
+      };
+    });
+    return schedules;
+  };
+  const collectServiceDurations = () => {
+    const serviceDurations = {};
+    form.querySelectorAll("[data-service-duration]").forEach((select) => {
+      const service = select.dataset.serviceDuration;
+      if (service) serviceDurations[service] = select.value || "0.5h";
+    });
+    return serviceDurations;
+  };
+  const scheduleData = () => {
+    const schedules = collectSchedules();
+    const serviceDurations = collectServiceDurations();
+    return selectedServices().map((service) => ({
+      service,
+      duration: serviceDurations[service] || "0.5h",
+      frequency: schedules[service]?.frequency || "",
+      windows: schedules[service]?.windows || [],
+    }));
+  };
+  const renderTimeWindow = (window = {}, removable = false) => `
+    <div class="service-time-window" data-time-window>
+      <div class="booking-field"><label>Von</label><select data-window-from required>${timeOptions(window.from)}</select></div>
+      <div class="booking-field"><label>Bis</label><select data-window-to required>${timeOptions(window.to)}</select></div>
+      ${removable ? '<button class="time-window-remove" type="button" data-remove-window aria-label="Zeitfenster entfernen">×</button>' : '<span class="time-window-placeholder" aria-hidden="true"></span>'}
+    </div>
+  `;
+  const renderDateGroup = (group = {}, removable = false) => `
+    <div class="service-date-group" data-date-group>
+      ${removable ? '<div class="service-date-group-head"><span>Weiteres Datum</span><button class="appointment-date-remove-button" type="button" data-remove-date-group aria-label="Datum löschen">× Datum löschen</button></div>' : ""}
+      <div class="booking-field">
+        <label>Datum wählen</label>
+        <input data-window-date type="date" min="${minDateValue}" max="${maxDateValue}" value="${escapeHtml(group.date)}" required>
+      </div>
+      <div class="service-time-window-list" data-time-window-list>
+        ${(group.times?.length ? group.times : [{}]).map((window, index) => renderTimeWindow(window, index > 0)).join("")}
+      </div>
+      <button class="appointment-time-add-button" type="button" data-add-time-to-date>+ Weitere Uhrzeit für dieses Datum</button>
+    </div>
+  `;
+  const renderScheduleBlocks = () => {
+    if (!appointmentContainer) return;
+    const selected = selectedServices();
+    const existing = collectSchedules();
+    if (!selected.length) {
+      appointmentContainer.innerHTML = '<p class="form-help">Wähle zuerst mindestens eine Dienstleistung aus. Danach kannst du pro Dienst Dauer, Zeitfenster und Häufigkeit angeben.</p>';
+      return;
+    }
+    appointmentContainer.innerHTML = selected.map((service) => {
+      const schedule = existing[service] || { duration: "", frequency: "", windows: [{}] };
+      const dateGroups = schedule.windows?.length ? schedule.windows : [{}];
+      return `
+        <article class="service-schedule-card" data-service-schedule="${escapeHtml(service)}">
+          <h4>${escapeHtml(service)}</h4>
+          <div class="service-schedule-section">
+            <strong>Wann soll die Hilfe stattfinden?</strong>
+            <div class="service-date-group-list" data-date-group-list>
+              ${dateGroups.map((group, index) => renderDateGroup(group, index > 0)).join("")}
+            </div>
+            <button class="appointment-date-add-button" type="button" data-add-date-group>+ Weiteres Datum hinzufügen</button>
+          </div>
+          <div class="service-schedule-section">
+            <strong>Wie oft wird die Hilfe gebraucht?</strong>
+            <div class="frequency-options inquiry-frequency">
+              ${frequencies.map((frequency) => `
+                <label><input type="radio" data-schedule-frequency name="frequency-${escapeHtml(service)}" value="${frequency}"${schedule.frequency === frequency ? " checked" : ""}><span><strong>${frequency}</strong></span></label>
+              `).join("")}
+            </div>
+          </div>
+        </article>
+      `;
+    }).join("");
+    updateTimeOptions();
+  };
+  const updateTimeOptions = () => {
+    appointmentContainer?.querySelectorAll("[data-time-window]").forEach((row) => {
+      const from = row.querySelector("[data-window-from]")?.value || "";
+      const toSelect = row.querySelector("[data-window-to]");
+      if (!toSelect) return;
+      [...toSelect.options].forEach((option) => {
+        option.disabled = Boolean(option.value && from && option.value <= from);
+      });
+      if (toSelect.value && from && toSelect.value <= from) toSelect.value = "";
+    });
+  };
+
+  const detailText = () => {
+    const labels = {
+      detailGardenSize: "Gartenfläche",
+      detailGardenCustom: "Weitere Aufgaben",
+      detailCareCustom: "Betreuung Hinweise",
+      detailCleaningSize: "Fläche",
+      detailCleaningCustom: "Weitere Aufgaben",
+      detailOtherCustom: "Sonstige Aufgabe",
+    };
+    const lines = Object.entries(labels).map(([name, label]) => value(name) ? `${label}: ${value(name)}` : "").filter(Boolean);
+    const tutoringRequests = collectTutoringRequests();
+    if (tutoringRequests.length) {
+      lines.push("Nachhilfe:");
+      tutoringRequests.forEach((request, index) => {
+        lines.push(`${index + 1}. ${request.grade || "Klasse nicht angegeben"}`);
+        request.subjects.forEach((item) => {
+          lines.push(`- ${item.subject}${item.topic ? `: ${item.topic}` : ""}`);
+        });
+      });
+    }
+    const buildTasks = collectBuildTasks();
+    if (buildTasks.length) {
+      lines.push(`Aufbau Aufgaben: ${buildTasks.map((item) => item.note ? `${item.task}: ${item.note}` : item.task).join(", ")}`);
+    }
+    const paintingTasks = collectPaintingTasks();
+    if (paintingTasks.length) {
+      lines.push(`Malereiarbeiten: ${paintingTasks.map((item) => item.size ? `${item.task}: ${item.size}` : item.task).join(", ")}`);
+    }
+    if (selectedServices().includes("Wäscheservice")) {
+      lines.push("Wäscheservice: Bügeln und Zusammenlegen");
+    }
+    [
+      ["detailGardenTask", "Garten Dienste"],
+      ["detailCareTask", "Betreuung Aufgaben"],
+      ["detailCleaningTask", "Reinigung Dienste"],
+    ].forEach(([name, label]) => {
+      const selected = selectedValues(name);
+      if (selected.length) lines.push(`${label}: ${selected.join(", ")}`);
+    });
+    return lines.join("\n");
+  };
+  const detailNotes = () => ({
+    garden: { tasks: selectedValues("detailGardenTask"), size: value("detailGardenSize"), custom: value("detailGardenCustom") },
+    tutoring: { requests: collectTutoringRequests() },
+    care: { tasks: selectedValues("detailCareTask"), custom: value("detailCareCustom") },
+    build: { tasks: collectBuildTasks() },
+    painting: { tasks: collectPaintingTasks() },
+    cleaning: { tasks: selectedValues("detailCleaningTask"), size: value("detailCleaningSize"), custom: value("detailCleaningCustom") },
+    laundry: { tasks: selectedServices().includes("Wäscheservice") ? ["Bügeln", "Zusammenlegen"] : [] },
+    other: { custom: value("detailOtherCustom") },
+  });
+  const updateDetailCards = () => {
+    const selected = new Set(selectedServices());
+    detailCards.forEach((card) => {
+      card.hidden = !selected.has(card.dataset.serviceDetail);
+    });
+    updateServiceDurationFields();
+    renderScheduleBlocks();
+  };
+  const serviceDurationId = (service) => `service-duration-${service.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`;
+  const renderServiceDurationField = (service, selected = "0.5h") => `
+    <div class="booking-field service-duration-field" data-service-duration-field>
+      <label for="${serviceDurationId(service)}">Dauer für ${escapeHtml(service)}</label>
+      <select id="${serviceDurationId(service)}" data-service-duration="${escapeHtml(service)}" aria-label="Dauer für ${escapeHtml(service)}">
+        ${durationOptions(selected || "0.5h")}
+      </select>
+    </div>
+  `;
+  const updateServiceDurationFields = () => {
+    const selected = new Set(selectedServices());
+    form.querySelectorAll(".service-choice-with-detail").forEach((wrapper) => {
+      const input = wrapper.querySelector('[name="requested-services"]');
+      if (!input) return;
+      const service = input.value;
+      const existing = wrapper.querySelector("[data-service-duration-field]");
+      if (!selected.has(service)) {
+        existing?.remove();
+        return;
+      }
+      if (!existing) {
+        const detailCard = wrapper.querySelector("[data-service-detail]");
+        detailCard?.insertAdjacentHTML("beforebegin", renderServiceDurationField(service));
+      }
+    });
+  };
+  const updateMultiSelectList = (name) => {
+    const list = form.querySelector(`[data-multi-select-list="${name}"]`);
+    if (!list) return;
+    const values = selectedValues(name);
+    list.hidden = !values.length;
+    list.innerHTML = values
+      .map((item) => `<button type="button" data-remove-task="${escapeHtml(item)}" data-remove-task-list="${name}">${escapeHtml(item)} <span aria-hidden="true">×</span></button>`)
+      .join("");
+  };
+  const hasCompleteSchedule = () => {
+    const schedules = scheduleData();
+    if (!schedules.length) return false;
+    return schedules.every((schedule) =>
+      schedule.duration &&
+      schedule.frequency &&
+      schedule.windows.length &&
+      schedule.windows.every((group) =>
+        group.date &&
+        group.date >= minDateValue &&
+        group.date <= maxDateValue &&
+        group.times?.length &&
+        group.times.every((time) =>
+          time.from &&
+          time.to &&
+          time.to > time.from
+        )
+      )
+    );
+  };
+  const hasCompleteContactDetails = () => {
+    const required = ["street", "zip", "city", "firstName", "lastName", "phone", "email"];
+    return required.every((name) => Boolean(value(name))) && value("email").includes("@");
+  };
+  const canSubmit = () => step === 3 && selectedServices().length > 0 && hasCompleteSchedule() && hasCompleteContactDetails();
+  const updateProgress = () => {
+    panels.forEach((panel) => {
+      const active = Number(panel.dataset.inquiryStep) === step;
+      panel.hidden = !active;
+      panel.classList.toggle("active", active);
+    });
+    progress.forEach((button) => {
+      const target = Number(button.dataset.stepJump);
+      button.classList.toggle("active", target === step);
+      button.classList.toggle("complete", target < step);
+    });
+    backButton.hidden = step === 1;
+    nextButton.hidden = step === 3;
+    submitButton.hidden = step !== 3;
+    submitButton.disabled = !canSubmit();
+  };
+
+  const validateStep = (targetStep = step) => {
+    clearMessages();
+    if (targetStep === 1 && !selectedServices().length) {
+      showError("Bitte wähle mindestens eine Dienstleistung aus.");
+      return false;
+    }
+    if (targetStep === 2) {
+      const schedules = scheduleData();
+      if (!schedules.length) {
+        showError("Bitte wähle zuerst mindestens eine Dienstleistung aus.");
+        return false;
+      }
+      const invalid = schedules.find((schedule) =>
+        !schedule.frequency ||
+        !schedule.windows.length ||
+        schedule.windows.some((group) =>
+          !group.date ||
+          group.date < minDateValue ||
+          group.date > maxDateValue ||
+          !group.times?.length ||
+          group.times.some((time) =>
+            !time.from ||
+            !time.to ||
+            time.to <= time.from
+          )
+        )
+      );
+      if (invalid) {
+        showError("Bitte fülle Datum, Von/Bis-Zeit und Häufigkeit für jede ausgewählte Dienstleistung aus.");
+        return false;
+      }
+    }
+    if (targetStep === 3) {
+      const required = ["street", "zip", "city", "firstName", "lastName", "phone", "email"];
+      if (required.some((name) => !value(name))) {
+        showError("Bitte fülle Adresse und Kontaktdaten vollständig aus.");
+        return false;
+      }
+      if (!value("email").includes("@")) {
+        showError("Bitte gib eine gültige E-Mail-Adresse ein.");
+        return false;
+      }
+    }
+    return true;
+  };
+  const goToStep = (target) => {
+    if (target > step && !validateStep(step)) return;
+    step = target;
+    maxStep = Math.max(maxStep, step);
+    clearMessages();
+    if (step === 2) renderScheduleBlocks();
+    updateProgress();
+    form.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
+  nextButton.addEventListener("click", () => goToStep(Math.min(3, step + 1)));
+  backButton.addEventListener("click", () => goToStep(Math.max(1, step - 1)));
+  progress.forEach((button) => {
+    button.addEventListener("click", () => {
+      const target = Number(button.dataset.stepJump);
+      if (target <= maxStep || target === step + 1) goToStep(target);
+    });
+  });
+  form.addEventListener("click", (event) => {
+    const serviceCard = event.target.closest(".service-choice-card");
+    if (serviceCard && event.target.closest("span")) {
+      const input = serviceCard.querySelector('[name="requested-services"]');
+      if (input) {
+        event.preventDefault();
+        input.checked = !input.checked;
+        input.dispatchEvent(new Event("change", { bubbles: true }));
+      }
+      return;
+    }
+
+    const addTimeToDate = event.target.closest("[data-add-time-to-date]");
+    if (addTimeToDate) {
+      const group = addTimeToDate.closest("[data-date-group]");
+      group?.querySelector("[data-time-window-list]")?.insertAdjacentHTML("beforeend", renderTimeWindow({}, true));
+      updateTimeOptions();
+      updateProgress();
+      return;
+    }
+
+    const addDateGroup = event.target.closest("[data-add-date-group]");
+    if (addDateGroup) {
+      addDateGroup.closest("[data-service-schedule]")?.querySelector("[data-date-group-list]")?.insertAdjacentHTML("beforeend", renderDateGroup({}, true));
+      updateTimeOptions();
+      updateProgress();
+      return;
+    }
+
+    const removeDateGroup = event.target.closest("[data-remove-date-group]");
+    if (removeDateGroup) {
+      removeDateGroup.closest("[data-date-group]")?.remove();
+      updateProgress();
+      return;
+    }
+
+    const removeWindow = event.target.closest("[data-remove-window]");
+    if (removeWindow) {
+      removeWindow.closest("[data-time-window]")?.remove();
+      updateProgress();
+      return;
+    }
+
+    const addTutoringRequest = event.target.closest("[data-add-tutoring-request]");
+    if (addTutoringRequest) {
+      form.querySelector("[data-tutoring-request-list]")?.insertAdjacentHTML("beforeend", renderTutoringRequest());
+      updateProgress();
+      return;
+    }
+
+    const removeTutoringRequest = event.target.closest("[data-remove-tutoring-request]");
+    if (removeTutoringRequest) {
+      removeTutoringRequest.closest("[data-tutoring-request]")?.remove();
+      updateProgress();
+      return;
+    }
+
+    const removeTutoringSubject = event.target.closest("[data-remove-tutoring-subject]");
+    if (removeTutoringSubject) {
+      const list = removeTutoringSubject.closest("[data-tutoring-subject-list]");
+      removeTutoringSubject.closest("[data-tutoring-subject-item]")?.remove();
+      if (list && !list.querySelector("[data-tutoring-subject-item]")) list.hidden = true;
+      updateProgress();
+      return;
+    }
+
+    const removeBuildTask = event.target.closest("[data-remove-build-task]");
+    if (removeBuildTask) {
+      const list = removeBuildTask.closest("[data-multi-select-list]");
+      removeBuildTask.closest("[data-build-task-item]")?.remove();
+      if (list && !list.querySelector("[data-build-task-item]")) list.hidden = true;
+      updateProgress();
+      return;
+    }
+
+    const removePaintingTask = event.target.closest("[data-remove-painting-task]");
+    if (removePaintingTask) {
+      const list = removePaintingTask.closest("[data-multi-select-list]");
+      removePaintingTask.closest("[data-painting-task-item]")?.remove();
+      if (list && !list.querySelector("[data-painting-task-item]")) list.hidden = true;
+      updateProgress();
+      return;
+    }
+
+    const removeTask = event.target.closest("[data-remove-task]");
+    if (removeTask) {
+      const list = form.querySelector(`[data-multi-select-list="${removeTask.dataset.removeTaskList}"]`);
+      if (!list) return;
+      list.dataset.values = JSON.stringify(selectedValues(removeTask.dataset.removeTaskList).filter((item) => item !== removeTask.dataset.removeTask));
+      updateMultiSelectList(removeTask.dataset.removeTaskList);
+    }
+  });
+  form.addEventListener("change", (event) => {
+    if (event.target.matches('[name="requested-services"]')) updateDetailCards();
+    if (event.target.matches("[data-window-from]")) updateTimeOptions();
+    if (event.target.matches("[data-tutoring-subject-select]")) {
+      const subject = event.target.value;
+      const block = event.target.closest("[data-tutoring-request]");
+      const list = block?.querySelector("[data-tutoring-subject-list]");
+      const alreadySelected = list && [...list.querySelectorAll("[data-tutoring-subject-item]")]
+        .some((item) => item.dataset.tutoringSubjectItem === subject);
+      if (subject && list && !alreadySelected) {
+        list.insertAdjacentHTML("beforeend", renderTutoringSubjectItem(subject));
+        list.hidden = false;
+      }
+      event.target.value = "";
+    }
+    updateProgress();
+  });
+  form.addEventListener("input", () => {
+    updateProgress();
+  });
+  form.querySelectorAll("[data-multi-select]").forEach((select) => {
+    select.addEventListener("change", () => {
+      const name = select.dataset.multiSelect;
+      const list = form.querySelector(`[data-multi-select-list="${name}"]`);
+      if (!select.value || !list) return;
+      if (name === "detailBuildTask") {
+        list.insertAdjacentHTML("beforeend", renderBuildTaskItem(select.value));
+        list.hidden = false;
+        select.value = "";
+        updateProgress();
+        return;
+      }
+      if (name === "detailPaintingTask") {
+        list.insertAdjacentHTML("beforeend", renderPaintingTaskItem(select.value));
+        list.hidden = false;
+        select.value = "";
+        updateProgress();
+        return;
+      }
+      const values = selectedValues(name);
+      if (!values.includes(select.value)) values.push(select.value);
+      list.dataset.values = JSON.stringify(values);
+      select.value = "";
+      updateMultiSelectList(name);
+    });
+  });
   form.addEventListener("submit", async (event) => {
     event.preventDefault();
-    clearMessages();
+    if (!validateStep(3) || !validateStep(2)) return;
 
-    if (!services().length) {
-      showError("Bitte wähle mindestens einen Bereich aus.");
-      return;
-    }
-    if (!value("duration")) {
-      showError("Bitte schätze die Dauer in vollen Stunden ein.");
-      return;
-    }
-    if (!value("frequency")) {
-      showError("Bitte wähle aus, ob du einmalig oder dauerhaft Hilfe suchst.");
-      return;
-    }
-    if (hasMissingAppointment()) {
-      showError("Bitte gib für jede ausgewählte Dienstleistung ein Datum sowie eine Von- und Bis-Uhrzeit an.");
-      return;
-    }
-    if (hasInvalidAppointmentDate()) {
-      showError("Bitte wähle Termine ab heute und maximal vier Wochen in die Zukunft.");
-      return;
-    }
-    if (hasInvalidAppointmentTime() || hasInvalidAvailabilityTime()) {
-      showError("Bitte achte darauf, dass die Bis-Uhrzeit nach der Von-Uhrzeit liegt.");
-      return;
-    }
-    if (!value("firstName") || !value("lastName") || !value("street") || !value("zip") || !value("city") || !value("phone") || !value("email")) {
-      showError("Bitte gib Name, Kontakt und vollständige Adresse an.");
-      return;
-    }
-    if (!value("email").includes("@")) {
-      showError("Bitte gib eine gültige E-Mail-Adresse ein.");
-      return;
-    }
-
-    submit.disabled = true;
-    submit.textContent = "Anfrage wird gesendet ...";
+    submitButton.disabled = true;
+    submitButton.textContent = "Anfrage wird gesendet ...";
+    const schedules = scheduleData();
+    const firstWindow = schedules.flatMap((schedule) =>
+      schedule.windows.flatMap((group) =>
+        group.times.map((time) => ({ ...time, date: group.date, service: schedule.service }))
+      )
+    )[0] || {};
 
     try {
       const response = await fetch("/api/bookings", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          services: services(),
+          services: selectedServices(),
           extraTask: detailText(),
           locationNotes: value("locationNotes"),
-          availability: {
-            ...availabilityData(),
-            serviceAppointments: serviceAppointments(),
-            summary: appointmentSummaryText(),
-          },
+          availability: { serviceAppointments: schedules },
           detailNotes: detailNotes(),
-          name: fullName(),
-          address: fullAddress(),
-          contact: contactText(),
-          duration: `${value("duration")} volle Stunde(n)`,
-          frequency: value("frequency") || "Prüfung angefragt",
+          name: [value("firstName"), value("lastName")].filter(Boolean).join(" "),
+          address: [value("street"), value("zip"), value("city")].filter(Boolean).join(", "),
+          contact: [value("email"), value("phone")].filter(Boolean).join(", "),
+          duration: schedules.map((schedule) => `${schedule.service}: ${schedule.duration}`).join("; "),
+          frequency: schedules.map((schedule) => `${schedule.service}: ${schedule.frequency}`).join("; "),
           firstName: value("firstName"),
           lastName: value("lastName"),
           street: value("street"),
@@ -437,110 +626,31 @@
           city: value("city"),
           phone: value("phone"),
           email: value("email"),
-          date: flatServiceAppointments()[0]?.date || "",
-          time: flatServiceAppointments()[0]?.from || "",
+          date: firstWindow.date || "",
+          time: firstWindow.from || "",
         }),
       });
-      if (!response.ok) throw new Error("Anfrage konnte nicht gespeichert werden.");
+      if (!response.ok) throw new Error("Anfrage konnte nicht gesendet werden.");
       confirmation.hidden = false;
+      error.hidden = true;
       form.reset();
       multiSelectLists.forEach((list) => {
         list.dataset.values = "[]";
+        updateMultiSelectList(list.dataset.multiSelectList);
       });
-      updateMultiSelectLists();
+      step = 1;
+      maxStep = 1;
       updateDetailCards();
-      updateDurationEstimate();
-      updateAvailabilityRows();
-      renderServiceAppointments();
-    } catch (err) {
+      updateProgress();
+    } catch {
       showError("Die Anfrage konnte nicht gesendet werden. Bitte versuche es später erneut.");
     } finally {
-      submit.disabled = false;
-      submit.textContent = "Heinzelchen anfragen";
+      submitButton.textContent = "Heinzelchen anfragen";
+      updateProgress();
     }
   });
 
-  form.querySelectorAll('[name="requested-services"]').forEach((input) => {
-    input.addEventListener("change", updateDetailCards);
-  });
-  form.querySelectorAll("[data-multi-select]").forEach((select) => {
-    select.addEventListener("change", () => {
-      const name = select.dataset.multiSelect;
-      const selected = select.value;
-      const list = form.querySelector(`[data-multi-select-list="${name}"]`);
-      if (!selected || !list) return;
-      const current = selectedValues(name);
-      if (!current.includes(selected)) current.push(selected);
-      list.dataset.values = JSON.stringify(current);
-      select.value = "";
-      updateMultiSelectList(name);
-    });
-  });
-  form.addEventListener("click", (event) => {
-    const addAppointmentButton = event.target.closest("[data-add-appointment]");
-    if (addAppointmentButton && appointmentContainer?.contains(addAppointmentButton)) {
-      const card = addAppointmentButton.closest("[data-service-appointment-card]");
-      const rows = card?.querySelector("[data-appointment-rows]");
-      const service = addAppointmentButton.dataset.addAppointment;
-      if (rows) {
-        rows.insertAdjacentHTML("beforeend", renderAppointmentDateGroup({ ...createAppointmentDate(service), removable: true }));
-      }
-      return;
-    }
-
-    const addAppointmentTimeButton = event.target.closest("[data-add-appointment-time]");
-    if (addAppointmentTimeButton && appointmentContainer?.contains(addAppointmentTimeButton)) {
-      const dateGroup = addAppointmentTimeButton.closest("[data-service-appointment-date]");
-      const rows = dateGroup?.querySelector("[data-appointment-times]");
-      if (rows) {
-        rows.insertAdjacentHTML("beforeend", renderAppointmentTimeRow({ ...createAppointmentTime(), removable: true }));
-      }
-      return;
-    }
-
-    const removeAppointmentButton = event.target.closest("[data-remove-appointment]");
-    if (removeAppointmentButton && appointmentContainer?.contains(removeAppointmentButton)) {
-      const row = removeAppointmentButton.closest("[data-service-appointment-time-row]");
-      const dateGroup = row?.closest("[data-service-appointment-date]");
-      row?.remove();
-      if (dateGroup && !dateGroup.querySelector("[data-service-appointment-time-row]")) {
-        dateGroup.remove();
-      }
-      return;
-    }
-
-    const removeAppointmentDateButton = event.target.closest("[data-remove-appointment-date]");
-    if (removeAppointmentDateButton && appointmentContainer?.contains(removeAppointmentDateButton)) {
-      removeAppointmentDateButton.closest("[data-service-appointment-date]")?.remove();
-      return;
-    }
-
-    const removeButton = event.target.closest("[data-remove-task]");
-    if (!removeButton) return;
-    const name = removeButton.dataset.removeTaskList;
-    const list = form.querySelector(`[data-multi-select-list="${name}"]`);
-    if (!list) return;
-    list.dataset.values = JSON.stringify(selectedValues(name).filter((task) => task !== removeButton.dataset.removeTask));
-    updateMultiSelectList(name);
-  });
-  availabilityRows.forEach((row) => {
-    row.querySelector("[data-availability-day]")?.addEventListener("change", updateAvailabilityRows);
-  });
-  form.querySelectorAll('[name="detailGardenTask"]').forEach((input) => {
-    input.addEventListener("change", updateGardenTaskSummary);
-  });
-  form.querySelectorAll('[name="detailCleaningTask"]').forEach((input) => {
-    input.addEventListener("change", updateCleaningTaskSummary);
-  });
-  form.querySelectorAll('[name="detailTutoringTask"], [name="detailCareTask"], [name="detailBuildTask"], [name="detailPaintingTask"]').forEach((input) => {
-    input.addEventListener("change", updateDurationEstimate);
-  });
-  form.querySelector('[name="detailOtherTask"]')?.addEventListener("change", updateOtherCustomField);
-  ["detailGardenSize", "detailGardenCustom", "detailCleaningSize", "detailCleaningCustom", "detailTutoringTopic", "detailOtherCustom"].forEach((name) => {
-    form.querySelector(`[name="${name}"]`)?.addEventListener("input", updateDurationEstimate);
-  });
+  multiSelectLists.forEach((list) => updateMultiSelectList(list.dataset.multiSelectList));
   updateDetailCards();
-  updateMultiSelectLists();
-  updateAvailabilityRows();
-  renderServiceAppointments();
+  updateProgress();
 })();
