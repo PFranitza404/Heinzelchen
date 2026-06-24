@@ -4760,9 +4760,10 @@ body:not(.home) .footer-bottom{
 :root{
   --color-primary:#1E3A5F;
   --color-primary-deep:#1E3A5F;
-  --color-navbar:#1E3A5F;
+  --color-navbar:#E4DCCB;
   --color-navbar-hover:#5DADE2;
-  --color-navbar-text:#FFFFFF;
+  --color-navbar-logo:#A63D52;
+  --color-navbar-link:#5578A8;
   --color-navbar-active-text:#FFFFFF;
   --color-primary-rgb:30,58,95;
 }
@@ -4775,11 +4776,14 @@ body nav{
 
 body nav .nav-logo,
 body nav .nav-logo span,
+body nav a.nav-logo:not(.btn-primary):not(.btn-book):not(.btn-book-main):not(.nav-cta){
+  color:var(--color-navbar-logo)!important;
+}
+
 body nav .nav-links a,
 body nav .nav-toggle,
-body nav a.nav-logo:not(.btn-primary):not(.btn-book):not(.btn-book-main):not(.nav-cta),
 body nav .nav-links li a:not(.btn-primary):not(.btn-book):not(.btn-book-main):not(.nav-cta){
-  color:var(--color-navbar-text)!important;
+  color:var(--color-navbar-link)!important;
 }
 
 body nav .nav-links a{
@@ -5338,5 +5342,24 @@ body:not(.home) footer{
 
   #so-startest-du .step{
     min-height:auto;
+  }
+}
+
+body.home > nav{
+  background:#5578A8!important;
+}
+
+body.home > nav .nav-logo,
+body.home > nav .nav-logo span,
+body.home > nav .nav-links a,
+body.home > nav .nav-toggle,
+body.home > nav a.nav-logo:not(.btn-primary):not(.btn-book):not(.btn-book-main):not(.nav-cta),
+body.home > nav .nav-links li a:not(.btn-primary):not(.btn-book):not(.btn-book-main):not(.nav-cta){
+  color:#A63D52!important;
+}
+
+@media(max-width:960px){
+  body.home > nav .nav-links{
+    background:#5578A8!important;
   }
 }

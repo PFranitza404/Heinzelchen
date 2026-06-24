@@ -7,7 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/styles.css?v=nav-20260623">
+<link rel="stylesheet" href="assets/styles.css">
 </head>
 <body class="home">
 <nav>
@@ -27,10 +27,23 @@
       <h1>Alltagshilfe, die sich <em>wirklich</em> kümmert.</h1>
       <p class="hero-sub">Ob Gartenarbeit, Einkauf oder Nachhilfe: Bei uns findest du zuverlässige Menschen, die dir den Alltag erleichtern. Schnell gebucht, persönlich betreut.</p>
       <div class="hero-actions">
-        <a href="leistungen.html#buchen" class="btn-primary">Hilfe buchen</a>
-        <a href="leistungen.html#buchen" class="btn-secondary">Leistungen ansehen →</a>
+        <a href="buchen.html" class="btn-primary">Hilfe buchen</a>
+        <a href="buchen.html" class="btn-secondary">Leistungen ansehen →</a>
+      </div>
+      <div class="hero-trust">
+        <div class="trust-item"><strong>2.400+</strong><span>Buchungen abgeschlossen</span></div>
+        <div class="trust-item"><strong>4,9 / 5</strong><span>Durchschnittliche Bewertung</span></div>
+        <div class="trust-item"><strong>98 %</strong><span>Zufriedene Kunden</span></div>
       </div>
     </div>
+  </div>
+</section>
+<section class="stats-bar">
+  <div class="stats-inner">
+    <div class="stat"><strong>320+</strong><span>Geprüfte Helfer</span></div>
+    <div class="stat"><strong>8</strong><span>Leistungskategorien</span></div>
+    <div class="stat"><strong>24 h</strong><span>Buchung bis Einsatz</span></div>
+    <div class="stat"><strong>100 %</strong><span>Versicherte Helfer</span></div>
   </div>
 </section>
 <section class="service-marquee-section" id="dienstleistungen">
@@ -68,7 +81,7 @@
     </div>
     <div class="home-service-list-grid">
       <article class="home-service-item" id="gartenarbeit" data-service-card="gartenarbeit">
-        <div class="home-service-media" aria-hidden="true"><img src="assets/service-gartenarbeit-ai.png" alt=""></div>
+        <div class="home-service-media" aria-hidden="true">🌿</div>
         <h3>Gartenarbeit</h3>
         <details class="home-service-details">
           <summary>Mehr erfahren</summary>
@@ -89,7 +102,7 @@
         </details>
       </article>
       <article class="home-service-item" id="putzen-reinigen" data-service-card="putzen-reinigen">
-        <div class="home-service-media" aria-hidden="true"><img src="assets/service-reinigung-ai.png" alt=""></div>
+        <div class="home-service-media" aria-hidden="true">🧹</div>
         <h3>Reinigung & Putzen</h3>
         <details class="home-service-details">
           <summary>Mehr erfahren</summary>
@@ -103,7 +116,7 @@
         </details>
       </article>
       <article class="home-service-item" id="nachhilfe" data-service-card="nachhilfe">
-        <div class="home-service-media" aria-hidden="true"><img src="assets/service-nachhilfe-ai.png" alt=""></div>
+        <div class="home-service-media" aria-hidden="true">📚</div>
         <h3>Nachhilfe</h3>
         <details class="home-service-details">
           <summary>Mehr erfahren</summary>
@@ -125,7 +138,7 @@
         </details>
       </article>
       <article class="home-service-item" id="betreuung" data-service-card="betreuung">
-        <div class="home-service-media" aria-hidden="true"><img src="assets/service-betreuung-ai.png" alt=""></div>
+        <div class="home-service-media" aria-hidden="true">🧸</div>
         <h3>Betreuung</h3>
         <details class="home-service-details">
           <summary>Mehr erfahren</summary>
@@ -141,7 +154,7 @@
         </details>
       </article>
       <article class="home-service-item" id="aufbau" data-service-card="aufbau">
-        <div class="home-service-media" aria-hidden="true"><img src="assets/service-aufbau-ai.png" alt=""></div>
+        <div class="home-service-media" aria-hidden="true">🧰</div>
         <h3>Aufbau</h3>
         <details class="home-service-details">
           <summary>Mehr erfahren</summary>
@@ -155,7 +168,7 @@
         </details>
       </article>
       <article class="home-service-item" id="malerarbeiten" data-service-card="malerarbeiten">
-        <div class="home-service-media" aria-hidden="true"><img src="assets/service-malerarbeiten-ai.png" alt=""></div>
+        <div class="home-service-media" aria-hidden="true">🎨</div>
         <h3>Malereiarbeiten</h3>
         <details class="home-service-details">
           <summary>Mehr erfahren</summary>
@@ -169,7 +182,7 @@
         </details>
       </article>
       <article class="home-service-item" id="sonstiges" data-service-card="sonstiges">
-        <div class="home-service-media" aria-hidden="true"><img src="assets/service-sonstiges-ai.png" alt=""></div>
+        <div class="home-service-media" aria-hidden="true">✨</div>
         <h3>Sonstiges</h3>
         <details class="home-service-details">
           <summary>Mehr erfahren</summary>
@@ -177,52 +190,6 @@
         </details>
       </article>
     </div>
-  </div>
-</section>
-<section class="home-helper-cta" aria-labelledby="home-helper-cta-title">
-  <div class="home-helper-cta-inner">
-    <div class="home-helper-cta-card">
-      <div class="home-helper-cta-image" aria-hidden="true">
-        <img src="assets/home-heinzelchen-taetig-ai.png" alt="">
-      </div>
-      <div class="home-helper-cta-content">
-        <div class="section-label">Selbstständig helfen</div>
-        <h2 id="home-helper-cta-title">Selbst als Heinzelchen tätig werden</h2>
-        <div class="home-helper-cta-copy">
-          <p>Du möchtest in deiner Freizeit etwas dazuverdienen und anderen im Alltag helfen? Über Heinzelchen kannst du als selbstständige Person Aufgaben in deiner Nähe übernehmen – flexibel, zu deinem eigenen Stundenlohn und völlig ohne Festanstellung.</p>
-          <p>Heinzelchen vermittelt den Kontakt zwischen Hilfesuchenden und selbstständig tätigen Helfern. Du entscheidest selbst welche Aufgaben du annimmst, wann du arbeitest und was du verlangst. Heinzelchen ist kein Arbeitgeber – du arbeitest eigenverantwortlich auf eigene Rechnung.</p>
-        </div>
-        <a class="btn-primary" href="/heinzelchen-werden">Jetzt als Heinzelchen registrieren</a>
-      </div>
-    </div>
-  </div>
-</section>
-<section class="content page-section anbieter-faq">
-  <div class="anbieter-faq-head reveal">
-    <div class="section-label">Kurz geklärt</div>
-    <h2>Häufige Fragen</h2>
-  </div>
-  <div class="anbieter-faq-list">
-    <details class="anbieter-faq-item reveal">
-      <summary>Was ist Heinzelchen?</summary>
-      <p>Heinzelchen vermittelt Alltagshilfe in deiner Nähe. Du beschreibst, wobei du Unterstützung brauchst, und wir bringen dich mit passenden selbstständig tätigen Helfern zusammen.</p>
-    </details>
-    <details class="anbieter-faq-item reveal">
-      <summary>Welche Aufgaben kann ich anfragen?</summary>
-      <p>Typische Aufgaben sind Gartenarbeit, Reinigung, Nachhilfe, Kinder- oder Haustierbetreuung, Aufbau, Malerarbeiten, Wäsche und besondere Einzelaufgaben nach Absprache.</p>
-    </details>
-    <details class="anbieter-faq-item reveal">
-      <summary>Sind die Heinzelchen angestellt?</summary>
-      <p>Nein. Heinzelchen sind selbstständig tätig und entscheiden eigenverantwortlich, welche Aufgaben sie annehmen. Wir vermitteln den Kontakt und helfen dabei, passende Anfragen und Helfer zusammenzubringen.</p>
-    </details>
-    <details class="anbieter-faq-item reveal">
-      <summary>Wie schnell bekomme ich eine Rückmeldung?</summary>
-      <p>Nach deiner Anfrage prüfen wir Dienstleistung, Ort, Zeitfenster und Verfügbarkeit. Danach melden wir uns persönlich mit einer Einschätzung oder einem passenden Vorschlag.</p>
-    </details>
-    <details class="anbieter-faq-item reveal">
-      <summary>Kann ich auch selbst Heinzelchen werden?</summary>
-      <p>Ja. Wenn du volljährig bist und selbstständig Aufgaben übernehmen möchtest, kannst du dich kostenlos als Heinzelchen registrieren und deine Dienstleistungen, Verfügbarkeit und deinen Stundenlohn angeben.</p>
-    </details>
   </div>
 </section>
 </main>
@@ -251,7 +218,7 @@
     <div class="footer-col">
       <h4>Rechtliches</h4>
       <a href="datenschutz.html">Datenschutz</a>
-      <a href="/agb">AGB</a>
+      <a href="agb.html">AGB</a>
       <a href="impressum.html">Impressum</a>
     </div>
   </div>
