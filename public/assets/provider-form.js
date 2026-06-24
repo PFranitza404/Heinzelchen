@@ -18,12 +18,90 @@
   let step = 1;
   let maxStep = 1;
   const confirmedServices = new Set();
+  const draftStorageKey = "heinzelchen.providerFormDraft.v1";
+  let restoringDraft = false;
 
   const value = (name) => form.querySelector(`[name="${name}"]`)?.value.trim() || "";
   const values = (name) => [...form.querySelectorAll(`[name="${name}"]:checked`)].map((input) => input.value);
   const priceName = (service) => `price${service.replace(/[^A-Za-zÄÖÜäöüß]/g, "")}`;
   const servicePriceInput = (card) => card.querySelector(`[name="${priceName(card.dataset.providerService)}"]`);
   const slug = (text) => `${text}`.replace(/[^A-Za-z0-9]/g, "");
+  const draftFields = () => [...form.querySelectorAll("input, select, textarea")]
+    .filter((field) => field.name && field.type !== "file");
+  const draftFieldKey = (field, index) => field.type === "checkbox" || field.type === "radio"
+    ? `${field.name}::${field.value}`
+    : `${field.name}::${index}`;
+
+  const collectDraftFields = () => Object.fromEntries(draftFields().map((field, index) => [
+    draftFieldKey(field, index),
+    field.type === "checkbox" || field.type === "radio" ? field.checked : field.value,
+  ]));
+
+  const applyDraftFields = (fields = {}) => {
+    draftFields().forEach((field, index) => {
+      const key = draftFieldKey(field, index);
+      if (!(key in fields)) return;
+      if (field.type === "checkbox" || field.type === "radio") {
+        field.checked = fields[key] === true;
+      } else {
+        field.value = fields[key] || "";
+      }
+    });
+  };
+
+  const saveDraft = () => {
+    if (restoringDraft) return;
+    try {
+      localStorage.setItem(draftStorageKey, JSON.stringify({
+        step,
+        maxStep,
+        confirmedServices: [...confirmedServices],
+        fields: collectDraftFields(),
+        openServices: serviceCards
+          .filter((card) => card.querySelector("[data-provider-service-detail]")?.hidden === false)
+          .map((card) => card.dataset.providerService),
+      }));
+    } catch {
+      // Local draft saving is best-effort.
+    }
+  };
+
+  const clearDraft = () => {
+    try {
+      localStorage.removeItem(draftStorageKey);
+    } catch {
+      // Local draft saving is best-effort.
+    }
+  };
+
+  const restoreDraft = () => {
+    let draft = null;
+    try {
+      draft = JSON.parse(localStorage.getItem(draftStorageKey) || "null");
+    } catch {
+      return false;
+    }
+    if (!draft) return false;
+
+    restoringDraft = true;
+    step = Math.min(3, Math.max(1, Number(draft.step) || 1));
+    maxStep = Math.min(3, Math.max(step, Number(draft.maxStep) || step));
+    confirmedServices.clear();
+    (Array.isArray(draft.confirmedServices) ? draft.confirmedServices : []).forEach((service) => confirmedServices.add(service));
+    applyDraftFields(draft.fields);
+    renderTutoringSubjectsByGrade();
+    applyDraftFields(draft.fields);
+    const openServices = new Set(Array.isArray(draft.openServices) ? draft.openServices : []);
+    serviceCards.forEach((card) => {
+      const detail = card.querySelector("[data-provider-service-detail]");
+      if (detail) detail.hidden = !openServices.has(card.dataset.providerService);
+    });
+    updateSkillsValue();
+    updateAvailabilityRows();
+    toggleStep();
+    restoringDraft = false;
+    return true;
+  };
 
   const showError = (text) => {
     if (!error) return;
@@ -171,6 +249,7 @@
     card.querySelector("[data-provider-service-toggle]")?.addEventListener("click", () => {
       const detail = card.querySelector("[data-provider-service-detail]");
       if (detail) detail.hidden = !detail.hidden;
+      saveDraft();
     });
 
     card.querySelector("[data-provider-add-service]")?.addEventListener("click", () => {
@@ -186,15 +265,22 @@
       const detail = card.querySelector("[data-provider-service-detail]");
       if (detail) detail.hidden = true;
       updateSkillsValue();
+      saveDraft();
     });
   });
 
   form.querySelectorAll('[name="tutoringGrades"]').forEach((input) => {
-    input.addEventListener("change", renderTutoringSubjectsByGrade);
+    input.addEventListener("change", () => {
+      renderTutoringSubjectsByGrade();
+      saveDraft();
+    });
   });
 
   availabilityRows.forEach((row) => {
-    row.querySelector("[data-provider-day]")?.addEventListener("change", updateAvailabilityRows);
+    row.querySelector("[data-provider-day]")?.addEventListener("change", () => {
+      updateAvailabilityRows();
+      saveDraft();
+    });
   });
 
   progress.forEach((button) => {
@@ -204,6 +290,7 @@
         step = target;
         clearError();
         toggleStep();
+        saveDraft();
       }
     });
   });
@@ -212,6 +299,7 @@
     step = Math.max(1, step - 1);
     clearError();
     toggleStep();
+    saveDraft();
   });
 
   nextButton?.addEventListener("click", () => {
@@ -219,8 +307,17 @@
     step = Math.min(3, step + 1);
     maxStep = Math.max(maxStep, step);
     toggleStep();
+    saveDraft();
     form.scrollIntoView({ behavior: "smooth", block: "start" });
   });
+
+  form.querySelectorAll('a[href$="datenschutz.html"], a[href$="nutzungsbedingungen.html"], a[href$="agb.html"]').forEach((link) => {
+    link.addEventListener("click", saveDraft);
+  });
+
+  form.addEventListener("input", saveDraft);
+  form.addEventListener("change", saveDraft);
+  window.addEventListener("beforeunload", saveDraft);
 
   form.addEventListener("submit", async (event) => {
     event.preventDefault();
@@ -286,6 +383,7 @@
       if (!response.ok) throw new Error("Speichern fehlgeschlagen");
       if (message) message.textContent = "Registrierung erhalten. Wir prüfen deine Angaben und melden uns mit passenden Aufgaben.";
       form.reset();
+      clearDraft();
       confirmedServices.clear();
       step = 1;
       maxStep = 1;
@@ -294,12 +392,14 @@
       updateAvailabilityRows();
       toggleStep();
     } catch {
-      if (message) message.textContent = "Die Registrierung konnte nicht gespeichert werden. Bitte starte die Website über den lokalen Server.";
+      if (message) message.textContent = "Die Registrierung konnte nicht gespeichert werden. Bitte versuche es gleich erneut oder melde dich direkt bei uns.";
     }
   });
 
-  updateSkillsValue();
-  renderTutoringSubjectsByGrade();
-  updateAvailabilityRows();
-  toggleStep();
+  if (!restoreDraft()) {
+    updateSkillsValue();
+    renderTutoringSubjectsByGrade();
+    updateAvailabilityRows();
+    toggleStep();
+  }
 })();

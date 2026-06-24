@@ -19,6 +19,8 @@
   maxDate.setDate(today.getDate() + 28);
   let step = 1;
   let maxStep = 1;
+  const draftStorageKey = "heinzelchen.inquiryDraft.v1";
+  let restoringDraft = false;
 
   const escapeHtml = (text) => `${text || ""}`.replace(/[&<>"']/g, (char) => ({
     "&": "&amp;",
@@ -78,14 +80,16 @@
   const tutoringSubjectOptions = () => ['<option value="">Bitte auswählen</option>']
     .concat(tutoringSubjects.map((subject) => `<option value="${escapeHtml(subject)}">${escapeHtml(subject)}</option>`))
     .join("");
-  const renderTutoringSubjectItem = (subject) => `
+  const renderTutoringSubjectItem = (subject, topic = "") => `
     <div class="tutoring-subject-row" data-tutoring-subject-item="${escapeHtml(subject)}">
       <span>${escapeHtml(subject)}</span>
-      <input type="text" data-tutoring-topic placeholder="${subject === "Anderes Fach" ? "Fach/Thema optional" : "Thema optional"}">
+      <input type="text" data-tutoring-topic placeholder="${subject === "Anderes Fach" ? "Fach/Thema optional" : "Thema optional"}" value="${escapeHtml(topic)}">
       <button class="time-window-remove" type="button" data-remove-tutoring-subject aria-label="Fach entfernen">×</button>
     </div>
   `;
-  const renderTutoringRequest = () => `
+  const renderTutoringRequest = (request = {}) => {
+    const subjects = Array.isArray(request.subjects) ? request.subjects : [];
+    return `
     <div class="tutoring-request-block" data-tutoring-request>
       <div class="tutoring-request-head">
         <strong>Weitere Nachhilfe</strong>
@@ -93,23 +97,26 @@
       </div>
       <div class="booking-field">
         <label>Klasse</label>
-        <select data-tutoring-grade>${tutoringGradeOptions()}</select>
+        <select data-tutoring-grade>${tutoringGradeOptions(request.grade || "")}</select>
       </div>
       <div class="booking-field">
         <label>Fach auswählen</label>
         <select data-tutoring-subject-select>${tutoringSubjectOptions()}</select>
       </div>
-      <div class="tutoring-subject-list" data-tutoring-subject-list hidden></div>
+      <div class="tutoring-subject-list" data-tutoring-subject-list${subjects.length ? "" : " hidden"}>
+        ${subjects.map((item) => renderTutoringSubjectItem(item.subject, item.topic)).join("")}
+      </div>
     </div>
   `;
+  };
   const collectBuildTasks = () => [...form.querySelectorAll("[data-build-task-item]")].map((item) => ({
     task: item.dataset.buildTaskItem || "",
     note: item.querySelector("[data-build-task-note]")?.value.trim() || "",
   })).filter((item) => item.task);
-  const renderBuildTaskItem = (task) => `
+  const renderBuildTaskItem = (task, note = "") => `
     <div class="build-task-row" data-build-task-item="${escapeHtml(task)}">
       <span>${escapeHtml(task)}</span>
-      <input type="text" data-build-task-note placeholder="${task === "Möbel" ? "z.B. Schrank, Schreibtisch oder Bett" : "Weitere Hinweise optional"}">
+      <input type="text" data-build-task-note placeholder="${task === "Möbel" ? "z.B. Schrank, Schreibtisch oder Bett" : "Weitere Hinweise optional"}" value="${escapeHtml(note)}">
       <button class="time-window-remove" type="button" data-remove-build-task aria-label="Aufgabe entfernen">×</button>
     </div>
   `;
@@ -117,10 +124,10 @@
     task: item.dataset.paintingTaskItem || "",
     size: item.querySelector("[data-painting-task-size]")?.value.trim() || "",
   })).filter((item) => item.task);
-  const renderPaintingTaskItem = (task) => `
+  const renderPaintingTaskItem = (task, size = "") => `
     <div class="painting-task-row" data-painting-task-item="${escapeHtml(task)}">
       <span>${escapeHtml(task)}</span>
-      <input type="text" data-painting-task-size placeholder="z.B. ca. 20 qm Wandfläche">
+      <input type="text" data-painting-task-size placeholder="z.B. ca. 20 qm Wandfläche" value="${escapeHtml(size)}">
       <button class="time-window-remove" type="button" data-remove-painting-task aria-label="Maleraufgabe entfernen">×</button>
     </div>
   `;
@@ -208,10 +215,10 @@
       <button class="appointment-time-add-button" type="button" data-add-time-to-date>+ Weitere Uhrzeit für dieses Datum</button>
     </div>
   `;
-  const renderScheduleBlocks = () => {
+  const renderScheduleBlocks = (savedSchedules = null) => {
     if (!appointmentContainer) return;
     const selected = selectedServices();
-    const existing = collectSchedules();
+    const existing = savedSchedules || collectSchedules();
     if (!selected.length) {
       appointmentContainer.innerHTML = '<p class="form-help">Wähle zuerst mindestens eine Dienstleistung aus. Danach kannst du pro Dienst Dauer, Zeitfenster und Häufigkeit angeben.</p>';
       return;
@@ -390,6 +397,101 @@
     submitButton.disabled = !canSubmit();
   };
 
+  const draftFields = () => [...form.querySelectorAll("input, select, textarea")]
+    .filter((field) => field.name && field.type !== "file");
+  const draftFieldKey = (field, index) => field.type === "checkbox" || field.type === "radio"
+    ? `${field.name}::${field.value}`
+    : `${field.name}::${index}`;
+  const collectDraftFields = () => Object.fromEntries(draftFields().map((field, index) => [
+    draftFieldKey(field, index),
+    field.type === "checkbox" || field.type === "radio" ? field.checked : field.value,
+  ]));
+  const applyDraftFields = (fields = {}) => {
+    draftFields().forEach((field, index) => {
+      const key = draftFieldKey(field, index);
+      if (!(key in fields)) return;
+      if (field.type === "checkbox" || field.type === "radio") {
+        field.checked = fields[key] === true;
+      } else {
+        field.value = fields[key] || "";
+      }
+    });
+  };
+  const saveDraft = () => {
+    if (restoringDraft) return;
+    try {
+      localStorage.setItem(draftStorageKey, JSON.stringify({
+        step,
+        maxStep,
+        fields: collectDraftFields(),
+        multiSelects: Object.fromEntries(multiSelectLists.map((list) => [list.dataset.multiSelectList, selectedValues(list.dataset.multiSelectList)])),
+        schedules: collectSchedules(),
+        serviceDurations: collectServiceDurations(),
+        tutoringRequests: collectTutoringRequests(),
+        buildTasks: collectBuildTasks(),
+        paintingTasks: collectPaintingTasks(),
+        selectedServices: selectedServices(),
+      }));
+    } catch {
+      // Local draft saving is best-effort.
+    }
+  };
+  const clearDraft = () => {
+    try {
+      localStorage.removeItem(draftStorageKey);
+    } catch {
+      // Local draft saving is best-effort.
+    }
+  };
+  const restoreDraft = () => {
+    let draft = null;
+    try {
+      draft = JSON.parse(localStorage.getItem(draftStorageKey) || "null");
+    } catch {
+      return false;
+    }
+    if (!draft) return false;
+
+    restoringDraft = true;
+    form.querySelectorAll('[name="requested-services"]').forEach((input) => {
+      input.checked = Array.isArray(draft.selectedServices) && draft.selectedServices.includes(input.value);
+    });
+    applyDraftFields(draft.fields);
+    multiSelectLists.forEach((list) => {
+      const values = draft.multiSelects?.[list.dataset.multiSelectList] || [];
+      list.dataset.values = JSON.stringify(Array.isArray(values) ? values : []);
+      updateMultiSelectList(list.dataset.multiSelectList);
+    });
+    const tutoringList = form.querySelector("[data-tutoring-request-list]");
+    if (tutoringList && Array.isArray(draft.tutoringRequests)) {
+      tutoringList.innerHTML = draft.tutoringRequests.map((request) => renderTutoringRequest(request)).join("");
+    }
+    const buildList = form.querySelector('[data-multi-select-list="detailBuildTask"]');
+    if (buildList && Array.isArray(draft.buildTasks)) {
+      buildList.innerHTML = draft.buildTasks.map((item) => renderBuildTaskItem(item.task, item.note)).join("");
+      buildList.hidden = !draft.buildTasks.length;
+    }
+    const paintingList = form.querySelector('[data-multi-select-list="detailPaintingTask"]');
+    if (paintingList && Array.isArray(draft.paintingTasks)) {
+      paintingList.innerHTML = draft.paintingTasks.map((item) => renderPaintingTaskItem(item.task, item.size)).join("");
+      paintingList.hidden = !draft.paintingTasks.length;
+    }
+    updateDetailCards();
+    renderScheduleBlocks(draft.schedules);
+    Object.entries(draft.serviceDurations || {}).forEach(([service, duration]) => {
+      const select = [...form.querySelectorAll("[data-service-duration]")]
+        .find((field) => field.dataset.serviceDuration === service);
+      if (select) select.value = duration || "0.5h";
+    });
+    applyDraftFields(draft.fields);
+    step = Math.min(3, Math.max(1, Number(draft.step) || 1));
+    maxStep = Math.min(3, Math.max(step, Number(draft.maxStep) || step));
+    updateTimeOptions();
+    updateProgress();
+    restoringDraft = false;
+    return true;
+  };
+
   const validateStep = (targetStep = step) => {
     clearMessages();
     if (targetStep === 1 && !selectedServices().length) {
@@ -442,6 +544,7 @@
     clearMessages();
     if (step === 2) renderScheduleBlocks();
     updateProgress();
+    saveDraft();
     form.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
@@ -454,6 +557,7 @@
     });
   });
   form.addEventListener("click", (event) => {
+    window.setTimeout(saveDraft, 0);
     const serviceCard = event.target.closest(".service-choice-card");
     if (serviceCard && event.target.closest("span")) {
       const input = serviceCard.querySelector('[name="requested-services"]');
@@ -561,10 +665,13 @@
       event.target.value = "";
     }
     updateProgress();
+    saveDraft();
   });
   form.addEventListener("input", () => {
     updateProgress();
+    saveDraft();
   });
+  window.addEventListener("beforeunload", saveDraft);
   form.querySelectorAll("[data-multi-select]").forEach((select) => {
     select.addEventListener("change", () => {
       const name = select.dataset.multiSelect;
@@ -575,6 +682,7 @@
         list.hidden = false;
         select.value = "";
         updateProgress();
+        saveDraft();
         return;
       }
       if (name === "detailPaintingTask") {
@@ -582,6 +690,7 @@
         list.hidden = false;
         select.value = "";
         updateProgress();
+        saveDraft();
         return;
       }
       const values = selectedValues(name);
@@ -589,6 +698,7 @@
       list.dataset.values = JSON.stringify(values);
       select.value = "";
       updateMultiSelectList(name);
+      saveDraft();
     });
   });
   form.addEventListener("submit", async (event) => {
@@ -634,6 +744,7 @@
       confirmation.hidden = false;
       error.hidden = true;
       form.reset();
+      clearDraft();
       multiSelectLists.forEach((list) => {
         list.dataset.values = "[]";
         updateMultiSelectList(list.dataset.multiSelectList);
@@ -650,7 +761,9 @@
     }
   });
 
-  multiSelectLists.forEach((list) => updateMultiSelectList(list.dataset.multiSelectList));
-  updateDetailCards();
-  updateProgress();
+  if (!restoreDraft()) {
+    multiSelectLists.forEach((list) => updateMultiSelectList(list.dataset.multiSelectList));
+    updateDetailCards();
+    updateProgress();
+  }
 })();
