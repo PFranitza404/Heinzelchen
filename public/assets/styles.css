@@ -5379,3 +5379,190 @@ body.home > nav .nav-links li a:not(.btn-primary):not(.btn-book):not(.btn-book-m
     margin-left:0!important;
   }
 }
+
+/* Global shell color */
+:root{
+  --page-background:#E4DCCB;
+}
+
+html,
+body,
+main,
+nav,
+body.home > nav,
+footer,
+footer .footer-inner,
+footer .footer-bottom{
+  background:#E4DCCB!important;
+  background-color:#E4DCCB!important;
+  background-image:none!important;
+}
+
+@media(max-width:960px){
+  body nav .nav-links,
+  body.home > nav .nav-links{
+    background:#E4DCCB!important;
+    background-color:#E4DCCB!important;
+    background-image:none!important;
+  }
+}
+
+footer,
+body:not(.home) footer{
+  box-shadow:0 0 0 100vmax #E4DCCB!important;
+}
+
+body.home,
+body.home main,
+body.home .hero,
+body.home .stats-bar,
+body.home .home-services-list,
+body:not(.home),
+body:not(.home) main,
+body:not(.home) .hero,
+body:not(.home) .subhero,
+body:not(.home) .stats-bar,
+body:not(.home) .how,
+body:not(.home) .services,
+body:not(.home) .reviews,
+body:not(.home) .content,
+body:not(.home) .booking-flow-section,
+body:not(.home) .provider-form-section,
+body:not(.home) .portal-section,
+body:not(.home) .service-request-section,
+body:not(.home) .page-section,
+body:not(.home) .compact,
+body:not(.home) .booking-services,
+body:not(.home) .booking-why,
+body:not(.home) .inquiry-page,
+body:not(.home) .dispatch-page{
+  background:#E4DCCB!important;
+  background-color:#E4DCCB!important;
+  background-image:none!important;
+}
+
+body.home > nav .nav-logo,
+body.home > nav .nav-logo span,
+body.home > nav a.nav-logo:not(.btn-primary):not(.btn-book):not(.btn-book-main):not(.nav-cta){
+  color:#A63D52!important;
+  font-family:"Fraunces",serif!important;
+  font-weight:700!important;
+}
+
+body.home > nav .nav-links a,
+body.home > nav .nav-links li a:not(.btn-primary):not(.btn-book):not(.btn-book-main):not(.nav-cta),
+body.home > nav .nav-toggle{
+  color:#5578A8!important;
+  font-family:"Lora",serif!important;
+  font-weight:600!important;
+}
+
+body.home .home-story-hero{
+  min-height:calc(100vh - 72px)!important;
+  display:flex!important;
+  align-items:flex-start!important;
+  justify-content:center!important;
+  padding:clamp(.25rem,1vw,.8rem) 5% clamp(3rem,6vw,5rem)!important;
+  background:#E4DCCB!important;
+  background-color:#E4DCCB!important;
+  overflow:hidden!important;
+}
+
+body.home .home-story-hero::before,
+body.home .home-story-hero::after{
+  content:none!important;
+}
+
+body.home .home-story-inner{
+  width:min(760px,100%)!important;
+  margin:0 auto!important;
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  text-align:center!important;
+}
+
+body.home .home-story-illustration{
+  width:min(620px,90vw)!important;
+  height:clamp(235px,39vw,380px)!important;
+  overflow:hidden!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  margin:0 auto clamp(.4rem,1vw,.8rem)!important;
+}
+
+body.home .home-story-illustration img{
+  width:100%!important;
+  height:100%!important;
+  object-fit:contain!important;
+  display:block!important;
+  transform:none!important;
+}
+
+body.home .home-story-inner h1{
+  margin:0 0 clamp(1.15rem,2.6vw,2rem)!important;
+  color:#A63D52!important;
+  font-family:"Fraunces",serif!important;
+  font-size:clamp(4.25rem,13vw,7.55rem)!important;
+  font-weight:900!important;
+  font-variation-settings:"opsz" 9,"wght" 900,"SOFT" 100,"WONK" 1!important;
+  line-height:.9!important;
+  letter-spacing:.005em!important;
+  font-synthesis-weight:none!important;
+  -webkit-text-stroke:0!important;
+  text-shadow:none!important;
+}
+
+body.home .home-story-verse,
+body.home .home-story-note{
+  max-width:680px!important;
+  margin:0 auto!important;
+  color:#5578A8!important;
+  font-family:"Lora",serif!important;
+  font-weight:700!important;
+  letter-spacing:0!important;
+  text-align:center!important;
+}
+
+body.home .home-story-verse{
+  font-size:clamp(1.65rem,4.3vw,2.45rem)!important;
+  line-height:1.24!important;
+}
+
+body.home .home-story-verse span{
+  display:block!important;
+  margin-top:.12em!important;
+  font-style:italic!important;
+  color:#5578A8!important;
+}
+
+body.home .home-story-note{
+  margin-top:clamp(1.45rem,3vw,2.25rem)!important;
+  font-size:clamp(1.55rem,4vw,2.25rem)!important;
+  line-height:1.25!important;
+}
+
+@media(max-width:720px){
+  body.home .home-story-hero{
+    min-height:auto!important;
+    padding-top:.35rem!important;
+  }
+
+  body.home .home-story-illustration{
+    width:min(500px,94vw)!important;
+    height:clamp(220px,64vw,330px)!important;
+  }
+
+  body.home .home-story-inner h1{
+    font-size:clamp(3.65rem,17vw,5.1rem)!important;
+  }
+
+  body.home .home-story-verse{
+    font-size:clamp(1.35rem,6vw,1.85rem)!important;
+  }
+
+  body.home .home-story-note{
+    font-size:clamp(1.3rem,5.6vw,1.75rem)!important;
+  }
+}
