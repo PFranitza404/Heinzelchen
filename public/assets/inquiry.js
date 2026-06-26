@@ -558,16 +558,6 @@
   });
   form.addEventListener("click", (event) => {
     window.setTimeout(saveDraft, 0);
-    const serviceCard = event.target.closest(".service-choice-card");
-    if (serviceCard && event.target.closest("span")) {
-      const input = serviceCard.querySelector('[name="requested-services"]');
-      if (input) {
-        event.preventDefault();
-        input.checked = !input.checked;
-        input.dispatchEvent(new Event("change", { bubbles: true }));
-      }
-      return;
-    }
 
     const addTimeToDate = event.target.closest("[data-add-time-to-date]");
     if (addTimeToDate) {
