@@ -5863,3 +5863,703 @@ body.home .anbieter-faq-item p{
     font-size:clamp(1.2rem,5.1vw,1.55rem)!important;
   }
 }
+
+/* Heinzelchen page theme: carry the homepage look across every static page */
+:root{
+  --heinzel-bg:#E4DCCB;
+  --heinzel-card:#EEE8DA;
+  --heinzel-red:#A63D52;
+  --heinzel-blue:#5578A8;
+  --heinzel-blue-dark:#466997;
+  --heinzel-border:rgba(85,120,168,.22);
+  --heinzel-shadow:0 10px 28px rgba(44,62,80,.045);
+}
+
+body:not(.home),
+body:not(.home) main,
+body:not(.home) section,
+body:not(.home) .subhero,
+body:not(.home) .content,
+body:not(.home) .page-section,
+body:not(.home) .booking-flow-section,
+body:not(.home) .provider-form-section,
+body:not(.home) .portal-section,
+body:not(.home) .service-request-section,
+body:not(.home) .reviews,
+body:not(.home) .how,
+body:not(.home) .services,
+body:not(.home) .booking-intro-hero,
+body:not(.home) .helper-info-strip{
+  background:var(--heinzel-bg)!important;
+  background-color:var(--heinzel-bg)!important;
+  background-image:none!important;
+  color:var(--heinzel-blue)!important;
+  font-family:"Lora",serif!important;
+}
+
+body:not(.home) nav,
+body:not(.home) footer,
+body:not(.home) footer .footer-inner,
+body:not(.home) footer .footer-bottom{
+  background:var(--heinzel-bg)!important;
+  background-color:var(--heinzel-bg)!important;
+  background-image:none!important;
+}
+
+body:not(.home) nav{
+  border-bottom:1px solid var(--heinzel-border)!important;
+  box-shadow:none!important;
+}
+
+body:not(.home) .nav-logo,
+body:not(.home) .nav-logo span,
+body:not(.home) nav a.nav-logo:not(.btn-primary):not(.btn-book):not(.btn-book-main):not(.nav-cta){
+  color:var(--heinzel-red)!important;
+  font-family:"Fraunces",serif!important;
+  font-weight:900!important;
+  font-variation-settings:"opsz" 9,"wght" 900,"SOFT" 100,"WONK" 1!important;
+}
+
+body:not(.home) .nav-links a,
+body:not(.home) .nav-links li a,
+body:not(.home) .nav-toggle{
+  color:var(--heinzel-blue)!important;
+  font-family:"Lora",serif!important;
+  font-weight:700!important;
+  letter-spacing:0!important;
+}
+
+body:not(.home) .nav-links a:hover,
+body:not(.home) .nav-links a.active{
+  color:var(--heinzel-red)!important;
+}
+
+@media(max-width:960px){
+  body:not(.home) nav .nav-links{
+    background:var(--heinzel-bg)!important;
+    border-bottom:1px solid var(--heinzel-border)!important;
+  }
+}
+
+body:not(.home) .subhero{
+  padding:clamp(3.2rem,6vw,5rem) 5% clamp(2.4rem,5vw,4rem)!important;
+  min-height:auto!important;
+  overflow:hidden!important;
+  border-bottom:1px solid rgba(85,120,168,.16)!important;
+}
+
+body:not(.home) .subhero::before,
+body:not(.home) .subhero::after,
+body:not(.home) .hero::before,
+body:not(.home) .hero::after{
+  content:none!important;
+}
+
+body:not(.home) .subhero-inner,
+body:not(.home) .booking-intro-inner{
+  width:min(960px,100%)!important;
+  margin:0 auto!important;
+  text-align:center!important;
+}
+
+body:not(.home) .section-label,
+body:not(.home) .section-label-pill,
+body:not(.home) .booking-intro-eyebrow,
+body:not(.home) .helper-hero-eyebrow{
+  color:var(--heinzel-blue)!important;
+  font-family:"Lora",serif!important;
+  font-weight:700!important;
+  letter-spacing:.04em!important;
+}
+
+body:not(.home) h1,
+body:not(.home) h2,
+body:not(.home) h3,
+body:not(.home) .booking-step-panel h2,
+body:not(.home) .portal-panel h2,
+body:not(.home) .provider-step-panel h2,
+body:not(.home) .review-text{
+  color:var(--heinzel-red)!important;
+  font-family:"Fraunces",serif!important;
+  font-weight:900!important;
+  font-variation-settings:"opsz" 9,"wght" 900,"SOFT" 100,"WONK" 1!important;
+  letter-spacing:0!important;
+}
+
+body:not(.home) h1{
+  font-size:clamp(3rem,7vw,5rem)!important;
+  line-height:.96!important;
+  margin-bottom:clamp(1rem,2.4vw,1.5rem)!important;
+}
+
+body:not(.home) h2{
+  font-size:clamp(2rem,4.6vw,3.35rem)!important;
+  line-height:1.05!important;
+}
+
+body:not(.home) h3{
+  font-size:clamp(1.22rem,2.3vw,1.65rem)!important;
+  line-height:1.15!important;
+}
+
+body:not(.home) p,
+body:not(.home) li,
+body:not(.home) dd,
+body:not(.home) dt,
+body:not(.home) span,
+body:not(.home) .form-help,
+body:not(.home) .section-sub,
+body:not(.home) .subhero p,
+body:not(.home) .content p,
+body:not(.home) .content li,
+body:not(.home) .booking-summary,
+body:not(.home) .booking-summary dd,
+body:not(.home) .booking-summary dt,
+body:not(.home) .provider-account-note,
+body:not(.home) .portal-card p,
+body:not(.home) .portal-card small{
+  color:var(--heinzel-blue)!important;
+  font-family:"Lora",serif!important;
+  letter-spacing:0!important;
+}
+
+body:not(.home) a:not(.btn-primary):not(.btn-book):not(.btn-book-main):not(.nav-cta):not(.nav-logo){
+  color:var(--heinzel-blue)!important;
+  font-family:"Lora",serif!important;
+  font-weight:700!important;
+  text-decoration-thickness:.08em!important;
+  text-underline-offset:.18em!important;
+}
+
+body:not(.home) a:not(.btn-primary):not(.btn-book):not(.btn-book-main):not(.nav-cta):not(.nav-logo):hover{
+  color:var(--heinzel-red)!important;
+}
+
+body:not(.home) .content.page-section,
+body:not(.home) .legal-content,
+body:not(.home) .philosophy,
+body:not(.home) .provider-form,
+body:not(.home) .booking-flow-card,
+body:not(.home) .booking-intro-panel,
+body:not(.home) .portal-panel,
+body:not(.home) .service-request-card,
+body:not(.home) .review-card,
+body:not(.home) .value-card,
+body:not(.home) .philosophy-statement,
+body:not(.home) .step,
+body:not(.home) .service-card,
+body:not(.home) .helper-info-card,
+body:not(.home) .provider-service-card,
+body:not(.home) .service-detail-card,
+body:not(.home) .inquiry-confirmation,
+body:not(.home) .booking-confirmation,
+body:not(.home) .booking-alert,
+body:not(.home) .dispatch-panel,
+body:not(.home) .portal-card{
+  background:var(--heinzel-card)!important;
+  background-color:var(--heinzel-card)!important;
+  border:1px solid var(--heinzel-border)!important;
+  border-radius:18px!important;
+  box-shadow:var(--heinzel-shadow)!important;
+}
+
+body:not(.home) .content.page-section,
+body:not(.home) .legal-content,
+body:not(.home) .philosophy{
+  width:min(1040px,90vw)!important;
+  max-width:1040px!important;
+  margin:clamp(2rem,4vw,3rem) auto clamp(3rem,6vw,5rem)!important;
+  padding:clamp(1.6rem,4vw,3rem)!important;
+}
+
+body:not(.home) .legal-content h2,
+body:not(.home) .legal-content h3,
+body:not(.home) .content h2,
+body:not(.home) .content h3{
+  margin-top:1.6em!important;
+  margin-bottom:.6em!important;
+}
+
+body:not(.home) .legal-content h2:first-child,
+body:not(.home) .content h2:first-child{
+  margin-top:0!important;
+}
+
+body:not(.home) .legal-content p,
+body:not(.home) .legal-content li,
+body:not(.home) .content p,
+body:not(.home) .content li{
+  font-size:1.02rem!important;
+  line-height:1.78!important;
+}
+
+body:not(.home) .values-grid,
+body:not(.home) .reviews-grid,
+body:not(.home) .steps,
+body:not(.home) .services-grid{
+  gap:1.4rem!important;
+}
+
+body:not(.home) .booking-intro-hero{
+  padding:clamp(3rem,6vw,5rem) 5% clamp(2rem,4vw,3.5rem)!important;
+}
+
+body:not(.home) .booking-intro-inner{
+  display:grid!important;
+  grid-template-columns:minmax(0,1.1fr) minmax(280px,.9fr)!important;
+  gap:clamp(1.4rem,4vw,3rem)!important;
+  align-items:center!important;
+  text-align:left!important;
+}
+
+body:not(.home) .booking-intro-copy h1,
+body:not(.home) .booking-intro-copy p{
+  text-align:left!important;
+}
+
+body:not(.home) .booking-intro-panel{
+  padding:1.45rem!important;
+}
+
+body:not(.home) .booking-flow-card,
+body:not(.home) .provider-form,
+body:not(.home) .portal-panel{
+  overflow:hidden!important;
+}
+
+body:not(.home) .booking-main,
+body:not(.home) .booking-summary,
+body:not(.home) .booking-progress,
+body:not(.home) .booking-flow-grid,
+body:not(.home) .provider-step-panel,
+body:not(.home) .provider-progress,
+body:not(.home) .provider-summary,
+body:not(.home) .payment-provider-box,
+body:not(.home) .summary-price{
+  background:var(--heinzel-card)!important;
+  background-color:var(--heinzel-card)!important;
+}
+
+body:not(.home) .booking-progress,
+body:not(.home) .provider-progress{
+  border-bottom:1px solid var(--heinzel-border)!important;
+}
+
+body:not(.home) .progress-step,
+body:not(.home) .provider-progress-step{
+  color:var(--heinzel-blue)!important;
+  font-family:"Lora",serif!important;
+  font-weight:700!important;
+}
+
+body:not(.home) .progress-step.active,
+body:not(.home) .progress-step.complete,
+body:not(.home) .provider-progress-step.active,
+body:not(.home) .provider-progress-step.complete{
+  color:var(--heinzel-red)!important;
+}
+
+body:not(.home) input,
+body:not(.home) select,
+body:not(.home) textarea{
+  background:#F6F0E4!important;
+  border:1px solid var(--heinzel-border)!important;
+  border-radius:12px!important;
+  color:var(--heinzel-blue)!important;
+  font-family:"Lora",serif!important;
+  box-shadow:none!important;
+}
+
+body:not(.home) input:focus,
+body:not(.home) select:focus,
+body:not(.home) textarea:focus{
+  border-color:var(--heinzel-blue)!important;
+  box-shadow:0 0 0 4px rgba(85,120,168,.16)!important;
+}
+
+body:not(.home) label,
+body:not(.home) .booking-field label,
+body:not(.home) .portal-field label,
+body:not(.home) .provider-form label,
+body:not(.home) .card-field label,
+body:not(.home) .payment-check{
+  color:var(--heinzel-red)!important;
+  font-family:"Lora",serif!important;
+  font-weight:700!important;
+  letter-spacing:.02em!important;
+}
+
+body:not(.home) .request-service-option span,
+body:not(.home) .frequency-options span,
+body:not(.home) .skill-option span,
+body:not(.home) .day-option span,
+body:not(.home) .provider-chip,
+body:not(.home) .provider-service-toggle,
+body:not(.home) .provider-consent-check,
+body:not(.home) .portal-checks label{
+  background:#F6F0E4!important;
+  border:1px solid var(--heinzel-border)!important;
+  border-radius:14px!important;
+  color:var(--heinzel-blue)!important;
+  font-family:"Lora",serif!important;
+}
+
+body:not(.home) .request-service-option input:checked + span,
+body:not(.home) .frequency-options input:checked + span,
+body:not(.home) .skill-option input:checked + span,
+body:not(.home) .day-option input:checked + span,
+body:not(.home) .provider-chip.is-active,
+body:not(.home) .provider-service-card.is-selected,
+body:not(.home) .provider-service-toggle[aria-pressed="true"]{
+  background:var(--heinzel-blue)!important;
+  border-color:var(--heinzel-blue)!important;
+  color:#FFFFFF!important;
+}
+
+body:not(.home) .btn-primary,
+body:not(.home) .btn-book,
+body:not(.home) .btn-book-main,
+body:not(.home) .nav-cta,
+body:not(.home) .booking-next,
+body:not(.home) .form-submit,
+body:not(.home) .provider-next,
+body:not(.home) button[type="submit"]{
+  background:var(--heinzel-blue)!important;
+  border:1px solid var(--heinzel-blue)!important;
+  color:#FFFFFF!important;
+  font-family:"Lora",serif!important;
+  font-weight:700!important;
+  border-radius:999px!important;
+  box-shadow:0 5px 14px rgba(85,120,168,.22)!important;
+}
+
+body:not(.home) .btn-primary:hover,
+body:not(.home) .btn-book:hover,
+body:not(.home) .btn-book-main:hover,
+body:not(.home) .nav-cta:hover,
+body:not(.home) .booking-next:hover,
+body:not(.home) .form-submit:hover,
+body:not(.home) .provider-next:hover,
+body:not(.home) button[type="submit"]:hover{
+  background:var(--heinzel-blue-dark)!important;
+  border-color:var(--heinzel-blue-dark)!important;
+  color:#FFFFFF!important;
+}
+
+body:not(.home) .btn-secondary,
+body:not(.home) .booking-back,
+body:not(.home) .provider-back{
+  color:var(--heinzel-blue)!important;
+  font-family:"Lora",serif!important;
+  font-weight:700!important;
+}
+
+body:not(.home) footer{
+  border-top:1px solid var(--heinzel-border)!important;
+  color:var(--heinzel-blue)!important;
+  box-shadow:none!important;
+}
+
+body:not(.home) footer .footer-brand .nav-logo,
+body:not(.home) footer .footer-brand .nav-logo span{
+  color:var(--heinzel-red)!important;
+}
+
+body:not(.home) footer .footer-col h4{
+  color:var(--heinzel-red)!important;
+  font-family:"Fraunces",serif!important;
+  font-weight:900!important;
+  font-variation-settings:"opsz" 9,"wght" 900,"SOFT" 100,"WONK" 1!important;
+}
+
+body:not(.home) footer p,
+body:not(.home) footer a,
+body:not(.home) footer span,
+body:not(.home) footer .footer-bottom{
+  color:var(--heinzel-blue)!important;
+  font-family:"Lora",serif!important;
+}
+
+body:not(.home) footer .footer-bottom{
+  border-top:1px solid var(--heinzel-border)!important;
+}
+
+body:not(.home) .anbieter-faq{
+  background:var(--heinzel-bg)!important;
+  border:0!important;
+  box-shadow:none!important;
+}
+
+body:not(.home) .anbieter-faq-item{
+  background:var(--heinzel-card)!important;
+  border:1px solid var(--heinzel-border)!important;
+  border-radius:18px!important;
+  box-shadow:var(--heinzel-shadow)!important;
+}
+
+body:not(.home) .anbieter-faq-item summary{
+  color:var(--heinzel-red)!important;
+  font-family:"Fraunces",serif!important;
+  font-weight:900!important;
+  font-variation-settings:"opsz" 9,"wght" 900,"SOFT" 100,"WONK" 1!important;
+}
+
+body:not(.home) .anbieter-faq-item summary::after{
+  background:var(--heinzel-blue)!important;
+  color:#FFFFFF!important;
+  font-family:"Lora",serif!important;
+}
+
+@media(max-width:820px){
+  body:not(.home) .booking-intro-inner{
+    grid-template-columns:1fr!important;
+    text-align:center!important;
+  }
+
+  body:not(.home) .booking-intro-copy h1,
+  body:not(.home) .booking-intro-copy p{
+    text-align:center!important;
+  }
+
+  body:not(.home) h1{
+    font-size:clamp(2.55rem,13vw,4rem)!important;
+  }
+
+  body:not(.home) h2{
+    font-size:clamp(1.8rem,9vw,2.65rem)!important;
+  }
+}
+
+/* Unified navigation and footer state across all Heinzelchen pages */
+body > nav,
+body.home > nav,
+body:not(.home) nav{
+  background:var(--heinzel-bg)!important;
+  background-color:var(--heinzel-bg)!important;
+  background-image:none!important;
+  border-bottom:1px solid var(--heinzel-border)!important;
+  box-shadow:none!important;
+}
+
+body > nav .nav-logo,
+body > nav .nav-logo span,
+body > nav a.nav-logo:not(.btn-primary):not(.btn-book):not(.btn-book-main):not(.nav-cta){
+  color:var(--heinzel-red)!important;
+  font-family:"Fraunces",serif!important;
+  font-weight:900!important;
+  font-variation-settings:"opsz" 9,"wght" 900,"SOFT" 100,"WONK" 1!important;
+  letter-spacing:0!important;
+}
+
+body > nav .nav-links{
+  gap:.9rem!important;
+}
+
+body > nav .nav-links a,
+body > nav .nav-links li a:not(.btn-primary):not(.btn-book):not(.btn-book-main):not(.nav-cta),
+body > nav .nav-toggle{
+  color:var(--heinzel-blue)!important;
+  font-family:"Lora",serif!important;
+  font-weight:700!important;
+  letter-spacing:0!important;
+}
+
+body > nav .nav-links a{
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  min-height:44px!important;
+  padding:.62rem 1.05rem!important;
+  border-radius:999px!important;
+  border:1px solid transparent!important;
+  text-decoration:none!important;
+  transition:background-color .18s ease,color .18s ease,border-color .18s ease!important;
+}
+
+body > nav .nav-links a:hover,
+body > nav .nav-links a.active{
+  background:var(--heinzel-blue)!important;
+  background-color:var(--heinzel-blue)!important;
+  border-color:var(--heinzel-blue)!important;
+  color:#FFFFFF!important;
+  box-shadow:0 5px 14px rgba(85,120,168,.22)!important;
+}
+
+body > nav .nav-links a.active:hover{
+  background:var(--heinzel-blue-dark)!important;
+  border-color:var(--heinzel-blue-dark)!important;
+  color:#FFFFFF!important;
+}
+
+@media(max-width:960px){
+  body > nav .nav-links,
+  body.home > nav .nav-links,
+  body:not(.home) nav .nav-links{
+    background:var(--heinzel-bg)!important;
+    background-color:var(--heinzel-bg)!important;
+    border-bottom:1px solid var(--heinzel-border)!important;
+    box-shadow:var(--heinzel-shadow)!important;
+  }
+
+  body > nav .nav-links a{
+    width:100%!important;
+    justify-content:center!important;
+  }
+}
+
+body footer,
+body footer .footer-inner,
+body footer .footer-bottom,
+body.home footer,
+body.home footer .footer-inner,
+body.home footer .footer-bottom,
+body:not(.home) footer,
+body:not(.home) footer .footer-inner,
+body:not(.home) footer .footer-bottom{
+  background:var(--heinzel-bg)!important;
+  background-color:var(--heinzel-bg)!important;
+  background-image:none!important;
+  color:var(--heinzel-blue)!important;
+}
+
+body footer{
+  border-top:1px solid var(--heinzel-border)!important;
+  box-shadow:none!important;
+}
+
+body footer .footer-brand .nav-logo,
+body footer .footer-brand .nav-logo span{
+  color:var(--heinzel-red)!important;
+  font-family:"Fraunces",serif!important;
+  font-weight:900!important;
+  font-variation-settings:"opsz" 9,"wght" 900,"SOFT" 100,"WONK" 1!important;
+}
+
+body footer .footer-col h4{
+  color:var(--heinzel-red)!important;
+  font-family:"Fraunces",serif!important;
+  font-weight:900!important;
+  font-variation-settings:"opsz" 9,"wght" 900,"SOFT" 100,"WONK" 1!important;
+  letter-spacing:.04em!important;
+}
+
+body footer p,
+body footer a,
+body footer .footer-col a,
+body footer span,
+body footer .footer-brand p,
+body footer .footer-bottom,
+body footer .footer-bottom span{
+  color:var(--heinzel-blue)!important;
+  font-family:"Lora",serif!important;
+  font-weight:500!important;
+}
+
+body footer .footer-col a{
+  font-weight:600!important;
+}
+
+body footer a:hover,
+body footer .footer-col a:hover{
+  color:var(--heinzel-red)!important;
+}
+
+body footer .footer-bottom{
+  border-top:1px solid var(--heinzel-border)!important;
+}
+
+/* Final navbar active state: blue text by default, current page as blue pill */
+body > nav .nav-links a,
+body > nav .nav-links li a:not(.btn-primary):not(.btn-book):not(.btn-book-main):not(.nav-cta){
+  background:transparent!important;
+  border-color:transparent!important;
+  box-shadow:none!important;
+  color:var(--heinzel-blue)!important;
+  font-family:"Lora",serif!important;
+  font-weight:700!important;
+}
+
+body > nav .nav-links a:hover{
+  background:transparent!important;
+  border-color:transparent!important;
+  box-shadow:none!important;
+  color:var(--heinzel-blue-dark)!important;
+}
+
+body > nav .nav-links a.active,
+body > nav .nav-links li a.active:not(.btn-primary):not(.btn-book):not(.btn-book-main):not(.nav-cta),
+body > nav .nav-links a.active:hover{
+  min-height:46px!important;
+  padding:.68rem 1.45rem!important;
+  background:var(--heinzel-blue)!important;
+  background-color:var(--heinzel-blue)!important;
+  border-color:var(--heinzel-blue)!important;
+  border-radius:999px!important;
+  box-shadow:0 5px 14px rgba(85,120,168,.22)!important;
+  color:#FFFFFF!important;
+  font-family:"Fraunces",serif!important;
+  font-weight:900!important;
+  font-variation-settings:"opsz" 9,"wght" 900,"SOFT" 100,"WONK" 1!important;
+  letter-spacing:0!important;
+}
+
+/* Final footer lock: identical homepage footer on every page */
+html body footer,
+html body.home footer,
+html body:not(.home) footer,
+html body footer .footer-inner,
+html body footer .footer-bottom{
+  background:#E4DCCB!important;
+  background-color:#E4DCCB!important;
+  background-image:none!important;
+  color:#5578A8!important;
+}
+
+html body footer{
+  border-top:1px solid rgba(85,120,168,.22)!important;
+  box-shadow:none!important;
+}
+
+html body footer .footer-brand .nav-logo,
+html body footer .footer-brand .nav-logo span{
+  color:#A63D52!important;
+  font-family:"Fraunces",serif!important;
+  font-weight:900!important;
+  font-variation-settings:"opsz" 9,"wght" 900,"SOFT" 100,"WONK" 1!important;
+  letter-spacing:0!important;
+}
+
+html body footer h4,
+html body footer .footer-col h4,
+html body footer .footer-inner .footer-col h4,
+html body footer .footer-inner > .footer-col h4{
+  color:#A63D52!important;
+  font-family:"Fraunces",serif!important;
+  font-weight:900!important;
+  font-variation-settings:"opsz" 9,"wght" 900,"SOFT" 100,"WONK" 1!important;
+  letter-spacing:.04em!important;
+}
+
+html body footer p,
+html body footer .footer-brand p,
+html body footer a,
+html body footer .footer-col a,
+html body footer span,
+html body footer .footer-bottom,
+html body footer .footer-bottom span{
+  color:#5578A8!important;
+  font-family:"Lora",serif!important;
+}
+
+html body footer .footer-col a{
+  font-weight:600!important;
+}
+
+html body footer a:hover,
+html body footer .footer-col a:hover{
+  color:#A63D52!important;
+}
+
+html body footer .footer-bottom{
+  border-top:1px solid rgba(85,120,168,.22)!important;
+}
