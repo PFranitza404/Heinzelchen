@@ -14,10 +14,10 @@ export default function App({ Component, pageProps }) {
       <Head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
-        <link rel="icon" href="/favicon.ico?v=3" sizes="any" />
-        <link rel="shortcut icon" href="/favicon.ico?v=3" />
-        <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png?v=3" />
-        <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=3" />
+        <link rel="icon" href="favicon.ico?v=4" sizes="any" />
+        <link rel="shortcut icon" href="favicon.ico?v=4" />
+        <link rel="icon" type="image/png" sizes="32x32" href="favicon.png?v=4" />
+        <link rel="apple-touch-icon" href="apple-touch-icon.png?v=4" />
         <link
           href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Lato:wght@300;400;700&display=swap"
           rel="stylesheet"
