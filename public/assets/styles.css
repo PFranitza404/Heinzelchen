@@ -5556,6 +5556,25 @@ body.home .home-story-return{
   text-align:center!important;
 }
 
+body.home .home-story-actions{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  flex-wrap:wrap!important;
+  gap:.85rem!important;
+  margin-top:clamp(1.15rem,2.6vw,1.9rem)!important;
+}
+
+body.home .home-story-actions .btn-primary{
+  background:#5578A8!important;
+  box-shadow:0 12px 28px rgba(85,120,168,.22)!important;
+}
+
+body.home .home-story-actions .btn-primary:hover{
+  background:#5578A8!important;
+  box-shadow:0 15px 32px rgba(85,120,168,.28)!important;
+}
+
 body.home .service-marquee-section,
 body.home .service-marquee{
   background:#E4DCCB!important;
@@ -5861,6 +5880,14 @@ body.home .anbieter-faq-item p{
 
   body.home .home-story-return{
     font-size:clamp(1.2rem,5.1vw,1.55rem)!important;
+  }
+
+  body.home .home-story-actions{
+    width:100%!important;
+  }
+
+  body.home .home-story-actions .btn-primary{
+    width:min(100%,280px)!important;
   }
 }
 
@@ -6468,9 +6495,9 @@ body footer .footer-bottom{
   border-top:1px solid var(--heinzel-border)!important;
 }
 
-/* Final navbar active state: blue text by default, current page as blue pill */
-body > nav .nav-links a,
-body > nav .nav-links li a:not(.btn-primary):not(.btn-book):not(.btn-book-main):not(.nav-cta){
+/* Final navbar active state: blue text by default, current page in red */
+nav .nav-links a,
+nav .nav-links li a:not(.btn-primary):not(.btn-book):not(.btn-book-main):not(.nav-cta){
   background:transparent!important;
   border-color:transparent!important;
   box-shadow:none!important;
@@ -6479,28 +6506,21 @@ body > nav .nav-links li a:not(.btn-primary):not(.btn-book):not(.btn-book-main):
   font-weight:700!important;
 }
 
-body > nav .nav-links a:hover{
+nav .nav-links a:hover{
   background:transparent!important;
   border-color:transparent!important;
   box-shadow:none!important;
-  color:var(--heinzel-blue-dark)!important;
+  color:var(--heinzel-red)!important;
 }
 
-body > nav .nav-links a.active,
-body > nav .nav-links li a.active:not(.btn-primary):not(.btn-book):not(.btn-book-main):not(.nav-cta),
-body > nav .nav-links a.active:hover{
-  min-height:46px!important;
-  padding:.68rem 1.45rem!important;
-  background:var(--heinzel-blue)!important;
-  background-color:var(--heinzel-blue)!important;
-  border-color:var(--heinzel-blue)!important;
-  border-radius:999px!important;
-  box-shadow:0 5px 14px rgba(85,120,168,.22)!important;
-  color:#FFFFFF!important;
-  font-family:"Fraunces",serif!important;
-  font-weight:900!important;
-  font-variation-settings:"opsz" 9,"wght" 900,"SOFT" 100,"WONK" 1!important;
-  letter-spacing:0!important;
+nav .nav-links a.active,
+nav .nav-links li a.active:not(.btn-primary):not(.btn-book):not(.btn-book-main):not(.nav-cta),
+nav .nav-links a.active:hover{
+  background:transparent!important;
+  background-color:transparent!important;
+  border-color:transparent!important;
+  box-shadow:none!important;
+  color:var(--heinzel-red)!important;
 }
 
 /* Final footer lock: identical homepage footer on every page */
