@@ -34,6 +34,10 @@ function renderWorkerPortal() {
   form.addEventListener("submit", async (event) => {
     event.preventDefault();
     const data = new FormData(form);
+    if (data.get("privacyAccepted") !== "on") {
+      document.querySelector("#workerFormMessage").textContent = "Bitte bestätige die Datenschutzerklärung.";
+      return;
+    }
     const worker = {
       name: data.get("name"),
       email: data.get("email"),
@@ -41,6 +45,7 @@ function renderWorkerPortal() {
       city: data.get("city"),
       skills: data.getAll("skills"),
       availability: parseAvailability(data.get("availability") || ""),
+      privacyAccepted: true,
     };
     await api.send("/api/workers", "POST", worker);
     document.querySelector("#workerFormMessage").textContent = "Profil gespeichert.";

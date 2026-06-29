@@ -379,7 +379,8 @@
     const required = ["street", "zip", "city", "firstName", "lastName", "phone", "email"];
     return required.every((name) => Boolean(value(name))) && value("email").includes("@");
   };
-  const canSubmit = () => step === 3 && selectedServices().length > 0 && hasCompleteSchedule() && hasCompleteContactDetails();
+  const privacyAccepted = () => form.querySelector('[name="privacyAccepted"]')?.checked === true;
+  const canSubmit = () => step === 3 && selectedServices().length > 0 && hasCompleteSchedule() && hasCompleteContactDetails() && privacyAccepted();
   const updateProgress = () => {
     panels.forEach((panel) => {
       const active = Number(panel.dataset.inquiryStep) === step;
@@ -532,6 +533,10 @@
       }
       if (!value("email").includes("@")) {
         showError("Bitte gib eine gültige E-Mail-Adresse ein.");
+        return false;
+      }
+      if (!privacyAccepted()) {
+        showError("Bitte bestätige die Datenschutzerklärung.");
         return false;
       }
     }
@@ -726,6 +731,7 @@
           city: value("city"),
           phone: value("phone"),
           email: value("email"),
+          privacyAccepted: privacyAccepted(),
           date: firstWindow.date || "",
           time: firstWindow.from || "",
         }),

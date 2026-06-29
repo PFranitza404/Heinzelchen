@@ -1,25 +1,14 @@
-const workerSessionKey = "hh_worker_session";
-
-function readWorkerSession() {
-  try {
-    return JSON.parse(localStorage.getItem(workerSessionKey) || "null");
-  } catch {
-    return null;
-  }
-}
-
-function clearWorkerSession() {
-  localStorage.removeItem(workerSessionKey);
+async function clearWorkerSession() {
+  await fetch("/api/worker/logout", { method: "POST", credentials: "same-origin" }).catch(() => {});
 }
 
 async function workerApi(path, options = {}) {
-  const session = readWorkerSession();
   const isFormData = options.body instanceof FormData;
   const response = await fetch(path, {
     ...options,
+    credentials: "same-origin",
     headers: {
       ...(isFormData ? {} : { "Content-Type": "application/json" }),
-      ...(session?.access_token ? { Authorization: `Bearer ${session.access_token}` } : {}),
       ...(options.headers || {}),
     },
   });
@@ -37,6 +26,10 @@ function initWorkerRegistration() {
     event.preventDefault();
     const data = new FormData(form);
     const body = Object.fromEntries(data.entries());
+    if (body.privacyAccepted !== "on") {
+      message.textContent = "Bitte bestätige die Datenschutzerklärung.";
+      return;
+    }
     const idCard = data.get("idCard");
     if (body.password !== body.passwordRepeat) {
       message.textContent = "Die Passwörter stimmen nicht überein.";
@@ -74,28 +67,20 @@ async function initWorkerDashboard() {
   const availabilityDateLabel = document.querySelector("#availabilityDateLabel");
   const availabilityMessage = document.querySelector("#availabilityMessage");
   const cancelButton = document.querySelector("#availabilityCancelButton");
-  const session = readWorkerSession();
   let calendar;
-
-  if (!session?.access_token) {
-    clearWorkerSession();
-    greeting.textContent = "Kein aktiver Helferzugang";
-    logoutButton?.remove();
-    return;
-  }
 
   try {
     const payload = await workerApi("/api/worker/session");
     greeting.textContent = `Hallo ${payload.worker.name || "und willkommen"}`;
   } catch {
-    clearWorkerSession();
+    await clearWorkerSession();
     greeting.textContent = "Kein aktiver Helferzugang";
     logoutButton?.remove();
     return;
   }
 
-  logoutButton?.addEventListener("click", () => {
-    clearWorkerSession();
+  logoutButton?.addEventListener("click", async () => {
+    await clearWorkerSession();
     greeting.textContent = "Kein aktiver Helferzugang";
     logoutButton.remove();
   });
@@ -121,12 +106,25 @@ async function initWorkerDashboard() {
     }));
 
     if (!calendar) {
+      const compactCalendar = window.matchMedia("(max-width: 480px)").matches;
       calendar = new FullCalendar.Calendar(calendarEl, {
-        initialView: "dayGridMonth",
+        initialView: compactCalendar ? "listWeek" : "dayGridMonth",
         locale: "de",
         height: "auto",
+        contentHeight: "auto",
+        expandRows: true,
         selectable: true,
-        headerToolbar: { left: "prev,next today", center: "title", right: "dayGridMonth,timeGridWeek" },
+        headerToolbar: compactCalendar
+          ? { left: "prev,next", center: "title", right: "today" }
+          : { left: "prev,next today", center: "title", right: "dayGridMonth,timeGridWeek,listWeek" },
+        windowResize: () => {
+          const compact = window.matchMedia("(max-width: 480px)").matches;
+          calendar.setOption("headerToolbar", compact
+            ? { left: "prev,next", center: "title", right: "today" }
+            : { left: "prev,next today", center: "title", right: "dayGridMonth,timeGridWeek,listWeek" });
+          if (compact && calendar.view.type !== "listWeek") calendar.changeView("listWeek");
+          if (!compact && calendar.view.type === "listWeek") calendar.changeView("dayGridMonth");
+        },
         dateClick: (info) => {
           availabilityForm.date.value = info.dateStr;
           availabilityDateLabel.textContent = new Date(`${info.dateStr}T12:00:00`).toLocaleDateString("de-DE", {

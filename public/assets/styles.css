@@ -6563,3 +6563,527 @@ html body footer .footer-col a:hover{
 html body footer .footer-bottom{
   border-top:1px solid rgba(85,120,168,.22)!important;
 }
+
+
+/* Cookie consent */
+.cookie-banner {
+  position: fixed;
+  left: clamp(1rem, 3vw, 2rem);
+  right: clamp(1rem, 3vw, 2rem);
+  bottom: clamp(1rem, 3vw, 2rem);
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem;
+  border: 1px solid rgba(85, 120, 168, .28);
+  border-radius: 18px;
+  background: #EEE8DA;
+  box-shadow: 0 18px 50px rgba(35, 45, 64, .18);
+  color: #5578A8;
+  font-family: Lora, Georgia, serif;
+}
+.cookie-banner__text strong {
+  display: block;
+  color: #A63D52;
+  font-family: Fraunces, Georgia, serif;
+  font-size: 1.05rem;
+  margin-bottom: .25rem;
+}
+.cookie-banner__text p {
+  margin: 0;
+  line-height: 1.45;
+}
+.cookie-banner__text a {
+  color: #A63D52;
+  font-weight: 700;
+}
+.cookie-banner__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .6rem;
+  justify-content: flex-end;
+}
+.cookie-banner__button {
+  border: 1px solid #5578A8;
+  border-radius: 999px;
+  background: transparent;
+  color: #5578A8;
+  cursor: pointer;
+  font-family: Lora, Georgia, serif;
+  font-weight: 700;
+  padding: .75rem 1rem;
+}
+.cookie-banner__button--primary {
+  background: #5578A8;
+  color: #fff;
+}
+.maps-consent-hint {
+  margin: .45rem 0 0;
+  color: #A63D52;
+  font-family: Lora, Georgia, serif;
+  font-size: .95rem;
+  font-weight: 700;
+}
+.inquiry-privacy-check,
+.worker-privacy-check {
+  margin: 1rem 0;
+}
+@media (max-width: 720px) {
+  .cookie-banner {
+    align-items: stretch;
+    flex-direction: column;
+  }
+  .cookie-banner__actions,
+  .cookie-banner__button {
+    width: 100%;
+  }
+}
+
+
+
+
+/* Allow brand headlines to break instead of being clipped on narrow screens */
+h1,
+h2,
+h3,
+.nav-logo,
+.footer-brand .nav-logo{
+  max-width:100%;
+  overflow-wrap:anywhere;
+  word-break:break-word;
+  hyphens:auto;
+}
+
+.nav-logo,
+.footer-brand .nav-logo{
+  white-space:normal!important;
+  line-height:1.05;
+}
+
+/* Responsive hardening for Heinzelchen pages */
+html{
+  width:100%;
+  overflow-x:hidden;
+}
+
+img,
+picture,
+video,
+canvas,
+svg,
+iframe{
+  max-width:100%;
+}
+
+img,
+video,
+iframe{
+  height:auto;
+}
+
+input,
+select,
+textarea,
+button{
+  max-width:100%;
+}
+
+iframe,
+.hamburg-map-card,
+#workerAvailabilityCalendar,
+.fc,
+.fc-view-harness{
+  min-width:0;
+}
+
+#workerAvailabilityCalendar{
+  width:100%;
+  overflow-x:auto;
+  -webkit-overflow-scrolling:touch;
+}
+
+#workerAvailabilityCalendar .fc{
+  min-width:min(42rem,100%);
+}
+
+.worker-calendar-legend{
+  display:flex;
+  flex-wrap:wrap;
+  gap:.75rem 1rem;
+  margin:0 0 1rem;
+}
+
+.worker-calendar-legend span{
+  display:inline-flex;
+  align-items:center;
+  gap:.4rem;
+}
+
+.availability-dialog{
+  width:min(100% - 2rem,34rem);
+  max-width:calc(100vw - 2rem);
+  border:0;
+  border-radius:18px;
+  padding:0;
+}
+
+.availability-dialog form{
+  display:grid;
+  gap:1rem;
+  padding:clamp(1rem,4vw,1.5rem);
+}
+
+.availability-dialog-actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:.75rem;
+}
+
+.availability-dialog-actions .btn-primary,
+.availability-dialog-actions .btn-secondary{
+  flex:1 1 12rem;
+  justify-content:center;
+}
+
+@media(max-width:768px){
+  nav{
+    padding-inline:clamp(1rem,4vw,1.25rem)!important;
+  }
+
+  .nav-links.open{
+    display:grid!important;
+    max-height:calc(100vh - 72px);
+    overflow-y:auto;
+  }
+
+  .hero-inner,
+  .booking-intro-inner,
+  .hamburg-map-inner,
+  .portal-grid,
+  .worker-dashboard-grid,
+  .dispatch-grid,
+  .booking-flow-grid,
+  .footer-inner,
+  .values-grid,
+  .duration-panel,
+  .form-grid,
+  .booking-field-row,
+  .booking-fields,
+  .card-row{
+    grid-template-columns:1fr!important;
+  }
+
+  .services-grid,
+  .reviews-grid,
+  .steps,
+  .request-service-grid,
+  .skill-grid,
+  .availability-grid,
+  .frequency-options,
+  .map-stats,
+  .inquiry-service-grid,
+  .inquiry-frequency,
+  .availability-week-grid{
+    grid-template-columns:1fr!important;
+  }
+
+  .provider-form,
+  .service-request-card,
+  .inquiry-card,
+  .portal-panel,
+  .booking-flow-card,
+  .dispatch-panel{
+    width:100%!important;
+    max-width:100%!important;
+  }
+
+  .provider-form-section,
+  .service-request-section,
+  .portal-section,
+  .booking-flow-section,
+  .inquiry-page,
+  .dispatch-page,
+  .hamburg-map-section{
+    padding-left:1rem!important;
+    padding-right:1rem!important;
+  }
+
+  .booking-field-row,
+  body:not(.home) .inquiry-card .booking-field-row,
+  body:not(.home) .inquiry-card .availability-day-row,
+  body:not(.home) .inquiry-card .inquiry-frequency,
+  .provider-price-field,
+  .service-time-window{
+    grid-template-columns:1fr!important;
+  }
+
+  .dispatch-table-wrap,
+  .portal-panel,
+  .booking-flow-card,
+  .inquiry-card,
+  .provider-form{
+    overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
+  }
+
+  .dispatch-table{
+    min-width:42rem!important;
+  }
+
+  .hamburg-map-card{
+    min-height:clamp(24rem,88vw,34rem)!important;
+  }
+
+  .map-pin>div{
+    white-space:normal!important;
+    max-width:8.5rem;
+  }
+
+  .fc .fc-toolbar{
+    align-items:stretch;
+    flex-direction:column;
+    gap:.75rem;
+  }
+
+  .fc .fc-toolbar-chunk{
+    display:flex;
+    justify-content:center;
+  }
+
+  .fc .fc-toolbar-title{
+    font-size:1.2rem;
+    text-align:center;
+  }
+}
+
+@media(max-width:480px){
+  body{
+    min-width:320px;
+  }
+
+  main{
+    padding-top:68px;
+  }
+
+  nav{
+    min-height:68px!important;
+  }
+
+  .nav-links{
+    top:68px!important;
+  }
+
+  h1,
+  body:not(.home) h1{
+    font-size:clamp(2rem,11vw,2.6rem)!important;
+    line-height:1.08!important;
+  }
+
+  h2,
+  body:not(.home) h2{
+    font-size:clamp(1.55rem,8vw,2.05rem)!important;
+  }
+
+  .hero-actions,
+  .booking-actions,
+  .inquiry-actions,
+  .provider-form-actions,
+  .footer-bottom,
+  .dispatch-head,
+  .portal-card-head,
+  .worker-card-head,
+  .availability-dialog-actions{
+    flex-direction:column!important;
+    align-items:stretch!important;
+  }
+
+  .btn-primary,
+  .btn-secondary,
+  .btn-book,
+  .btn-book-main,
+  .nav-cta,
+  .form-submit,
+  .inquiry-next,
+  .inquiry-back,
+  .inquiry-submit,
+  .provider-next,
+  .provider-back,
+  .dispatch-refresh,
+  .worker-status-button{
+    width:100%!important;
+    min-width:0!important;
+  }
+
+  .inquiry-progress,
+  .provider-progress,
+  .booking-progress{
+    grid-template-columns:1fr!important;
+    overflow:visible!important;
+  }
+
+  body:not(.home) .inquiry-card .service-choice-card span{
+    grid-template-columns:2.5rem minmax(0,1fr)!important;
+    padding:.9rem!important;
+  }
+
+  body:not(.home) .inquiry-card .service-choice-card span::after{
+    display:none!important;
+  }
+
+  .service-time-window,
+  .service-date-group,
+  .service-schedule-card,
+  .inquiry-block,
+  .form-block,
+  .portal-card,
+  .worker-card{
+    padding:1rem!important;
+  }
+
+  .hamburg-map-card{
+    min-height:26rem!important;
+    border-radius:18px!important;
+  }
+
+  .map-district,
+  .map-route,
+  .map-water{
+    opacity:.55;
+  }
+
+  .map-pin{
+    transform:scale(.88);
+    transform-origin:left center;
+  }
+
+  .map-pin>div{
+    display:none;
+  }
+
+  #workerAvailabilityCalendar{
+    margin-inline:-.25rem;
+    padding-bottom:.5rem;
+  }
+
+  #workerAvailabilityCalendar .fc{
+    min-width:34rem;
+  }
+
+  .fc .fc-button{
+    padding:.35rem .5rem;
+    font-size:.82rem;
+  }
+
+  .fc .fc-col-header-cell-cushion,
+  .fc .fc-daygrid-day-number,
+  .fc .fc-list-day-text,
+  .fc .fc-list-day-side-text{
+    font-size:.82rem;
+  }
+
+  .availability-dialog{
+    width:calc(100vw - 1rem);
+    max-width:calc(100vw - 1rem);
+  }
+
+  .cookie-banner{
+    left:.75rem;
+    right:.75rem;
+    bottom:.75rem;
+  }
+}
+
+
+/* Social media footer */
+:root{
+  --footer-social-bg:#E4DCCB;
+  --footer-social-text:#5578A8;
+  --footer-social-hover:#A63D52;
+}
+
+html body footer,
+html body footer .footer-inner,
+html body footer .footer-bottom{
+  background:var(--footer-social-bg)!important;
+  background-color:var(--footer-social-bg)!important;
+}
+
+html body footer .footer-inner{
+  grid-template-columns:minmax(220px,2fr) repeat(4,minmax(130px,1fr))!important;
+}
+
+html body footer .footer-social{
+  display:flex;
+  flex-direction:column;
+  gap:.85rem;
+  align-items:flex-start;
+}
+
+html body footer .footer-social h4{
+  margin:0!important;
+}
+
+html body footer .footer-social-list{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  gap:.75rem;
+  list-style:none;
+  margin:0;
+  padding:0;
+}
+
+html body footer .footer-social-link{
+  display:inline-flex!important;
+  align-items:center;
+  justify-content:center;
+  gap:.45rem;
+  min-height:2.4rem;
+  padding:.42rem .55rem;
+  border-radius:999px;
+  color:var(--footer-social-text)!important;
+  text-decoration:none;
+  transition:color .2s ease, transform .2s ease, background-color .2s ease;
+}
+
+html body footer .footer-social-icon{
+  width:1.15rem;
+  height:1.15rem;
+  flex:0 0 auto;
+  fill:currentColor;
+}
+
+html body footer .footer-social-link:hover,
+html body footer .footer-social-link:focus-visible{
+  color:var(--footer-social-hover)!important;
+  background:rgba(255,255,255,.28);
+  transform:translateY(-1px) scale(1.04);
+}
+
+html body footer .footer-social-link:focus-visible{
+  outline:2px solid var(--footer-social-hover);
+  outline-offset:3px;
+}
+
+@media(max-width:960px){
+  html body footer .footer-inner{
+    grid-template-columns:1fr 1fr!important;
+  }
+}
+
+@media(max-width:560px){
+  html body footer .footer-inner{
+    grid-template-columns:1fr!important;
+  }
+
+  html body footer .footer-social{
+    align-items:center;
+    text-align:center;
+  }
+
+  html body footer .footer-social-list{
+    justify-content:center;
+  }
+}
