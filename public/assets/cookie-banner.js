@@ -111,8 +111,14 @@
     document.body.appendChild(banner);
   };
 
-  document.addEventListener("DOMContentLoaded", () => {
+  const initCookieBanner = () => {
     applyConsent();
     showBanner();
-  });
+  };
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initCookieBanner, { once: true });
+  } else {
+    initCookieBanner();
+  }
 })();
