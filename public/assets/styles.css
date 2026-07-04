@@ -7252,3 +7252,28 @@ html body nav .nav-links li a.active:not(.btn-primary):not(.btn-book):not(.btn-b
 html body nav .nav-links a.active:hover{
   color:var(--heinzel-red)!important;
 }
+
+/* Final home typography lock */
+html body.home > nav a.nav-logo,
+html body.home > nav a.nav-logo span,
+html body.home nav a.nav-logo,
+html body.home nav a.nav-logo span,
+html body.home nav a.nav-logo:not(.btn-primary):not(.btn-book):not(.btn-book-main):not(.nav-cta){
+  color:var(--heinzel-red)!important;
+  font-family:"Fraunces",serif!important;
+  font-weight:900!important;
+  font-variation-settings:"opsz" 9,"wght" 900,"SOFT" 100,"WONK" 1!important;
+  letter-spacing:0!important;
+}
+
+html body.home .home-story-verse,
+html body.home .home-story-verse span,
+html body.home .home-story-note,
+html body.home .home-story-return,
+html body.home .home-story-actions .btn-primary,
+html body.home .home-services-list .section-label{
+  font-family:"Fraunces",serif!important;
+  font-weight:700!important;
+  font-variation-settings:"opsz" 9,"wght" 700,"SOFT" 100,"WONK" 1!important;
+  letter-spacing:0!important;
+}
