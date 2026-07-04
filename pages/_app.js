@@ -17,7 +17,7 @@ export default function App({ Component, pageProps }) {
         <link rel="shortcut icon" href="favicon.ico?v=4" />
         <link rel="icon" type="image/png" sizes="32x32" href="favicon.png?v=4" />
         <link rel="apple-touch-icon" href="apple-touch-icon.png?v=4" />
-        <link rel="stylesheet" href="/assets/styles.css?v=form-uniform-provider-progress" />
+        <link rel="stylesheet" href="/assets/styles.css?v=home-typography-next" />
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.css" />
       </Head>
       <Script src="/assets/cookie-banner.js" strategy="afterInteractive" />
