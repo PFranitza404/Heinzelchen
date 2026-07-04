@@ -15,8 +15,6 @@
   const durations = Array.from({ length: 24 }, (_, index) => (index + 1) * 0.5);
   const frequencies = ["Einmalig", "Wöchentlich", "2-wöchentlich"];
   const today = new Date();
-  const maxDate = new Date();
-  maxDate.setDate(today.getDate() + 28);
   let step = 1;
   let maxStep = 1;
   const draftStorageKey = "heinzelchen.inquiryDraft.v1";
@@ -37,8 +35,13 @@
     return `${year}-${month}-${day}`;
   };
   const minDateValue = dateValue(today);
-  const maxDateValue = dateValue(maxDate);
-  const selectedServices = () => [...form.querySelectorAll('[name="requested-services"]:checked')].map((input) => input.value);
+  const normalizeServiceName = (service) => ({
+    "Malereiarbeiten": "Malerarbeiten",
+    "Putzen & Reinigen": "Hausreinigung",
+    "Wäscheservice": "Bügeln",
+  }[service] || service);
+  const normalizePaintingTask = (task) => task === "Farbauswahl und Beratung (Farrow & Ball)" ? "Farbauswahl und Beratung" : task;
+  const selectedServices = () => [...form.querySelectorAll('[name="requested-services"]:checked')].map((input) => normalizeServiceName(input.value));
   const selectedValues = (name) => {
     const list = form.querySelector(`[data-multi-select-list="${name}"]`);
     if (list) {
@@ -70,15 +73,22 @@
     "Studium",
   ].map((grade) => `<option value="${escapeHtml(grade)}"${grade === selected ? " selected" : ""}>${grade ? escapeHtml(grade) : "Bitte auswählen"}</option>`).join("");
   const tutoringSubjects = ["Mathematik", "Deutsch", "Englisch", "Französisch", "Spanisch", "Physik", "Chemie", "Biologie", "Geschichte", "Informatik", "Anderes Fach"];
-  const collectTutoringRequests = () => [...form.querySelectorAll("[data-tutoring-request]")].map((block) => ({
-    grade: block.querySelector("[data-tutoring-grade]")?.value || "",
-    subjects: [...block.querySelectorAll("[data-tutoring-subject-item]")].map((subject) => ({
-      subject: subject.dataset.tutoringSubjectItem || "",
-      topic: subject.querySelector("[data-tutoring-topic]")?.value.trim() || "",
-    })),
-  })).filter((request) => request.grade || request.subjects.length);
-  const tutoringSubjectOptions = () => ['<option value="">Bitte auswählen</option>']
-    .concat(tutoringSubjects.map((subject) => `<option value="${escapeHtml(subject)}">${escapeHtml(subject)}</option>`))
+  const collectTutoringRequests = () => [...form.querySelectorAll("[data-tutoring-request]")].map((block) => {
+    const directSubject = block.querySelector("[data-tutoring-subject-select]")?.value || "";
+    const directTopic = block.querySelector("[data-tutoring-topic]")?.value.trim() || "";
+    const subjects = directSubject
+      ? [{ subject: directSubject, topic: directTopic }]
+      : [...block.querySelectorAll("[data-tutoring-subject-item]")].map((subject) => ({
+        subject: subject.dataset.tutoringSubjectItem || "",
+        topic: subject.querySelector("[data-tutoring-topic]")?.value.trim() || "",
+      }));
+    return {
+      grade: block.querySelector("[data-tutoring-grade]")?.value || "",
+      subjects,
+    };
+  }).filter((request) => request.grade || request.subjects.length);
+  const tutoringSubjectOptions = (selected = "") => ['<option value="">Bitte auswählen</option>']
+    .concat(tutoringSubjects.map((subject) => `<option value="${escapeHtml(subject)}"${subject === selected ? " selected" : ""}>${escapeHtml(subject)}</option>`))
     .join("");
   const renderTutoringSubjectItem = (subject, topic = "") => `
     <div class="tutoring-subject-row" data-tutoring-subject-item="${escapeHtml(subject)}">
@@ -89,6 +99,7 @@
   `;
   const renderTutoringRequest = (request = {}) => {
     const subjects = Array.isArray(request.subjects) ? request.subjects : [];
+    const primarySubject = subjects[0] || {};
     return `
     <div class="tutoring-request-block" data-tutoring-request>
       <div class="tutoring-request-head">
@@ -101,10 +112,11 @@
       </div>
       <div class="booking-field">
         <label>Fach auswählen</label>
-        <select data-tutoring-subject-select>${tutoringSubjectOptions()}</select>
+        <select data-tutoring-subject-select>${tutoringSubjectOptions(primarySubject.subject || "")}</select>
       </div>
-      <div class="tutoring-subject-list" data-tutoring-subject-list${subjects.length ? "" : " hidden"}>
-        ${subjects.map((item) => renderTutoringSubjectItem(item.subject, item.topic)).join("")}
+      <div class="booking-field">
+        <label>Thema optional</label>
+        <input type="text" data-tutoring-topic placeholder="z.B. Bruchrechnung, Grammatik, Prüfungsvorbereitung" value="${escapeHtml(primarySubject.topic || "")}">
       </div>
     </div>
   `;
@@ -121,19 +133,22 @@
     </div>
   `;
   const collectPaintingTasks = () => [...form.querySelectorAll("[data-painting-task-item]")].map((item) => ({
-    task: item.dataset.paintingTaskItem || "",
+    task: normalizePaintingTask(item.dataset.paintingTaskItem || ""),
     size: item.querySelector("[data-painting-task-size]")?.value.trim() || "",
   })).filter((item) => item.task);
-  const renderPaintingTaskItem = (task, size = "") => `
-    <div class="painting-task-row" data-painting-task-item="${escapeHtml(task)}">
-      <span>${escapeHtml(task)}</span>
+  const renderPaintingTaskItem = (task, size = "") => {
+    const normalizedTask = normalizePaintingTask(task);
+    return `
+    <div class="painting-task-row" data-painting-task-item="${escapeHtml(normalizedTask)}">
+      <span>${escapeHtml(normalizedTask)}</span>
       <input type="text" data-painting-task-size placeholder="z.B. ca. 20 qm Wandfläche" value="${escapeHtml(size)}">
       <button class="time-window-remove" type="button" data-remove-painting-task aria-label="Maleraufgabe entfernen">×</button>
     </div>
   `;
+  };
   const timeOptions = (selected = "") => {
     const options = ['<option value="">Bitte wählen</option>'];
-    for (let hour = 0; hour < 24; hour += 1) {
+    for (let hour = 7; hour < 24; hour += 1) {
       for (const minute of [0, 30]) {
         const time = `${hour}`.padStart(2, "0") + ":" + `${minute}`.padStart(2, "0");
         options.push(`<option value="${time}"${time === selected ? " selected" : ""}>${time}</option>`);
@@ -149,8 +164,18 @@
     })
     .join("");
 
-  const showError = (message) => {
-    error.textContent = message;
+  const showError = (message, options = {}) => {
+    error.textContent = "";
+    const messageEl = document.createElement("p");
+    messageEl.textContent = message;
+    error.appendChild(messageEl);
+    if (options.phoneButton) {
+      const phoneLink = document.createElement("a");
+      phoneLink.className = "btn-primary error-phone-button";
+      phoneLink.href = "tel:+491742997866";
+      phoneLink.textContent = "0174 2997866";
+      error.appendChild(phoneLink);
+    }
     error.hidden = false;
     confirmation.hidden = true;
     form.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -168,6 +193,7 @@
         frequency: card.querySelector("[data-schedule-frequency]:checked")?.value || "",
         windows: [...card.querySelectorAll("[data-date-group]")].map((group) => ({
           date: group.querySelector("[data-window-date]")?.value || "",
+          dateEnd: group.querySelector("[data-window-date-end]")?.value || "",
           times: [...group.querySelectorAll("[data-time-window]")].map((row) => ({
             from: row.querySelector("[data-window-from]")?.value || "",
             to: row.querySelector("[data-window-to]")?.value || "",
@@ -207,7 +233,12 @@
       ${removable ? '<div class="service-date-group-head"><span>Weiteres Datum</span><button class="appointment-date-remove-button" type="button" data-remove-date-group aria-label="Datum löschen">× Datum löschen</button></div>' : ""}
       <div class="booking-field">
         <label>Datum wählen</label>
-        <input data-window-date type="date" min="${minDateValue}" max="${maxDateValue}" value="${escapeHtml(group.date)}" required>
+        <div class="service-date-range">
+          <input data-window-date type="date" min="${minDateValue}" value="${escapeHtml(group.date)}" required aria-label="Datum von">
+          <span>bis</span>
+          <input data-window-date-end type="date" min="${minDateValue}" value="${escapeHtml(group.dateEnd)}" aria-label="Datum bis optional">
+        </div>
+        <small class="date-range-help">Optional: Tragen Sie ein Bis-Datum ein, wenn die Aufgabe an mehreren Tagen in diesem Zeitfenster erledigt werden kann.</small>
       </div>
       <div class="service-time-window-list" data-time-window-list>
         ${(group.times?.length ? group.times : [{}]).map((window, index) => renderTimeWindow(window, index > 0)).join("")}
@@ -220,7 +251,7 @@
     const selected = selectedServices();
     const existing = savedSchedules || collectSchedules();
     if (!selected.length) {
-      appointmentContainer.innerHTML = '<p class="form-help">Wähle zuerst mindestens eine Dienstleistung aus. Danach kannst du pro Dienst Dauer, Zeitfenster und Häufigkeit angeben.</p>';
+      appointmentContainer.innerHTML = '<p class="form-help">Wählen Sie zuerst mindestens eine Dienstleistung aus. Danach können Sie pro Dienst Dauer, Zeitfenster und Häufigkeit angeben.</p>';
       return;
     }
     appointmentContainer.innerHTML = selected.map((service) => {
@@ -287,15 +318,15 @@
     }
     const paintingTasks = collectPaintingTasks();
     if (paintingTasks.length) {
-      lines.push(`Malereiarbeiten: ${paintingTasks.map((item) => item.size ? `${item.task}: ${item.size}` : item.task).join(", ")}`);
+      lines.push(`Malerarbeiten: ${paintingTasks.map((item) => item.size ? `${item.task}: ${item.size}` : item.task).join(", ")}`);
     }
-    if (selectedServices().includes("Wäscheservice")) {
-      lines.push("Wäscheservice: Bügeln und Zusammenlegen");
+    if (selectedServices().includes("Bügeln")) {
+      lines.push("Bügeln: Bügeln und Zusammenlegen");
     }
     [
       ["detailGardenTask", "Garten Dienste"],
       ["detailCareTask", "Betreuung Aufgaben"],
-      ["detailCleaningTask", "Reinigung Dienste"],
+      ["detailCleaningTask", "Hausreinigung Dienste"],
     ].forEach(([name, label]) => {
       const selected = selectedValues(name);
       if (selected.length) lines.push(`${label}: ${selected.join(", ")}`);
@@ -309,7 +340,7 @@
     build: { tasks: collectBuildTasks() },
     painting: { tasks: collectPaintingTasks() },
     cleaning: { tasks: selectedValues("detailCleaningTask"), size: value("detailCleaningSize"), custom: value("detailCleaningCustom") },
-    laundry: { tasks: selectedServices().includes("Wäscheservice") ? ["Bügeln", "Zusammenlegen"] : [] },
+    laundry: { tasks: selectedServices().includes("Bügeln") ? ["Bügeln", "Zusammenlegen"] : [] },
     other: { custom: value("detailOtherCustom") },
   });
   const updateDetailCards = () => {
@@ -365,7 +396,6 @@
       schedule.windows.every((group) =>
         group.date &&
         group.date >= minDateValue &&
-        group.date <= maxDateValue &&
         group.times?.length &&
         group.times.every((time) =>
           time.from &&
@@ -380,7 +410,8 @@
     return required.every((name) => Boolean(value(name))) && value("email").includes("@");
   };
   const privacyAccepted = () => form.querySelector('[name="privacyAccepted"]')?.checked === true;
-  const canSubmit = () => step === 3 && selectedServices().length > 0 && hasCompleteSchedule() && hasCompleteContactDetails() && privacyAccepted();
+  const mediationStartAccepted = () => form.querySelector('[name="mediationStartAccepted"]')?.checked === true;
+  const canSubmit = () => step === 3 && selectedServices().length > 0 && hasCompleteSchedule() && hasCompleteContactDetails() && privacyAccepted() && mediationStartAccepted();
   const updateProgress = () => {
     panels.forEach((panel) => {
       const active = Number(panel.dataset.inquiryStep) === step;
@@ -455,12 +486,16 @@
 
     restoringDraft = true;
     form.querySelectorAll('[name="requested-services"]').forEach((input) => {
-      input.checked = Array.isArray(draft.selectedServices) && draft.selectedServices.includes(input.value);
+      const selectedDraftServices = Array.isArray(draft.selectedServices) ? draft.selectedServices.map(normalizeServiceName) : [];
+      input.checked = selectedDraftServices.includes(input.value);
     });
     applyDraftFields(draft.fields);
     multiSelectLists.forEach((list) => {
       const values = draft.multiSelects?.[list.dataset.multiSelectList] || [];
-      list.dataset.values = JSON.stringify(Array.isArray(values) ? values : []);
+      const normalizedValues = list.dataset.multiSelectList === "detailPaintingTask" && Array.isArray(values)
+        ? values.map(normalizePaintingTask)
+        : values;
+      list.dataset.values = JSON.stringify(Array.isArray(normalizedValues) ? normalizedValues : []);
       updateMultiSelectList(list.dataset.multiSelectList);
     });
     const tutoringList = form.querySelector("[data-tutoring-request-list]");
@@ -511,7 +546,6 @@
         schedule.windows.some((group) =>
           !group.date ||
           group.date < minDateValue ||
-          group.date > maxDateValue ||
           !group.times?.length ||
           group.times.some((time) =>
             !time.from ||
@@ -537,6 +571,10 @@
       }
       if (!privacyAccepted()) {
         showError("Bitte bestätige die Datenschutzerklärung.");
+        return false;
+      }
+      if (!mediationStartAccepted()) {
+        showError("Bitte bestätigen Sie, dass Heinzelchen nach Eingang Ihrer Anfrage sofort mit der Vermittlung beginnen darf.");
         return false;
       }
     }
@@ -647,18 +685,6 @@
   form.addEventListener("change", (event) => {
     if (event.target.matches('[name="requested-services"]')) updateDetailCards();
     if (event.target.matches("[data-window-from]")) updateTimeOptions();
-    if (event.target.matches("[data-tutoring-subject-select]")) {
-      const subject = event.target.value;
-      const block = event.target.closest("[data-tutoring-request]");
-      const list = block?.querySelector("[data-tutoring-subject-list]");
-      const alreadySelected = list && [...list.querySelectorAll("[data-tutoring-subject-item]")]
-        .some((item) => item.dataset.tutoringSubjectItem === subject);
-      if (subject && list && !alreadySelected) {
-        list.insertAdjacentHTML("beforeend", renderTutoringSubjectItem(subject));
-        list.hidden = false;
-      }
-      event.target.value = "";
-    }
     updateProgress();
     saveDraft();
   });
@@ -705,7 +731,7 @@
     const schedules = scheduleData();
     const firstWindow = schedules.flatMap((schedule) =>
       schedule.windows.flatMap((group) =>
-        group.times.map((time) => ({ ...time, date: group.date, service: schedule.service }))
+        group.times.map((time) => ({ ...time, date: group.date, dateEnd: group.dateEnd || "", service: schedule.service }))
       )
     )[0] || {};
 
@@ -732,6 +758,7 @@
           phone: value("phone"),
           email: value("email"),
           privacyAccepted: privacyAccepted(),
+          mediationStartAccepted: mediationStartAccepted(),
           date: firstWindow.date || "",
           time: firstWindow.from || "",
         }),
@@ -750,7 +777,7 @@
       updateDetailCards();
       updateProgress();
     } catch {
-      showError("Die Anfrage konnte nicht gesendet werden. Bitte versuche es später erneut.");
+      showError("Ihre Buchungsanfrage konnte aktuell nicht übermittelt werden. Bitte versuchen Sie es erneut oder rufen Sie uns direkt an.", { phoneButton: true });
     } finally {
       submitButton.textContent = "Heinzelchen anfragen";
       updateProgress();

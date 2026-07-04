@@ -27,7 +27,7 @@
       <div class="booking-intro-copy">
         <div class="section-label">Heinzelchen buchen</div>
         <h1>Verlässliche Alltagshilfe, persönlich vermittelt.</h1>
-        <p>Beschreibe kurz, wobei du Unterstützung brauchst. Wir prüfen deine Anfrage, gleichen Dienstleistung, Ort und Verfügbarkeit ab und melden uns mit einem passenden Heinzelchen.</p>
+        <p>Beschreiben Sie kurz, wobei Sie Unterstützung brauchen. Wir prüfen Ihre Anfrage, gleichen Dienstleistung, Ort und Verfügbarkeit ab und melden uns mit einem passenden Heinzelchen.</p>
         <div class="booking-intro-actions">
           <a class="btn-primary" href="#buchen">Buchungsanfrage stellen</a>
         </div>
@@ -43,7 +43,7 @@
         </div>
         <div class="intro-panel-row">
           <span>3</span>
-          <div><strong>Hilfe kommt an</strong><small>Du erhältst eine Rückmeldung mit dem passenden Heinzelchen</small></div>
+          <div><strong>Hilfe wird angeboten</strong><small>Sie erhalten ein Angebot mit dem in Ihrem Zeitfenster gewählten Termin und dem Stundenlohn des Heinzelchen</small></div>
         </div>
       </div>
     </div>
@@ -52,19 +52,19 @@
     <form class="inquiry-card reveal" id="buchen" data-inquiry-form>
       <div class="inquiry-intro">
         <div class="section-label">Anfrage prüfen lassen</div>
-        <h2>Beschreibe kurz, wobei du Hilfe brauchst.</h2>
-        <p class="form-help">Du buchst hier noch nichts verbindlich und es wird nichts bezahlt. Wir prüfen deine Anfrage und melden uns persönlich mit einem passenden Vorschlag.</p>
+        <h2>Beschreiben Sie kurz, wobei Sie sich Hilfe wünschen.</h2>
+        <p class="form-help">Ihre hier getätigte Buchungsanfrage ist unverbindlich und kostenlos. Wir prüfen Ihre Anfrage und melden uns dann mit einem passenden Angebot bei Ihnen, welches Sie dann frei ablehnen oder bestätigen können.</p>
       </div>
       <div class="booking-alert" data-inquiry-error hidden></div>
       <div class="booking-confirmation inquiry-confirmation" data-inquiry-confirmation hidden>
         <strong>Anfrage erhalten.</strong>
-        <p>Wir prüfen dein Anliegen und melden uns bei dir mit einer Einschätzung.</p>
+        <p>Wir prüfen Ihr Anliegen und melden uns bei Ihnen mit einer Einschätzung.</p>
       </div>
 
       <div class="inquiry-progress" aria-label="Fortschritt">
         <button class="inquiry-progress-step active" type="button" data-step-jump="1"><span>1</span>Dienstleistung</button>
-        <button class="inquiry-progress-step" type="button" data-step-jump="2"><span>2</span>Termin & Zeit</button>
-        <button class="inquiry-progress-step" type="button" data-step-jump="3"><span>3</span>Deine Angaben</button>
+        <button class="inquiry-progress-step" type="button" data-step-jump="2"><span>2</span>Ihr Zeitfenster</button>
+        <button class="inquiry-progress-step" type="button" data-step-jump="3"><span>3</span>Ihre Angaben</button>
       </div>
 
       <div class="inquiry-step-panel active" data-inquiry-step="1">
@@ -72,7 +72,7 @@
         <h3>1. Dienstleistung auswählen</h3>
         <div class="request-service-grid service-choice-grid inquiry-service-grid">
           <div class="service-choice-with-detail">
-            <label class="request-service-option service-choice-card"><input type="checkbox" name="requested-services" value="Gartenarbeit"><span><i aria-hidden="true">🌿</i><strong>Garten</strong><small>Rasen, Beete, Laub und Außenarbeiten</small></span></label>
+            <label class="request-service-option service-choice-card"><input type="checkbox" name="requested-services" value="Gartenarbeit"><span><i aria-hidden="true">🌿</i><strong>Gartenarbeit</strong><small>Rasen, Beete, Laub und Außenarbeiten</small></span></label>
             <article class="service-detail-card inline-service-detail" data-service-detail="Gartenarbeit" hidden>
               <strong>Garten Details</strong>
               <div class="booking-field">
@@ -139,7 +139,10 @@
                       <option value="Anderes Fach">Anderes Fach</option>
                     </select>
                   </div>
-                  <div class="tutoring-subject-list" data-tutoring-subject-list hidden></div>
+                  <div class="booking-field">
+                    <label>Thema optional</label>
+                    <input type="text" data-tutoring-topic placeholder="z.B. Bruchrechnung, Grammatik, Prüfungsvorbereitung">
+                  </div>
                 </div>
               </div>
               <button class="appointment-time-add-button tutoring-add-button" type="button" data-add-tutoring-request>+ Weitere Nachhilfe hinzufügen</button>
@@ -181,14 +184,14 @@
             </article>
           </div>
           <div class="service-choice-with-detail">
-            <label class="request-service-option service-choice-card"><input type="checkbox" name="requested-services" value="Malereiarbeiten"><span><i aria-hidden="true">🖌️</i><strong>Malereiarbeiten</strong><small>Streichen, Tapezieren und Beratung</small></span></label>
-            <article class="service-detail-card inline-service-detail" data-service-detail="Malereiarbeiten" hidden>
-              <strong>Malereiarbeiten Details</strong>
+            <label class="request-service-option service-choice-card"><input type="checkbox" name="requested-services" value="Malerarbeiten"><span><i aria-hidden="true">🖌️</i><strong>Malerarbeiten</strong><small>Streichen, Tapezieren und Beratung</small></span></label>
+            <article class="service-detail-card inline-service-detail" data-service-detail="Malerarbeiten" hidden>
+              <strong>Malerarbeiten Details</strong>
               <div class="booking-field">
                 <label>Dienste auswählen</label>
                 <select name="detailPaintingTask" data-multi-select="detailPaintingTask">
                   <option value="">Bitte auswählen</option>
-                  <option value="Farbauswahl und Beratung (Farrow & Ball)">Farbauswahl und Beratung (Farrow &amp; Ball)</option>
+                  <option value="Farbauswahl und Beratung">Farbauswahl und Beratung</option>
                   <option value="Innenmalereien und Tapezierung">Innenmalereien und Tapezierung</option>
                   <option value="Außenmalereien">Außenmalereien</option>
                 </select>
@@ -197,9 +200,9 @@
             </article>
           </div>
           <div class="service-choice-with-detail">
-            <label class="request-service-option service-choice-card"><input type="checkbox" name="requested-services" value="Putzen & Reinigen"><span><i aria-hidden="true">🧹</i><strong>Reinigung/Putzen</strong><small>Wohnung, Bad, Küche und Büro</small></span></label>
-            <article class="service-detail-card inline-service-detail" data-service-detail="Putzen & Reinigen" hidden>
-              <strong>Reinigung Details</strong>
+            <label class="request-service-option service-choice-card"><input type="checkbox" name="requested-services" value="Hausreinigung"><span><i aria-hidden="true">🧹</i><strong>Hausreinigung</strong><small>Wohnung, Bad, Küche und Büro</small></span></label>
+            <article class="service-detail-card inline-service-detail" data-service-detail="Hausreinigung" hidden>
+              <strong>Hausreinigung Details</strong>
               <div class="booking-field">
                 <label>Dienste auswählen</label>
                 <select name="detailCleaningTask" data-multi-select="detailCleaningTask">
@@ -217,10 +220,10 @@
             </article>
           </div>
           <div class="service-choice-with-detail">
-            <label class="request-service-option service-choice-card"><input type="checkbox" name="requested-services" value="Wäscheservice"><span><i aria-hidden="true">👕</i><strong>Wäscheservice</strong><small>Bügeln und Wäsche zusammenlegen</small></span></label>
-            <article class="service-detail-card inline-service-detail" data-service-detail="Wäscheservice" hidden>
-              <strong>Wäscheservice Details</strong>
-              <p class="form-help">Der Wäscheservice umfasst immer Bügeln und Zusammenlegen.</p>
+            <label class="request-service-option service-choice-card"><input type="checkbox" name="requested-services" value="Bügeln"><span><i aria-hidden="true">👕</i><strong>Bügeln</strong><small>Bügeln und Wäsche zusammenlegen</small></span></label>
+            <article class="service-detail-card inline-service-detail" data-service-detail="Bügeln" hidden>
+              <strong>Bügeln Details</strong>
+              <p class="form-help">Bügeln und Zusammenlegen</p>
             </article>
           </div>
           <div class="service-choice-with-detail">
@@ -228,7 +231,7 @@
             <article class="service-detail-card inline-service-detail" data-service-detail="Sonstiges" hidden>
               <strong>Sonstiges Details</strong>
               <p>Ihre Heinzelchen erfüllen auch Ihre speziellen Aufgaben — über das Weihnachtsmann-Spielen an Heilig Abend bis hin zur Arztbegleitung.</p>
-              <div class="booking-field"><label>Weitere Aufgaben</label><input name="detailOtherCustom" type="text" placeholder="Beschreibe kurz deine Aufgabe"></div>
+              <div class="booking-field"><label>Weitere Aufgaben</label><input name="detailOtherCustom" type="text" placeholder="Beschreiben Sie kurz Ihre Aufgabe"></div>
             </article>
           </div>
         </div>
@@ -237,11 +240,12 @@
 
       <div class="inquiry-step-panel" data-inquiry-step="2" hidden>
         <div class="inquiry-block">
-          <h3>2. Termin & Zeit</h3>
+          <h3>2. Ihr Zeitfenster</h3>
+          <p class="form-help">Hier wählen Sie Ihr persönliches Zeitfenster für die Erledigung der Aufgabe, sowie die Häufigkeit mit der Sie die Dienstleistung in Anspruch nehmen wollen. Je großzügiger Ihr Zeitfenster ist, desto schneller finden wir ein Heinzelchen.</p>
           <div class="service-appointment-list" data-service-appointments>
-            <p class="form-help">Wähle zuerst mindestens eine Dienstleistung aus. Danach kannst du pro Dienst Dauer, Zeitfenster und Häufigkeit angeben.</p>
+            <p class="form-help">Wählen Sie zuerst mindestens eine Dienstleistung aus. Danach können Sie pro Dienst Dauer, Zeitfenster und Häufigkeit angeben.</p>
           </div>
-          <p class="appointment-global-note">Wir melden uns zur Bestätigung – ein größeres Zeitfenster erhöht die Verfügbarkeit.</p>
+          <p class="appointment-global-note">Wir melden uns schnellstmöglich mit einem Angebot bei Ihnen - ein größeres Zeitfenster erhöht die Verfügbarkeit</p>
         </div>
       </div>
 
@@ -266,11 +270,12 @@
         </div>
         <div class="booking-field-row">
           <div class="booking-field"><label>Telefon</label><input name="phone" type="tel" required placeholder="+49 ..."></div>
-          <div class="booking-field"><label>E-Mail</label><input name="email" type="email" required placeholder="deine@email.de"></div>
+          <div class="booking-field"><label>E-Mail</label><input name="email" type="email" required placeholder="name@email.de"></div>
         </div>
       </div>
 
       <label class="provider-consent-check inquiry-privacy-check"><input name="privacyAccepted" type="checkbox" required><span>Ich habe die <a href="datenschutz.html">Datenschutzerklärung</a> gelesen und stimme der Verarbeitung meiner personenbezogenen Daten zu.*</span></label>
+      <label class="provider-consent-check inquiry-privacy-check"><input name="mediationStartAccepted" type="checkbox" required><span>Ich stimme zu, dass Heinzelchen nach Eingang meiner Anfrage sofort mit der Vermittlung beginnt. Ich nehme zur Kenntnis, dass mein <a href="agb.html#widerrufsrecht">Widerrufsrecht</a> erlischt, sobald ich den Auftrag für das gefundene Heinzelchen bestätige.*</span></label>
       <p class="inquiry-note">Unverbindlich: Wir prüfen zuerst ob ein passender Helfer verfügbar ist.</p>
       </div>
 
@@ -289,11 +294,11 @@
     <div class="anbieter-faq-list">
       <details class="anbieter-faq-item reveal">
         <summary>Ist meine Anfrage direkt verbindlich?</summary>
-        <p>Nein. Mit dem Formular stellst du zunächst eine unverbindliche Anfrage. Wir prüfen, ob Aufgabe, Ort und Zeitfenster zu einem verfügbaren Heinzelchen passen, bevor ein Termin bestätigt wird.</p>
+        <p>Nein. Mit dem Formular stellen Sie zunächst eine unverbindliche Anfrage. Wir prüfen, ob Aufgabe, Ort und Zeitfenster zu einem verfügbaren Heinzelchen passen, bevor ein Termin bestätigt wird.</p>
       </details>
       <details class="anbieter-faq-item reveal">
         <summary>Was passiert nach dem Absenden?</summary>
-        <p>Wir schauen uns deine Angaben an und melden uns persönlich bei dir. Falls etwas unklar ist, fragen wir nach; wenn alles passt, erhältst du einen Vorschlag für die Hilfe.</p>
+        <p>Wir schauen uns Ihre Angaben an und melden uns persönlich bei Ihnen. Falls etwas unklar ist, fragen wir nach; wenn alles passt, erhalten Sie einen Vorschlag für die Hilfe.</p>
       </details>
       <details class="anbieter-faq-item reveal">
         <summary>Wie genau muss ich die Aufgabe beschreiben?</summary>
@@ -301,15 +306,15 @@
       </details>
       <details class="anbieter-faq-item reveal">
         <summary>Kann ich mehrere Dienstleistungen gleichzeitig anfragen?</summary>
-        <p>Ja. Du kannst mehrere Aufgabenbereiche auswählen, zum Beispiel Gartenarbeit und Reinigung. Gib pro Bereich am besten kurz an, was genau erledigt werden soll.</p>
+        <p>Ja. Sie können mehrere Aufgabenbereiche auswählen, zum Beispiel Gartenarbeit und Reinigung. Geben Sie pro Bereich am besten kurz an, was genau erledigt werden soll.</p>
       </details>
       <details class="anbieter-faq-item reveal">
         <summary>Was kostet ein Einsatz?</summary>
-        <p>Der Preis hängt von Aufgabe, Umfang und dem jeweiligen Heinzelchen ab. Viele Helfer orientieren sich an Stundenpreisen; bevor ein Einsatz zustande kommt, bekommst du eine persönliche Rückmeldung.</p>
+        <p>Der Preis hängt von Aufgabe, Umfang und dem jeweiligen Heinzelchen ab. Viele Helfer orientieren sich an Stundenpreisen; bevor ein Einsatz zustande kommt, erhalten Sie eine persönliche Rückmeldung.</p>
       </details>
       <details class="anbieter-faq-item reveal">
         <summary>Kann ich regelmäßige Hilfe anfragen?</summary>
-        <p>Ja. Wenn du wiederkehrende Unterstützung brauchst, kannst du das in der Anfrage angeben. Wir prüfen dann, ob ein Heinzelchen regelmäßig zu deinem gewünschten Zeitraum verfügbar ist.</p>
+        <p>Ja. Wenn Sie wiederkehrende Unterstützung brauchen, können Sie das in der Anfrage angeben. Wir prüfen dann, ob ein Heinzelchen regelmäßig zu Ihrem gewünschten Zeitraum verfügbar ist.</p>
       </details>
     </div>
   </section>
@@ -323,11 +328,12 @@
     <div class="footer-col">
       <h4>Leistungen</h4>
       <a href="index.html#gartenarbeit">Gartenarbeit</a>
-      <a href="index.html#putzen-reinigen">Reinigung & Putzen</a>
+      <a href="index.html#putzen-reinigen">Hausreinigung</a>
       <a href="index.html#nachhilfe">Nachhilfe</a>
       <a href="index.html#betreuung">Betreuung</a>
       <a href="index.html#aufbau">Aufbau</a>
-      <a href="index.html#malerarbeiten">Malereiarbeiten</a>
+      <a href="index.html#malerarbeiten">Malerarbeiten</a>
+      <a href="index.html#buegeln">Bügeln</a>
       <a href="index.html#sonstiges">Sonstiges</a>
     </div>
     <div class="footer-col">
@@ -344,11 +350,11 @@
       <a href="impressum.html">Impressum</a>
     </div>
     <nav class="footer-social" aria-label="Social Media">
-      <h4>Folge uns</h4>
+      <h4>Folgen Sie uns</h4>
       <ul class="footer-social-list">
         <li>
-          <!-- Platzhalter-URL: INSTAGRAM_URL später durch die echte Instagram-Adresse ersetzen. -->
-          <a class="footer-social-link" href="INSTAGRAM_URL" target="_blank" rel="noopener noreferrer" aria-label="Heinzelchen auf Instagram">
+          <!-- Instagram -->
+          <a class="footer-social-link" href="https://www.instagram.com/heinzelchen_?igsh=MXU2Z2F0MDBtczRrMg%3D%3D&utm_source=qr" target="_blank" rel="noopener noreferrer" aria-label="Heinzelchen auf Instagram">
             <svg class="footer-social-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
               <path d="M7.75 2h8.5A5.76 5.76 0 0 1 22 7.75v8.5A5.76 5.76 0 0 1 16.25 22h-8.5A5.76 5.76 0 0 1 2 16.25v-8.5A5.76 5.76 0 0 1 7.75 2Zm0 1.8a3.95 3.95 0 0 0-3.95 3.95v8.5a3.95 3.95 0 0 0 3.95 3.95h8.5a3.95 3.95 0 0 0 3.95-3.95v-8.5a3.95 3.95 0 0 0-3.95-3.95h-8.5Zm4.25 3.3a4.9 4.9 0 1 1 0 9.8 4.9 4.9 0 0 1 0-9.8Zm0 1.8a3.1 3.1 0 1 0 0 6.2 3.1 3.1 0 0 0 0-6.2Zm5.15-2.15a1.1 1.1 0 1 1 0 2.2 1.1 1.1 0 0 1 0-2.2Z" />
             </svg>
@@ -365,8 +371,8 @@
           </a>
         </li>
         <li>
-          <!-- Platzhalter-URL: TIKTOK_URL später durch die echte TikTok-Adresse ersetzen. -->
-          <a class="footer-social-link" href="TIKTOK_URL" target="_blank" rel="noopener noreferrer" aria-label="Heinzelchen auf TikTok">
+          <!-- TikTok -->
+          <a class="footer-social-link" href="https://www.tiktok.com/@heinzelchen7?_r=1&_t=ZG-97cHNZS2Q4n" target="_blank" rel="noopener noreferrer" aria-label="Heinzelchen auf TikTok">
             <svg class="footer-social-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
               <path d="M16.45 2c.32 2.72 1.86 4.34 4.55 4.51v3.06a7.72 7.72 0 0 1-4.48-1.4v6.63c0 4.58-3.16 7.2-6.9 7.2C6.16 22 3 19.36 3 15.88c0-4.06 3.68-6.7 7.66-5.78v3.2c-1.8-.58-4.34.28-4.34 2.58 0 1.52 1.28 2.76 3.05 2.76 1.92 0 3.46-1.12 3.46-3.78V2h3.62Z" />
             </svg>
