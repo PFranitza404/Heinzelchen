@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Dienstleister werden | Heinzelchen</title>
 <link rel="stylesheet" href="assets/styles.css?v=schedule-edge-beige-20260706">
-<link rel="icon" href="favicon.ico?v=4" sizes="any">
-<link rel="shortcut icon" href="favicon.ico?v=4">
-<link rel="icon" type="image/png" sizes="32x32" href="favicon.png?v=4">
-<link rel="apple-touch-icon" href="apple-touch-icon.png?v=4">
+<link rel="icon" href="favicon.ico?v=5" sizes="any">
+<link rel="shortcut icon" href="favicon.ico?v=5">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon.png?v=5">
+<link rel="apple-touch-icon" href="apple-touch-icon.png?v=5">
 <script defer src="assets/cookie-banner.js"></script>
 </head>
 <body>
@@ -212,6 +212,15 @@
           <div><label>Stadt *</label><input name="city" type="text" required placeholder="Hamburg"></div>
           <div><label>Geburtsdatum *</label><input name="birthdate" type="date" required></div>
         </div>
+        <div class="provider-upload-box field-spacer">
+          <strong>Ausweis hochladen *</strong>
+          <p>Bitte lade Deinen Ausweis mit Vorder- und Rückseite hoch. Wir benötigen diese Dokumente zur internen Prüfung Deiner Registrierung.</p>
+          <div class="form-grid">
+            <div><label>Ausweis Vorderseite *</label><input name="identityDocumentFront" type="file" accept=".jpg,.jpeg,.png,.pdf" data-identity-front required></div>
+            <div><label>Ausweis Rückseite *</label><input name="identityDocumentBack" type="file" accept=".jpg,.jpeg,.png,.pdf" data-identity-back required></div>
+          </div>
+          <small>JPG, PNG oder PDF, max. 10 MB je Datei. Deine Daten werden vertraulich gespeichert und nur intern geprüft.</small>
+        </div>
         <p class="provider-account-note">Aktuell registrierst Du Dich kostenlos und unverbindlich für passende Aufgabenanfragen. Deine Angaben werden an Heinzelchen übermittelt und intern passenden Aufgabenbereichen zugeordnet.</p>
       </div>
     </div>
@@ -382,6 +391,6 @@
   </div>
 </footer>
 <script src="assets/main.js"></script>
-<script src="assets/provider-form.js?v=draft-save-20260624"></script>
+<script src="assets/provider-form.js?v=documents-upload-20260706"></script>
 </body>
 </html>

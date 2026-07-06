@@ -52,6 +52,14 @@
     ? `${field.name}::${field.value}`
     : `${field.name}::${index}`;
 
+  const fileToDataUrl = (file) => new Promise((resolve, reject) => {
+    if (!file || (!file.type?.startsWith("image/") && file.type !== "application/pdf")) return resolve("");
+    const reader = new FileReader();
+    reader.onload = () => resolve(typeof reader.result === "string" ? reader.result : "");
+    reader.onerror = () => reject(reader.error || new Error("Datei konnte nicht gelesen werden."));
+    reader.readAsDataURL(file);
+  });
+
   const collectDraftFields = () => Object.fromEntries(draftFields().map((field, index) => [
     draftFieldKey(field, index),
     field.type === "checkbox" || field.type === "radio" ? field.checked : field.value,
@@ -242,7 +250,7 @@
       }
     }
     if (targetStep === 2) {
-      const required = ["firstName", "lastName", "email", "phone", "street", "zip", "city", "birthdate"];
+      const required = ["firstName", "lastName", "email", "phone", "street", "zip", "city", "birthdate", "identityDocumentFront", "identityDocumentBack"];
       const invalid = required
         .map((name) => form.querySelector(`[name="${name}"]`))
         .filter((field) => {
@@ -378,6 +386,11 @@
       .map((area) => area.trim())
       .filter(Boolean);
     const childcareCertificate = data.get("childcareCertificate");
+    const childcareCertificateDataUrl = await fileToDataUrl(childcareCertificate);
+    const identityDocumentFront = data.get("identityDocumentFront");
+    const identityDocumentBack = data.get("identityDocumentBack");
+    const identityDocumentFrontDataUrl = await fileToDataUrl(identityDocumentFront);
+    const identityDocumentBackDataUrl = await fileToDataUrl(identityDocumentBack);
     const firstName = data.get("firstName") || "";
     const lastName = data.get("lastName") || "";
 
@@ -413,7 +426,18 @@
       adultSelfEmployedConfirmed: data.get("adultSelfEmployedConfirmed") === "on",
       termsAccepted: data.get("termsAccepted") === "on",
       privacyAccepted: data.get("privacyAccepted") === "on",
+      identityDocumentFrontName: identityDocumentFront?.name || "",
+      identityDocumentFrontType: identityDocumentFront?.type || "",
+      identityDocumentFrontSize: identityDocumentFront?.size || 0,
+      identityDocumentFrontDataUrl,
+      identityDocumentBackName: identityDocumentBack?.name || "",
+      identityDocumentBackType: identityDocumentBack?.type || "",
+      identityDocumentBackSize: identityDocumentBack?.size || 0,
+      identityDocumentBackDataUrl,
       childcareCertificateName: childcareCertificate?.name || "",
+      childcareCertificateType: childcareCertificate?.type || "",
+      childcareCertificateSize: childcareCertificate?.size || 0,
+      childcareCertificateDataUrl,
       registrationType: "Aufgabenverteiler / unverbindliche Registrierung",
     };
 

@@ -1,5 +1,12 @@
 import { createClient } from "npm:@supabase/supabase-js@2";
 import nodemailer from "npm:nodemailer@6.9.16";
+import {
+  mailHeading,
+  mailInfoTable,
+  mailLink,
+  mailParagraph,
+  renderMailLayout,
+} from "../_shared/html-mail-template.ts";
 
 const PRIVACY_URL = "https://heinzelchen.com/datenschutz.html";
 const TERMS_URL = "https://heinzelchen.com/nutzungsbedingungen.html";
@@ -37,6 +44,14 @@ const jsonHeaders = {
 };
 
 const textValue = (value: unknown) => (typeof value === "string" ? value.trim() : "");
+
+const escapeHtml = (value: unknown) =>
+  `${value ?? ""}`
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
 
 const displayValue = (value: unknown): string => {
   if (value === null || value === undefined || value === "") return "-";
@@ -149,6 +164,58 @@ ${TERMS_URL}
 `;
 };
 
+const internalMailHtml = (record: BookingRecord, auftragsnummer: number) =>
+  renderMailLayout({
+    title: `Neue Buchungsanfrage [${auftragsnummer}]`,
+    preheader: "Eine neue Buchungsanfrage ist eingegangen.",
+    children: `
+      ${mailHeading("Wo")}
+      ${mailInfoTable([
+        ["PLZ", escapeHtml(record.zip)],
+        ["Ort", escapeHtml(record.city)],
+        ["Straße", escapeHtml(record.street)],
+      ])}
+      ${mailHeading("Was")}
+      ${mailInfoTable([
+        ["Dienstleistungen", escapeHtml(displayValue(record.services_summary))],
+        ["Details", escapeHtml(displayValue(record.detail_notes)).replace(/\n/g, "<br>")],
+        ["Geschätzte Dauer", `${escapeHtml(displayValue(record.duration))} Stunden`],
+        ["Zusatzaufgaben", escapeHtml(displayValue(record.extra_task))],
+      ])}
+      ${mailHeading("Wann")}
+      ${mailInfoTable([
+        ["Datum", escapeHtml(displayValue(record.date))],
+        ["Uhrzeit", escapeHtml(displayValue(record.time))],
+        ["Häufigkeit", escapeHtml(displayValue(record.frequency))],
+        ["Verfügbarkeit", escapeHtml(displayValue(record.availability)).replace(/\n/g, "<br>")],
+      ])}
+      ${mailHeading("Kontakt")}
+      ${mailInfoTable([
+        ["Name", escapeHtml(fullName(record))],
+        ["E-Mail", escapeHtml(displayValue(record.email))],
+        ["Telefon", escapeHtml(displayValue(record.phone))],
+      ])}
+    `,
+  });
+
+const customerMailHtml = (record: BookingRecord) => {
+  const lastName = lastNameForGreeting(record);
+  const greeting = lastName ? `Sehr geehrte Frau / sehr geehrter Herr ${escapeHtml(lastName)},` : "Sehr geehrte Damen und Herren,";
+
+  return renderMailLayout({
+    title: "Ihre Anfrage bei den Heinzelchen",
+    preheader: "Ihre Buchungsanfrage ist bei uns eingegangen.",
+    children: `
+      ${mailParagraph(greeting)}
+      ${mailParagraph("wir haben Ihre Anfrage erhalten und melden uns bei Ihnen schnellstmöglich mit einem Termin und Stundenlohn, sodass Sie den Buchungsprozess abschließen können und Ihre Aufgabe zuverlässig erledigt wird.")}
+      ${mailParagraph("Sollten Sie Fragen haben, kontaktieren Sie uns gerne.")}
+      ${mailParagraph("Herzliche Grüße von Ihren Heinzelchen")}
+      ${mailParagraph(`Mail: ${mailLink("mailto:info@heinzelchen.com", "info@heinzelchen.com")}<br>Telefon: ${mailLink("tel:+491742997866", "0174 2997866")}`)}
+      ${mailParagraph(`${mailLink(PRIVACY_URL, "Datenschutzerklärung")}<br>${mailLink(TERMS_URL, "Nutzungsbedingungen")}`)}
+    `,
+  });
+};
+
 Deno.serve(async (req) => {
   try {
     if (req.method !== "POST") {
@@ -180,6 +247,7 @@ Deno.serve(async (req) => {
       replyTo: customerEmail,
       subject: `Neue Buchungsanfrage [${auftragsnummer}]`,
       text: internalMailBody(record, auftragsnummer),
+      html: internalMailHtml(record, auftragsnummer),
     });
 
     await transporter.sendMail({
@@ -188,6 +256,7 @@ Deno.serve(async (req) => {
       replyTo: "info@heinzelchen.com",
       subject: "Ihre Anfrage bei den Heinzelchen",
       text: customerMailBody(record),
+      html: customerMailHtml(record),
     });
 
     return new Response(JSON.stringify({ ok: true, auftragsnummer }), {

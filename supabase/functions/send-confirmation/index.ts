@@ -1,5 +1,10 @@
 import { createClient } from "npm:@supabase/supabase-js@2";
 import { Resend } from "npm:resend";
+import {
+  mailLink,
+  mailParagraph,
+  renderMailLayout,
+} from "../_shared/html-mail-template.ts";
 
 type WebhookPayload = {
   table?: string;
@@ -23,6 +28,14 @@ const corsHeaders = {
 };
 
 const textValue = (value: unknown) => (typeof value === "string" ? value.trim() : "");
+
+const escapeHtml = (value: unknown) =>
+  `${value ?? ""}`
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
 
 const fullName = (firstName?: unknown, lastName?: unknown) =>
   [textValue(firstName), textValue(lastName)].filter(Boolean).join(" ").trim();
@@ -72,14 +85,17 @@ async function bookingRecipient(record: Record<string, unknown>): Promise<Recipi
     from: "Heinzelchen Buchungen <buchungen@heinzelchen.com>",
     replyTo: "info@heinzelchen.com",
     subject: "Deine Buchung ist bestätigt",
-    html: `
-      <p>Hallo ${displayName},</p>
-      <p>deine Buchung bei den Heinzelchen ist bei uns eingegangen.</p>
-      <p>Wir prüfen deine Anfrage und melden uns persönlich mit einem passenden Vorschlag.</p>
-      <p>Herzliche Grüße<br>Dein Heinzelchen-Team</p>
-      <p><a href="${PRIVACY_URL}">Datenschutzerklärung</a></p>
-      <p><a href="${TERMS_URL}">Nutzungsbedingungen</a></p>
-    `,
+    html: renderMailLayout({
+      title: "Ihre Buchung ist eingegangen",
+      preheader: "Wir prüfen Ihre Anfrage und melden uns persönlich.",
+      children: `
+        ${mailParagraph(`Hallo ${escapeHtml(displayName)},`)}
+        ${mailParagraph("Ihre Buchung bei den Heinzelchen ist bei uns eingegangen.")}
+        ${mailParagraph("Wir prüfen Ihre Anfrage und melden uns persönlich mit einem passenden Vorschlag.")}
+        ${mailParagraph("Herzliche Grüße<br>Ihr Heinzelchen-Team")}
+        ${mailParagraph(`${mailLink(PRIVACY_URL, "Datenschutzerklärung")}<br>${mailLink(TERMS_URL, "Nutzungsbedingungen")}`)}
+      `,
+    }),
   };
 }
 
@@ -96,14 +112,17 @@ async function workerRecipient(record: Record<string, unknown>): Promise<Recipie
     from: "Heinzelchen <registrierung@heinzelchen.com>",
     replyTo: "info@heinzelchen.com",
     subject: "Willkommen bei den Heinzelchen",
-    html: `
-      <p>Hallo ${displayName},</p>
-      <p>willkommen bei den Heinzelchen. Deine Anmeldung ist bei uns eingegangen.</p>
-      <p>Wir prüfen deine Angaben und melden uns, sobald passende Aufgaben verfügbar sind.</p>
-      <p>Herzliche Grüße<br>Dein Heinzelchen-Team</p>
-      <p><a href="${PRIVACY_URL}">Datenschutzerklärung</a></p>
-      <p><a href="${TERMS_URL}">Nutzungsbedingungen</a></p>
-    `,
+    html: renderMailLayout({
+      title: "Willkommen bei den Heinzelchen",
+      preheader: "Deine Anmeldung ist bei uns eingegangen.",
+      children: `
+        ${mailParagraph(`Hallo ${escapeHtml(displayName)},`)}
+        ${mailParagraph("willkommen bei den Heinzelchen. Deine Anmeldung ist bei uns eingegangen.")}
+        ${mailParagraph("Wir prüfen deine Angaben und melden uns, sobald passende Aufgaben verfügbar sind.")}
+        ${mailParagraph("Herzliche Grüße<br>Dein Heinzelchen-Team")}
+        ${mailParagraph(`${mailLink(PRIVACY_URL, "Datenschutzerklärung")}<br>${mailLink(TERMS_URL, "Nutzungsbedingungen")}`)}
+      `,
+    }),
   };
 }
 

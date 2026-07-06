@@ -1,4 +1,11 @@
 import nodemailer from "npm:nodemailer@6.9.16";
+import {
+  mailHeading,
+  mailInfoTable,
+  mailLink,
+  mailParagraph,
+  renderMailLayout,
+} from "../_shared/html-mail-template.ts";
 
 const PRIVACY_URL = "https://heinzelchen.com/datenschutz.html";
 const TERMS_URL = "https://heinzelchen.com/nutzungsbedingungen.html";
@@ -60,6 +67,64 @@ const escapeHtml = (value: string) =>
     .replaceAll("'", "&#039;");
 
 const rawText = (record: WorkerRecord, key: string) => textValue(record.raw_payload?.[key]);
+
+const childcareCertificateName = (record: WorkerRecord) =>
+  textValue(record.childcare_certificate_name) || rawText(record, "childcareCertificateName");
+
+const childcareCertificateDataUrl = (record: WorkerRecord) =>
+  rawText(record, "childcareCertificateDataUrl");
+
+const childcareCertificateType = (record: WorkerRecord) =>
+  rawText(record, "childcareCertificateType");
+
+const workerDocuments = (record: WorkerRecord) => {
+  const documents = record.raw_payload?.documents;
+  return Array.isArray(documents) ? documents as Array<Record<string, unknown>> : [];
+};
+
+const childcareCertificateAttachment = (record: WorkerRecord) => {
+  const certificateDocument = workerDocuments(record).find((doc) => textValue(doc.label) === "Führungszeugnis");
+  const dataUrl = textValue(certificateDocument?.dataUrl) || childcareCertificateDataUrl(record);
+  const match = /^data:(image\/(?:png|jpe?g|webp));base64,(.+)$/i.exec(dataUrl);
+  if (!match) return null;
+  return {
+    filename: textValue(certificateDocument?.name) || childcareCertificateName(record) || "fuehrungszeugnis.jpg",
+    content: match[2],
+    encoding: "base64",
+    contentType: textValue(certificateDocument?.type) || childcareCertificateType(record) || match[1],
+    cid: "childcare-certificate@heinzelchen",
+  };
+};
+
+const workerDocumentAttachments = (record: WorkerRecord) =>
+  workerDocuments(record)
+    .map((doc, index) => {
+      const dataUrl = textValue(doc.dataUrl);
+      const match = /^data:([^;]+);base64,(.+)$/i.exec(dataUrl);
+      if (!match) return null;
+      return {
+        filename: textValue(doc.name) || `dokument-${index + 1}`,
+        content: match[2],
+        encoding: "base64",
+        contentType: textValue(doc.type) || match[1],
+      };
+    })
+    .filter(Boolean);
+
+const workerDocumentsHtml = (record: WorkerRecord) => {
+  const documents = workerDocuments(record);
+  if (!documents.length) return "";
+  return `${mailHeading("Dokumente")}
+    ${mailInfoTable(documents.map((doc) => [
+      escapeHtml(textValue(doc.label) || "Dokument"),
+      [
+        escapeHtml(textValue(doc.name) || "-"),
+        textValue(doc.bucket) && textValue(doc.path) ? `<br>Pfad: ${escapeHtml(`${textValue(doc.bucket)}/${textValue(doc.path)}`)}` : "",
+        textValue(doc.signedUrl) ? `<br>${mailLink(textValue(doc.signedUrl), "Datei öffnen")}` : "",
+        textValue(doc.uploadError) ? `<br>Upload-Hinweis: ${escapeHtml(textValue(doc.uploadError))}` : "",
+      ].join(""),
+    ]))}`;
+};
 
 const firstName = (record: WorkerRecord) =>
   textValue(record.first_name) || rawText(record, "first_name") || rawText(record, "firstName");
@@ -147,6 +212,64 @@ Selbstständigkeit bestätigt: ${displayValue(record.adult_self_employed_confirm
 ${childcareNotice}`;
 };
 
+const internalMailHtml = (record: WorkerRecord) => {
+  const certificateAttachment = childcareCertificateAttachment(record);
+  const childcareNotice = hasChildcareSkill(record)
+    ? `Führungszeugnis wurde eingereicht - bitte prüfen: ${escapeHtml(displayValue(childcareCertificateName(record)))}`
+    : "-";
+  const certificatePreview = certificateAttachment
+    ? `${mailHeading("Führungszeugnis")}
+      ${mailParagraph(`Datei: ${escapeHtml(childcareCertificateName(record) || "-")}`)}
+      <img src="cid:childcare-certificate@heinzelchen" alt="Führungszeugnis" style="display:block;width:100%;max-width:520px;height:auto;border:1px solid rgba(85,120,168,.22);border-radius:12px;margin:8px 0 16px;">`
+    : "";
+
+  return renderMailLayout({
+    title: "Neue Heinzelchen-Registrierung",
+    preheader: "Eine neue Heinzelchen-Registrierung ist eingegangen.",
+    children: `
+      ${mailHeading("Wo")}
+      ${mailInfoTable([
+        ["PLZ", escapeHtml(displayValue(record.zip))],
+        ["Ort", escapeHtml(displayValue(record.city))],
+        ["Straße", escapeHtml(displayValue(record.street))],
+        ["Einsatzgebiet", escapeHtml(displayValue(record.service_area))],
+        ["Radius", `${escapeHtml(displayValue(record.radius_km))} km`],
+        ["Lokale Gebiete", escapeHtml(displayValue(record.local_areas))],
+      ])}
+      ${mailHeading("Was")}
+      ${mailInfoTable([
+        ["Dienstleistungen", escapeHtml(skillsText(record))],
+        ["Zusätzliche Skills", escapeHtml(displayValue(record.extra_skills))],
+        ["Dienstleistungsdetails", escapeHtml(displayValue(record.service_details)).replace(/\n/g, "<br>")],
+        ["Stundenlohn", `Je Dienstleistung in ${escapeHtml(displayValue(record.service_details)).replace(/\n/g, "<br>")}`],
+      ])}
+      ${mailHeading("Wann")}
+      ${mailInfoTable([
+        ["Verfügbarkeit", escapeHtml(displayValue(record.availability)).replace(/\n/g, "<br>")],
+        ["Vorlaufzeit", escapeHtml(displayValue(record.lead_time))],
+      ])}
+      ${mailHeading("Kontakt")}
+      ${mailInfoTable([
+        ["Name", escapeHtml(fullName(record))],
+        ["E-Mail", escapeHtml(displayValue(record.email))],
+        ["Telefon", escapeHtml(displayValue(record.phone))],
+        ["Geburtsdatum", escapeHtml(displayValue(record.birthdate))],
+        ["Registrierungstyp", escapeHtml(displayValue(record.registration_type))],
+      ])}
+      ${workerDocumentsHtml(record)}
+      ${certificatePreview}
+      ${mailHeading("Bestätigungen")}
+      ${mailInfoTable([
+        ["AGB akzeptiert", escapeHtml(displayValue(record.terms_accepted))],
+        ["Datenschutz akzeptiert", escapeHtml(displayValue(record.privacy_accepted))],
+        ["Qualifikation bestätigt", escapeHtml(displayValue(record.qualification_confirmed))],
+        ["Selbstständigkeit bestätigt", escapeHtml(displayValue(record.adult_self_employed_confirmed))],
+        ["Kinderbetreuung", childcareNotice],
+      ])}
+    `,
+  });
+};
+
 const welcomeMailBody = (record: WorkerRecord) => {
   const greetingName = firstName(record) || "Heinzelchen";
 
@@ -178,18 +301,19 @@ const welcomeMailHtml = (record: WorkerRecord) => {
   const greetingName = escapeHtml(firstName(record) || "Heinzelchen");
   const escapedSkills = escapeHtml(skillsText(record));
 
-  return `
-    <p>Moin ${greetingName},</p>
-    <p>wir freuen uns sehr Dich als Heinzelchen für ${escapedSkills} begrüßen zu dürfen. Wir werden Dich mit passenden Aufgaben in Deiner Umgebung belohnen.</p>
-    <p>Behalte Deine Mailbox aktiv im Auge, damit Du keine attraktiven Arbeitsgelegenheiten verpasst.</p>
-    <p>Solltest Du Deine Angaben (Stundenlohn, Dienstleistungsbereiche usw.) ändern wollen oder irgendwelche Fragen haben, kontaktiere uns gerne jederzeit.</p>
-    <p>Herzliche Grüße</p>
-    <p>Dein Heinzelchen-Team</p>
-    <p>E-Mail: info@heinzelchen.com</p>
-    <p>Telefon: 0174 2997866</p>
-    <p><a href="${PRIVACY_URL}">Datenschutzerklärung</a></p>
-    <p><a href="${TERMS_URL}">Nutzungsbedingungen</a></p>
-  `;
+  return renderMailLayout({
+    title: "Willkommen bei den Heinzelchen",
+    preheader: "Ihre Registrierung ist bei uns eingegangen.",
+    children: `
+      ${mailParagraph(`Moin ${greetingName},`)}
+      ${mailParagraph(`wir freuen uns sehr Dich als Heinzelchen für ${escapedSkills} begrüßen zu dürfen. Wir werden Dich mit passenden Aufgaben in Deiner Umgebung belohnen.`)}
+      ${mailParagraph("Behalte Deine Mailbox aktiv im Auge, damit Du keine attraktiven Arbeitsgelegenheiten verpasst.")}
+      ${mailParagraph("Solltest Du Deine Angaben (Stundenlohn, Dienstleistungsbereiche usw.) ändern wollen oder irgendwelche Fragen haben, kontaktiere uns gerne jederzeit.")}
+      ${mailParagraph("Herzliche Grüße<br>Dein Heinzelchen-Team")}
+      ${mailParagraph(`E-Mail: ${mailLink("mailto:info@heinzelchen.com", "info@heinzelchen.com")}<br>Telefon: ${mailLink("tel:+491742997866", "0174 2997866")}`)}
+      ${mailParagraph(`${mailLink(PRIVACY_URL, "Datenschutzerklärung")}<br>${mailLink(TERMS_URL, "Nutzungsbedingungen")}`)}
+    `,
+  });
 };
 
 Deno.serve(async (req) => {
@@ -216,6 +340,9 @@ Deno.serve(async (req) => {
 
     const transporter = mailTransport();
     const workerName = fullName(record);
+    const attachments = workerDocumentAttachments(record);
+    const certificateAttachment = childcareCertificateAttachment(record);
+    const allAttachments = attachments.length ? attachments : (certificateAttachment ? [certificateAttachment] : undefined);
 
     await transporter.sendMail({
       from: "Heinzelchen Registrierungen <registrierungen@heinzelchen.com>",
@@ -223,16 +350,21 @@ Deno.serve(async (req) => {
       replyTo: workerEmail,
       subject: `Neue Heinzelchen-Registrierung – ${workerName}`,
       text: internalMailBody(record),
+      html: internalMailHtml(record),
+      attachments: allAttachments,
     });
+    console.log("Internal registration mail sent to registrierungen@heinzelchen.com");
 
     await transporter.sendMail({
       from: "Heinzelchen <registrierungen@heinzelchen.com>",
       to: workerEmail,
+      bcc: "registrierungen@heinzelchen.com",
       replyTo: "info@heinzelchen.com",
       subject: "Willkommen bei den Heinzelchen!",
       text: welcomeMailBody(record),
       html: welcomeMailHtml(record),
     });
+    console.log(`Welcome mail sent to ${workerEmail} with bcc to registrierungen@heinzelchen.com`);
 
     return new Response(JSON.stringify({ ok: true }), {
       status: 200,
