@@ -1,6 +1,7 @@
 import nodemailer from "npm:nodemailer@6.9.16";
 
-const STRIPE_ONBOARDING_URL = "[STRIPE_ONBOARDING_URL]";
+const PRIVACY_URL = "https://heinzelchen.com/datenschutz.html";
+const TERMS_URL = "https://heinzelchen.com/nutzungsbedingungen.html";
 
 type WebhookPayload = {
   type?: string;
@@ -149,55 +150,45 @@ ${childcareNotice}`;
 const welcomeMailBody = (record: WorkerRecord) => {
   const greetingName = firstName(record) || "Heinzelchen";
 
-  return `Liebe/-r ${greetingName},
+  return `Moin ${greetingName},
 
-wir freuen uns sehr, Dich als Heinzelchen für ${skillsText(record)} begrüßen zu dürfen. Wir werden Dich mit passenden Aufgaben in Deiner Umgebung belohnen.
+wir freuen uns sehr Dich als Heinzelchen für ${skillsText(record)} begrüßen zu dürfen. Wir werden Dich mit passenden Aufgaben in Deiner Umgebung belohnen.
 
-Damit Du möglichst schnell nach Deiner ersten erledigten Aufgabe Deinen Lohn erhältst, solltest Du – wenn Du es noch nicht nach der Registrierung auf der Website gemacht hast – noch Dein gewünschtes Auszahlungskonto angeben.
+Behalte Deine Mailbox aktiv im Auge, damit Du keine attraktiven Arbeitsgelegenheiten verpasst.
 
-Auszahlungskonto für meinen Lohn angeben:
-${STRIPE_ONBOARDING_URL}
-
-Behalte Deine Mailbox aktiv im Auge. Sobald ein passender Auftrag in Deiner Nähe eingeht, bekommst Du eine Mail – es gilt: first come, first serve!
-
-Solltest Du Deine Angaben (Stundenlohn, Dienstleistungsbereiche usw.) ändern wollen oder Fragen haben, kontaktiere uns gerne jederzeit.
+Solltest Du Deine Angaben (Stundenlohn, Dienstleistungsbereiche usw.) ändern wollen oder irgendwelche Fragen haben, kontaktiere uns gerne jederzeit.
 
 Herzliche Grüße
 
 Dein Heinzelchen-Team
 
-info@heinzelchen.com
+E-Mail: info@heinzelchen.com
 
-0174 2997866
+Telefon: 0174 2997866
 
-[Link zur Datenschutzerklärung – Platzhalter]
+Datenschutzerklärung:
+${PRIVACY_URL}
 
-[Link zu den Nutzungsbedingungen – Platzhalter]
+Nutzungsbedingungen:
+${TERMS_URL}
 `;
 };
 
 const welcomeMailHtml = (record: WorkerRecord) => {
   const greetingName = escapeHtml(firstName(record) || "Heinzelchen");
   const escapedSkills = escapeHtml(skillsText(record));
-  const escapedUrl = escapeHtml(STRIPE_ONBOARDING_URL);
 
   return `
-    <p>Liebe/-r ${greetingName},</p>
-    <p>wir freuen uns sehr, Dich als Heinzelchen für ${escapedSkills} begrüßen zu dürfen. Wir werden Dich mit passenden Aufgaben in Deiner Umgebung belohnen.</p>
-    <p>Damit Du möglichst schnell nach Deiner ersten erledigten Aufgabe Deinen Lohn erhältst, solltest Du – wenn Du es noch nicht nach der Registrierung auf der Website gemacht hast – noch Dein gewünschtes Auszahlungskonto angeben.</p>
-    <p>
-      <a href="${escapedUrl}" style="display:inline-block;background:#5578A8;color:#ffffff;text-decoration:none;padding:12px 18px;border-radius:8px;font-weight:700;">
-        Auszahlungskonto für meinen Lohn angeben
-      </a>
-    </p>
-    <p>Behalte Deine Mailbox aktiv im Auge. Sobald ein passender Auftrag in Deiner Nähe eingeht, bekommst Du eine Mail – es gilt: first come, first serve!</p>
-    <p>Solltest Du Deine Angaben (Stundenlohn, Dienstleistungsbereiche usw.) ändern wollen oder Fragen haben, kontaktiere uns gerne jederzeit.</p>
+    <p>Moin ${greetingName},</p>
+    <p>wir freuen uns sehr Dich als Heinzelchen für ${escapedSkills} begrüßen zu dürfen. Wir werden Dich mit passenden Aufgaben in Deiner Umgebung belohnen.</p>
+    <p>Behalte Deine Mailbox aktiv im Auge, damit Du keine attraktiven Arbeitsgelegenheiten verpasst.</p>
+    <p>Solltest Du Deine Angaben (Stundenlohn, Dienstleistungsbereiche usw.) ändern wollen oder irgendwelche Fragen haben, kontaktiere uns gerne jederzeit.</p>
     <p>Herzliche Grüße</p>
     <p>Dein Heinzelchen-Team</p>
-    <p>info@heinzelchen.com</p>
-    <p>0174 2997866</p>
-    <p>[Link zur Datenschutzerklärung – Platzhalter]</p>
-    <p>[Link zu den Nutzungsbedingungen – Platzhalter]</p>
+    <p>E-Mail: info@heinzelchen.com</p>
+    <p>Telefon: 0174 2997866</p>
+    <p><a href="${PRIVACY_URL}">Datenschutzerklärung</a></p>
+    <p><a href="${TERMS_URL}">Nutzungsbedingungen</a></p>
   `;
 };
 

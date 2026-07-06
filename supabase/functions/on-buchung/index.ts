@@ -1,6 +1,9 @@
 import { createClient } from "npm:@supabase/supabase-js@2";
 import nodemailer from "npm:nodemailer@6.9.16";
 
+const PRIVACY_URL = "https://heinzelchen.com/datenschutz.html";
+const TERMS_URL = "https://heinzelchen.com/nutzungsbedingungen.html";
+
 type WebhookPayload = {
   type?: string;
   table?: string;
@@ -138,7 +141,11 @@ Mail: info@heinzelchen.com
 
 Telefon: 0174 2997866
 
-[Link zur Datenschutzerklärung – Platzhalter, URL wird später ergänzt]
+Datenschutzerklärung:
+${PRIVACY_URL}
+
+Nutzungsbedingungen:
+${TERMS_URL}
 `;
 };
 

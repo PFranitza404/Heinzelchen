@@ -262,6 +262,7 @@
           <h4>${escapeHtml(service)}</h4>
           <div class="service-schedule-section">
             <strong>Wann soll die Hilfe stattfinden?</strong>
+            <p class="form-help">Die Arbeit kann innerhalb Ihres angegebenen Zeitfensters zu einer verfügbaren Zeit erledigt werden.</p>
             <div class="service-date-group-list" data-date-group-list>
               ${dateGroups.map((group, index) => renderDateGroup(group, index > 0)).join("")}
             </div>

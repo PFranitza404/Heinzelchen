@@ -15,6 +15,8 @@
   const gradePanel = form.querySelector("[data-provider-grade-panel]");
   const tutoringSubjectsContainer = form.querySelector("[data-provider-tutoring-subjects]");
   const tutoringSubjects = ["Mathe", "Deutsch", "Chemie", "Physik", "Biologie", "Englisch", "Französisch", "Spanisch", "Latein", "Geschichte", "Politik & Wirtschaft", "Religion", "Erdkunde", "Informatik"];
+  const minimumProviderAge = 18;
+  const minimumHourlyRate = 13.9;
   let step = 1;
   let maxStep = 1;
   const confirmedServices = new Set();
@@ -26,6 +28,24 @@
   const priceName = (service) => `price${service.replace(/[^A-Za-zÄÖÜäöüß]/g, "")}`;
   const servicePriceInput = (card) => card.querySelector(`[name="${priceName(card.dataset.providerService)}"]`);
   const slug = (text) => `${text}`.replace(/[^A-Za-z0-9]/g, "");
+  const formatDateValue = (date) => [
+    date.getFullYear(),
+    `${date.getMonth() + 1}`.padStart(2, "0"),
+    `${date.getDate()}`.padStart(2, "0"),
+  ].join("-");
+  const minimumBirthdateValue = () => {
+    const date = new Date();
+    date.setFullYear(date.getFullYear() - minimumProviderAge);
+    return formatDateValue(date);
+  };
+  const isAdultBirthdate = (dateValue) => {
+    const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(`${dateValue || ""}`);
+    if (!match) return false;
+    const [, year, month, day] = match.map(Number);
+    const date = new Date(year, month - 1, day);
+    if (date.getFullYear() !== year || date.getMonth() !== month - 1 || date.getDate() !== day) return false;
+    return dateValue <= minimumBirthdateValue();
+  };
   const draftFields = () => [...form.querySelectorAll("input, select, textarea")]
     .filter((field) => field.name && field.type !== "file");
   const draftFieldKey = (field, index) => field.type === "checkbox" || field.type === "radio"
@@ -137,7 +157,11 @@
       const confirmed = confirmedServices.has(service);
       const status = card.querySelector("[data-provider-service-status]");
       card.classList.toggle("confirmed", confirmed);
-      if (status) status.textContent = confirmed ? "✓" : "";
+      if (status) {
+        status.textContent = confirmed ? "✓" : "";
+        status.title = confirmed ? "Dienstleistung entfernen" : "";
+        status.setAttribute("aria-label", confirmed ? "Dienstleistung entfernen" : "");
+      }
     });
   };
 
@@ -191,6 +215,7 @@
     const invalid = [];
     const price = servicePriceInput(card);
     if (!price?.value) invalid.push(price);
+    if (price?.value && Number(price.value) < minimumHourlyRate) invalid.push(price);
     if (service === "Nachhilfe") {
       const tutoringByGrade = collectTutoringByGrade();
       if (!tutoringByGrade.length) invalid.push(card.querySelector("[data-provider-tutoring-grades]"));
@@ -231,6 +256,12 @@
         showError("Bitte fülle alle Pflichtfelder aus.");
         return false;
       }
+      const birthdate = form.querySelector('[name="birthdate"]');
+      if (!isAdultBirthdate(value("birthdate"))) {
+        markInvalid([birthdate]);
+        showError("Bitte gib ein gültiges Geburtsdatum an. Du musst mindestens 18 Jahre alt sein.");
+        return false;
+      }
     }
     if (targetStep === 3) {
       const consents = ["adultSelfEmployedConfirmed", "termsAccepted", "privacyAccepted"]
@@ -246,7 +277,13 @@
   };
 
   serviceCards.forEach((card) => {
-    card.querySelector("[data-provider-service-toggle]")?.addEventListener("click", () => {
+    card.querySelector("[data-provider-service-toggle]")?.addEventListener("click", (event) => {
+      if (event.target.closest("[data-provider-service-status]") && confirmedServices.has(card.dataset.providerService)) {
+        confirmedServices.delete(card.dataset.providerService);
+        updateSkillsValue();
+        saveDraft();
+        return;
+      }
       const detail = card.querySelector("[data-provider-service-detail]");
       if (detail) detail.hidden = !detail.hidden;
       saveDraft();
@@ -256,6 +293,12 @@
       const invalid = validateServiceCard(card);
       if (invalid.length) {
         markInvalid(invalid);
+        const price = servicePriceInput(card);
+        if (price?.value && Number(price.value) < minimumHourlyRate) {
+          showError("Der Stundenpreis muss mindestens 13,90 EUR betragen.");
+          price.focus();
+          return;
+        }
         showError("Bitte ergänze die notwendigen Angaben für diese Dienstleistung.");
         return;
       }
@@ -402,4 +445,7 @@
     updateAvailabilityRows();
     toggleStep();
   }
+
+  const birthdate = form.querySelector('[name="birthdate"]');
+  if (birthdate) birthdate.max = minimumBirthdateValue();
 })();

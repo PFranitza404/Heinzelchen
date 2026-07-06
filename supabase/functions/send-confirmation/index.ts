@@ -15,6 +15,9 @@ type Recipient = {
   html: string;
 };
 
+const PRIVACY_URL = "https://heinzelchen.com/datenschutz.html";
+const TERMS_URL = "https://heinzelchen.com/nutzungsbedingungen.html";
+
 const corsHeaders = {
   "Content-Type": "application/json",
 };
@@ -74,6 +77,8 @@ async function bookingRecipient(record: Record<string, unknown>): Promise<Recipi
       <p>deine Buchung bei den Heinzelchen ist bei uns eingegangen.</p>
       <p>Wir prüfen deine Anfrage und melden uns persönlich mit einem passenden Vorschlag.</p>
       <p>Herzliche Grüße<br>Dein Heinzelchen-Team</p>
+      <p><a href="${PRIVACY_URL}">Datenschutzerklärung</a></p>
+      <p><a href="${TERMS_URL}">Nutzungsbedingungen</a></p>
     `,
   };
 }
@@ -96,6 +101,8 @@ async function workerRecipient(record: Record<string, unknown>): Promise<Recipie
       <p>willkommen bei den Heinzelchen. Deine Anmeldung ist bei uns eingegangen.</p>
       <p>Wir prüfen deine Angaben und melden uns, sobald passende Aufgaben verfügbar sind.</p>
       <p>Herzliche Grüße<br>Dein Heinzelchen-Team</p>
+      <p><a href="${PRIVACY_URL}">Datenschutzerklärung</a></p>
+      <p><a href="${TERMS_URL}">Nutzungsbedingungen</a></p>
     `,
   };
 }
