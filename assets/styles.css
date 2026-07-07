@@ -7804,6 +7804,20 @@ html body:not(.home) .booking-flow-section .inquiry-card .service-time-window{
   line-height:1.75;
 }
 
+.contact-actions{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:.9rem;
+  margin-top:1.8rem;
+}
+
+.contact-actions .btn-primary,
+.contact-actions .btn-secondary{
+  min-width:180px;
+  justify-content:center;
+}
+
 @media(max-width:900px){
   .team-grid{
     grid-template-columns:1fr;
