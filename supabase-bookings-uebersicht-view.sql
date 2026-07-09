@@ -1,4 +1,6 @@
-create or replace view public.bookings_uebersicht as
+create or replace view public.bookings_uebersicht
+with (security_invoker = true)
+as
 select
   coalesce(
     nullif(services_summary, ''),

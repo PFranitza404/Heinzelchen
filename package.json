@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "next": "^15.5.20",
+    "nodemailer": "^9.0.3",
     "postcss": "8.5.16",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
