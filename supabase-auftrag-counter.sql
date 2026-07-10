@@ -3,6 +3,11 @@ create table if not exists auftrag_counter (
   counter integer not null
 );
 
+alter table public.auftrag_counter enable row level security;
+
+revoke all on table public.auftrag_counter from anon, authenticated;
+grant select, update on table public.auftrag_counter to service_role;
+
 insert into auftrag_counter (id, counter)
 values (1, 1000)
 on conflict (id) do nothing;
@@ -31,3 +36,6 @@ begin
   return next_counter;
 end;
 $$;
+
+revoke execute on function public.get_next_auftragsnummer() from anon, authenticated;
+grant execute on function public.get_next_auftragsnummer() to service_role;

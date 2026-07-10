@@ -7823,3 +7823,14 @@ html body:not(.home) .booking-flow-section .inquiry-card .service-time-window{
     grid-template-columns:1fr;
   }
 }
+
+.home-helper-register-button{
+  flex-direction:column;
+  gap:.12rem;
+  line-height:1.15;
+  text-align:center;
+}
+
+.home-helper-register-button span{
+  display:block;
+}
