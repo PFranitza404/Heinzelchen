@@ -30,17 +30,8 @@ function initWorkerRegistration() {
       message.textContent = "Bitte bestätige die Datenschutzerklärung.";
       return;
     }
-    const idCard = data.get("idCard");
     if (body.password !== body.passwordRepeat) {
       message.textContent = "Die Passwörter stimmen nicht überein.";
-      return;
-    }
-    if (!idCard || !idCard.size) {
-      message.textContent = "Bitte lade deinen Ausweis hoch.";
-      return;
-    }
-    if (idCard.size > 10 * 1024 * 1024) {
-      message.textContent = "Die Datei ist zu groß. Maximal erlaubt sind 10MB.";
       return;
     }
     try {

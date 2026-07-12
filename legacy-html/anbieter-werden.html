@@ -140,9 +140,10 @@
             <div class="provider-service-detail" data-provider-service-detail hidden>
               <div class="provider-upload-box">
                 <strong>Erweitertes Führungszeugnis</strong>
-                <p>Für die Vermittlung von Kinderbetreuung benötigen wir einmalig Dein erweitertes Führungszeugnis (§ 72a SGB VIII). Du kannst es kostenlos bei Deinem Einwohnermeldeamt beantragen.</p>
-                <input name="childcareCertificate" type="file" accept=".jpg,.jpeg,.png,.pdf" data-childcare-certificate>
-                <small>JPG, PNG oder PDF, max. 10 MB. Deine Daten werden vertraulich gespeichert und nicht an Dritte weitergegeben.</small>
+                <p>Für die Vermittlung von Kinderbetreuung benötigen wir einmalig Dein erweitertes Führungszeugnis. Du kannst es kostenlos bei Deinem Einwohnermeldeamt beantragen.</p>
+                <label class="provider-consent-check provider-certificate-consent"><input name="childcareCertificateConsent" type="checkbox" data-childcare-certificate-consent><span>Ich lade mein erweitertes Führungszeugnis freiwillig hoch und willige ein, dass Heinzelchen es zur Prüfung meiner Eignung für Kinderbetreuung einsieht. Das Dokument wird nach Prüfung nicht dauerhaft gespeichert. Meine Einwilligung kann ich jederzeit widerrufen; eine Vermittlung für Kinderbetreuung ist dann nicht mehr möglich.</span></label>
+                <input name="childcareCertificate" type="file" accept=".jpg,.jpeg,.png,.pdf" data-childcare-certificate disabled>
+                <small>JPG, PNG oder PDF, max. 10 MB. Der Upload wird erst nach Deiner freiwilligen Einwilligung aktiviert.</small>
               </div>
               <div class="provider-price-field"><label>Dein Stundenpreis</label><input name="priceKinderbetreuung" type="number" min="13.9" max="80" step="0.1" placeholder="mind. 13,90"><span>EUR / Stunde</span></div>
               <button class="btn-primary provider-add-service" type="button" data-provider-add-service>Dienstleistung hinzufügen</button>
@@ -211,15 +212,6 @@
           <div><label>PLZ *</label><input name="zip" type="text" required placeholder="22765"></div>
           <div><label>Stadt *</label><input name="city" type="text" required placeholder="Hamburg"></div>
           <div><label>Geburtsdatum *</label><input name="birthdate" type="date" required></div>
-        </div>
-        <div class="provider-upload-box field-spacer">
-          <strong>Ausweis hochladen *</strong>
-          <p>Bitte lade Deinen Ausweis mit Vorder- und Rückseite hoch. Wir benötigen diese Dokumente zur internen Prüfung Deiner Registrierung.</p>
-          <div class="form-grid">
-            <div><label>Ausweis Vorderseite *</label><input name="identityDocumentFront" type="file" accept=".jpg,.jpeg,.png,.pdf" data-identity-front required></div>
-            <div><label>Ausweis Rückseite *</label><input name="identityDocumentBack" type="file" accept=".jpg,.jpeg,.png,.pdf" data-identity-back required></div>
-          </div>
-          <small>JPG, PNG oder PDF, max. 10 MB je Datei. Deine Daten werden vertraulich gespeichert und nur intern geprüft.</small>
         </div>
         <p class="provider-account-note">Aktuell registrierst Du Dich kostenlos und unverbindlich für passende Aufgabenanfragen. Deine Angaben werden an Heinzelchen übermittelt und intern passenden Aufgabenbereichen zugeordnet.</p>
       </div>

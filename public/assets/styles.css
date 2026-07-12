@@ -6223,6 +6223,11 @@ body:not(.home) .content h3{
   margin-bottom:.6em!important;
 }
 
+body:not(.home) .legal-content h3{
+  color:#A63D52!important;
+  font-weight:700!important;
+}
+
 body:not(.home) .legal-content h2:first-child,
 body:not(.home) .content h2:first-child{
   margin-top:0!important;

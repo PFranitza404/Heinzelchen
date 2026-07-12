@@ -80,12 +80,13 @@ const previews = {
     preheader: "Bestätigen Sie Ihren Auftrag mit der Vermittlungsgebühr.",
     children: `
       ${mailParagraph("Sehr geehrte Frau / sehr geehrter Herr Muster,")}
-      ${mailParagraph("wir haben ein Heinzelchen für Sie gefunden. Lena kann am 12.07.2026 um 10:00 Uhr zu Ihnen kommen und verlangt 18 EUR pro Stunde.")}
-      ${mailParagraph("Wissen Sie Ihre Aufgabe in guten Händen und bestätigen Sie Ihren Auftrag mit der Zahlung der Vermittlungsgebühr.")}
+      ${mailParagraph("wir haben ein Heinzelchen für Sie gefunden. Lena kann am 12.07.2026 um 10:00 Uhr zu Ihnen kommen und verlangt 18 € pro Stunde. Wissen Sie Ihre Aufgabe in guten Händen und bestätigen Sie Ihren Auftrag mit der Zahlung der Vermittlungsgebühr.")}
       ${mailButton({ href: stripeUrl, label: "Jetzt 3 € zahlen und Auftrag bestätigen" })}
       ${mailParagraph("Wir freuen uns sehr über Ihre Buchung und die Gelegenheit, Ihnen den Alltag leichter zu machen.")}
+      ${mailParagraph("Herzliche Grüße<br>Ihre Heinzelchen")}
+      ${mailParagraph(`Mail: ${mailLink("mailto:info@heinzelchen.com", "info@heinzelchen.com")}<br>Telefon: ${mailLink("tel:+491742997866", "0174 2997866")}`)}
       ${mailHeading("Stornierung")}
-      ${mailParagraph(`Die Vermittlungsgebühr von 3,00 EUR ist nach Zahlung nicht erstattbar. Möchten Sie umbuchen oder einen anderen Termin vereinbaren, wenden Sie sich direkt an uns oder stellen Sie eine neue Buchungsanfrage über ${mailLink("https://heinzelchen.com", "heinzelchen.com")}. Bei Nichterscheinen Ihres Heinzelchens erstatten wir die Vermittlungsgebühr auf Anfrage kulanzweise zurück.`)}
+      ${mailParagraph(`Die Vermittlungsgebühr von 3,00 € ist nach Zahlung nicht erstattbar. Möchten Sie umbuchen oder einen anderen Termin vereinbaren, wenden Sie sich direkt an uns oder stellen Sie eine neue Buchungsanfrage über ${mailLink("https://heinzelchen.com", "heinzelchen.com")}. Bei Nichterscheinen Ihres Heinzelchens erstatten wir die Vermittlungsgebühr auf Anfrage kulanzweise zurück.`)}
       ${mailParagraph(`${mailLink(agbUrl, "AGB")}<br>${mailLink(privacyUrl, "Datenschutzerklärung")}`)}
     `,
   }),

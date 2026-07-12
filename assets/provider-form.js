@@ -126,6 +126,7 @@
     });
     updateSkillsValue();
     updateAvailabilityRows();
+    updateChildcareCertificateUpload();
     toggleStep();
     restoringDraft = false;
     return true;
@@ -155,6 +156,16 @@
       row.querySelectorAll("[data-provider-time]").forEach((select) => {
         select.disabled = !checked;
       });
+    });
+  };
+
+  const updateChildcareCertificateUpload = () => {
+    form.querySelectorAll("[data-provider-service='Kinderbetreuung']").forEach((card) => {
+      const consent = card.querySelector("[data-childcare-certificate-consent]");
+      const certificate = card.querySelector("[data-childcare-certificate]");
+      if (!certificate) return;
+      certificate.disabled = !consent?.checked;
+      if (certificate.disabled) certificate.value = "";
     });
   };
 
@@ -234,7 +245,9 @@
       });
     }
     if (service === "Kinderbetreuung") {
+      const consent = card.querySelector("[data-childcare-certificate-consent]");
       const certificate = card.querySelector("[data-childcare-certificate]");
+      if (!consent?.checked) invalid.push(consent?.closest(".provider-consent-check") || consent);
       if (!certificate?.files?.length) invalid.push(certificate);
     }
     return invalid;
@@ -250,7 +263,7 @@
       }
     }
     if (targetStep === 2) {
-      const required = ["firstName", "lastName", "email", "phone", "street", "zip", "city", "birthdate", "identityDocumentFront", "identityDocumentBack"];
+      const required = ["firstName", "lastName", "email", "phone", "street", "zip", "city", "birthdate"];
       const invalid = required
         .map((name) => form.querySelector(`[name="${name}"]`))
         .filter((field) => {
@@ -367,7 +380,10 @@
   });
 
   form.addEventListener("input", saveDraft);
-  form.addEventListener("change", saveDraft);
+  form.addEventListener("change", () => {
+    updateChildcareCertificateUpload();
+    saveDraft();
+  });
   window.addEventListener("beforeunload", saveDraft);
 
   form.addEventListener("submit", async (event) => {
@@ -387,10 +403,6 @@
       .filter(Boolean);
     const childcareCertificate = data.get("childcareCertificate");
     const childcareCertificateDataUrl = await fileToDataUrl(childcareCertificate);
-    const identityDocumentFront = data.get("identityDocumentFront");
-    const identityDocumentBack = data.get("identityDocumentBack");
-    const identityDocumentFrontDataUrl = await fileToDataUrl(identityDocumentFront);
-    const identityDocumentBackDataUrl = await fileToDataUrl(identityDocumentBack);
     const firstName = data.get("firstName") || "";
     const lastName = data.get("lastName") || "";
 
@@ -426,14 +438,6 @@
       adultSelfEmployedConfirmed: data.get("adultSelfEmployedConfirmed") === "on",
       termsAccepted: data.get("termsAccepted") === "on",
       privacyAccepted: data.get("privacyAccepted") === "on",
-      identityDocumentFrontName: identityDocumentFront?.name || "",
-      identityDocumentFrontType: identityDocumentFront?.type || "",
-      identityDocumentFrontSize: identityDocumentFront?.size || 0,
-      identityDocumentFrontDataUrl,
-      identityDocumentBackName: identityDocumentBack?.name || "",
-      identityDocumentBackType: identityDocumentBack?.type || "",
-      identityDocumentBackSize: identityDocumentBack?.size || 0,
-      identityDocumentBackDataUrl,
       childcareCertificateName: childcareCertificate?.name || "",
       childcareCertificateType: childcareCertificate?.type || "",
       childcareCertificateSize: childcareCertificate?.size || 0,
