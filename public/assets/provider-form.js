@@ -4,6 +4,9 @@
 
   const message = document.querySelector("#publicWorkerFormMessage");
   const error = document.querySelector("#publicWorkerFormError");
+  const confirmation = form.querySelector("[data-provider-confirmation]");
+  const progressBar = form.querySelector(".provider-progress");
+  const actions = form.querySelector(".provider-form-actions");
   const panels = [...form.querySelectorAll("[data-provider-step]")];
   const progress = [...form.querySelectorAll("[data-provider-step-jump]")];
   const backButton = form.querySelector("[data-provider-back]");
@@ -22,6 +25,8 @@
   const confirmedServices = new Set();
   const draftStorageKey = "heinzelchen.providerFormDraft.v1";
   let restoringDraft = false;
+  let isSubmitting = false;
+  let submitted = false;
 
   const value = (name) => form.querySelector(`[name="${name}"]`)?.value.trim() || "";
   const values = (name) => [...form.querySelectorAll(`[name="${name}"]:checked`)].map((input) => input.value);
@@ -213,6 +218,7 @@
   };
 
   const toggleStep = () => {
+    if (submitted) return;
     panels.forEach((panel) => {
       const active = Number(panel.dataset.providerStep) === step;
       panel.hidden = !active;
@@ -388,7 +394,17 @@
 
   form.addEventListener("submit", async (event) => {
     event.preventDefault();
+    if (submitted || isSubmitting) return;
     if (!validateStep(3)) return;
+    isSubmitting = true;
+    if (submitButton) {
+      submitButton.disabled = true;
+      submitButton.textContent = "Registrierung wird gesendet ...";
+    }
+    if (backButton) backButton.disabled = true;
+    progress.forEach((button) => {
+      button.disabled = true;
+    });
 
     const data = new FormData(form);
     const days = data.getAll("days");
@@ -452,7 +468,16 @@
         body: JSON.stringify(worker),
       });
       if (!response.ok) throw new Error("Speichern fehlgeschlagen");
-      if (message) message.textContent = "Registrierung erhalten. Wir prüfen deine Angaben und melden uns mit passenden Aufgaben.";
+      submitted = true;
+      if (error) error.hidden = true;
+      if (message) message.textContent = "";
+      if (confirmation) confirmation.hidden = false;
+      if (progressBar) progressBar.hidden = true;
+      if (actions) actions.hidden = true;
+      panels.forEach((panel) => {
+        panel.hidden = true;
+        panel.classList.remove("active");
+      });
       form.reset();
       clearDraft();
       confirmedServices.clear();
@@ -461,8 +486,18 @@
       updateSkillsValue();
       renderTutoringSubjectsByGrade();
       updateAvailabilityRows();
-      toggleStep();
+      form.scrollIntoView({ behavior: "smooth", block: "start" });
     } catch {
+      isSubmitting = false;
+      if (submitButton) {
+        submitButton.disabled = false;
+        submitButton.textContent = "Jetzt kostenlos und unverbindlich registrieren";
+      }
+      if (backButton) backButton.disabled = false;
+      progress.forEach((button) => {
+        const target = Number(button.dataset.providerStepJump);
+        button.disabled = target > maxStep;
+      });
       if (message) message.textContent = "Die Registrierung konnte nicht gespeichert werden. Bitte versuche es gleich erneut oder melde dich direkt bei uns.";
     }
   });

@@ -7839,3 +7839,149 @@ html body:not(.home) .booking-flow-section .inquiry-card .service-time-window{
 .home-helper-register-button span{
   display:block;
 }
+
+/* Responsive typography and German hyphenation final lock */
+html[lang="de"],
+html[lang="de"] body,
+html[lang="de"] body *:not(.no-break):not(.no-break *):not(.nav-logo):not(.nav-logo *){
+  hyphens:auto;
+  -webkit-hyphens:auto;
+  -ms-hyphens:auto;
+  overflow-wrap:break-word;
+  word-break:normal;
+}
+
+html body nav .nav-logo,
+html body nav .nav-logo span,
+html body nav a.nav-logo:not(.btn-primary):not(.btn-book):not(.btn-book-main):not(.nav-cta){
+  display:inline-flex!important;
+  align-items:center!important;
+  flex:0 1 auto!important;
+  max-width:min(48vw, 14rem)!important;
+  min-width:0!important;
+  color:var(--heinzel-red)!important;
+  font-size:clamp(1rem, .82rem + 1.35vw, 1.72rem)!important;
+  line-height:1.05!important;
+  white-space:nowrap!important;
+  hyphens:none!important;
+  -webkit-hyphens:none!important;
+  -ms-hyphens:none!important;
+  overflow-wrap:normal!important;
+  word-break:keep-all!important;
+}
+
+html body footer .footer-brand .nav-logo,
+html body footer .footer-brand .nav-logo span{
+  display:inline-flex!important;
+  max-width:100%!important;
+  font-size:clamp(1.35rem, .9rem + 2.4vw, 2rem)!important;
+  line-height:1.05!important;
+  white-space:nowrap!important;
+  hyphens:none!important;
+  -webkit-hyphens:none!important;
+  -ms-hyphens:none!important;
+  overflow-wrap:normal!important;
+  word-break:keep-all!important;
+}
+
+html body .nav-links a{
+  min-width:0!important;
+  hyphens:auto;
+  -webkit-hyphens:auto;
+  overflow-wrap:break-word;
+  word-break:normal;
+}
+
+html body .home-helper-register-button,
+html body .home-helper-register-button .no-break{
+  max-width:100%!important;
+  white-space:normal!important;
+  hyphens:auto!important;
+  -webkit-hyphens:auto!important;
+  overflow-wrap:break-word!important;
+  word-break:normal!important;
+}
+
+html body .home-helper-register-button .no-break{
+  display:inline!important;
+}
+
+@media(max-width:1100px){
+  html body footer .footer-inner{
+    grid-template-columns:1fr 1fr!important;
+  }
+}
+
+@media(max-width:560px){
+  html body footer .footer-inner{
+    grid-template-columns:1fr!important;
+  }
+}
+
+@media(max-width:700px){
+  html body .dispatch-table-wrap{
+    overflow:visible!important;
+  }
+
+  html body .dispatch-table,
+  html body .dispatch-table thead,
+  html body .dispatch-table tbody,
+  html body .dispatch-table tr,
+  html body .dispatch-table th,
+  html body .dispatch-table td{
+    display:block!important;
+    width:100%!important;
+    min-width:0!important;
+  }
+
+  html body .dispatch-table{
+    border-collapse:separate!important;
+    border-spacing:0!important;
+  }
+
+  html body .dispatch-table thead{
+    position:absolute!important;
+    width:1px!important;
+    height:1px!important;
+    overflow:hidden!important;
+    clip:rect(0 0 0 0)!important;
+  }
+
+  html body .dispatch-table tr{
+    margin:0 0 .9rem!important;
+    border:1px solid rgba(85,120,168,.22)!important;
+    border-radius:14px!important;
+    background:#EEE8DA!important;
+    overflow:hidden!important;
+  }
+
+  html body .dispatch-table td{
+    padding:.75rem .85rem!important;
+    border-bottom:1px solid rgba(85,120,168,.16)!important;
+  }
+
+  html body .dispatch-table td:last-child{
+    border-bottom:0!important;
+  }
+
+  html body .dispatch-table td::before{
+    display:block;
+    margin-bottom:.25rem;
+    color:#A63D52;
+    font-family:"Lora",Georgia,serif;
+    font-size:.78rem;
+    font-weight:900;
+  }
+
+  html body .dispatch-table td:nth-child(1)::before{content:"Kunde";}
+  html body .dispatch-table td:nth-child(2)::before{content:"Dienstleistung";}
+  html body .dispatch-table td:nth-child(3)::before{content:"Stadt";}
+  html body .dispatch-table td:nth-child(4)::before{content:"Datum";}
+  html body .dispatch-table td:nth-child(5)::before{content:"Status";}
+  html body .dispatch-table td:nth-child(6)::before{content:"Zuweisen";}
+
+  html body .dispatch-select{
+    min-width:0!important;
+    width:100%!important;
+  }
+}

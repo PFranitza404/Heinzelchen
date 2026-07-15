@@ -4,7 +4,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "audit:responsive": "node scripts/responsive-audit.js"
   },
   "dependencies": {
     "next": "^15.5.20",
@@ -15,5 +16,8 @@
   },
   "overrides": {
     "postcss": "8.5.16"
+  },
+  "devDependencies": {
+    "playwright": "^1.61.1"
   }
 }

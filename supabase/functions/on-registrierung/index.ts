@@ -85,19 +85,21 @@ const workerDocuments = (record: WorkerRecord) => {
 const childcareCertificateAttachment = (record: WorkerRecord) => {
   const certificateDocument = workerDocuments(record).find((doc) => textValue(doc.label) === "Führungszeugnis");
   const dataUrl = textValue(certificateDocument?.dataUrl) || childcareCertificateDataUrl(record);
-  const match = /^data:(image\/(?:png|jpe?g|webp));base64,(.+)$/i.exec(dataUrl);
+  const match = /^data:([^;]+);base64,(.+)$/i.exec(dataUrl);
   if (!match) return null;
+  const contentType = textValue(certificateDocument?.type) || childcareCertificateType(record) || match[1];
   return {
     filename: textValue(certificateDocument?.name) || childcareCertificateName(record) || "fuehrungszeugnis.jpg",
     content: match[2],
     encoding: "base64",
-    contentType: textValue(certificateDocument?.type) || childcareCertificateType(record) || match[1],
-    cid: "childcare-certificate@heinzelchen",
+    contentType,
+    cid: contentType.startsWith("image/") ? "childcare-certificate@heinzelchen" : undefined,
   };
 };
 
 const workerDocumentAttachments = (record: WorkerRecord) =>
   workerDocuments(record)
+    .filter((doc) => textValue(doc.label) !== "Führungszeugnis")
     .map((doc, index) => {
       const dataUrl = textValue(doc.dataUrl);
       const match = /^data:([^;]+);base64,(.+)$/i.exec(dataUrl);
@@ -220,7 +222,9 @@ const internalMailHtml = (record: WorkerRecord) => {
   const certificatePreview = certificateAttachment
     ? `${mailHeading("Führungszeugnis")}
       ${mailParagraph(`Datei: ${escapeHtml(childcareCertificateName(record) || "-")}`)}
-      <img src="cid:childcare-certificate@heinzelchen" alt="Führungszeugnis" style="display:block;width:100%;max-width:520px;height:auto;border:1px solid rgba(85,120,168,.22);border-radius:12px;margin:8px 0 16px;">`
+      ${certificateAttachment.cid
+        ? `<img src="cid:childcare-certificate@heinzelchen" alt="Führungszeugnis" style="display:block;width:100%;max-width:520px;height:auto;border:1px solid rgba(85,120,168,.22);border-radius:12px;margin:8px 0 16px;">`
+        : mailParagraph("Das Führungszeugnis ist als Anhang beigefügt.")}`
     : "";
 
   return renderMailLayout({
@@ -342,7 +346,7 @@ Deno.serve(async (req) => {
     const workerName = fullName(record);
     const attachments = workerDocumentAttachments(record);
     const certificateAttachment = childcareCertificateAttachment(record);
-    const allAttachments = attachments.length ? attachments : (certificateAttachment ? [certificateAttachment] : undefined);
+    const allAttachments = [...attachments, certificateAttachment].filter(Boolean);
 
     await transporter.sendMail({
       from: "Heinzelchen Registrierungen <registrierungen@heinzelchen.com>",
@@ -351,7 +355,7 @@ Deno.serve(async (req) => {
       subject: `Neue Heinzelchen-Registrierung – ${workerName}`,
       text: internalMailBody(record),
       html: internalMailHtml(record),
-      attachments: allAttachments,
+      attachments: allAttachments.length ? allAttachments : undefined,
     });
     console.log("Internal registration mail sent to registrierungen@heinzelchen.com");
 
