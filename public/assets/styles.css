@@ -7744,6 +7744,74 @@ html body:not(.home) .booking-flow-section .inquiry-card .service-time-window{
   background-clip:padding-box!important;
 }
 
+/* Booking flow visual hardening: hidden choice inputs must not keep full field width */
+html body:not(.home) .booking-flow-section .inquiry-card .request-service-option input,
+html body:not(.home) .booking-flow-section .inquiry-card .frequency-options input,
+html body:not(.home) .booking-flow-section .inquiry-card .service-choice-card input{
+  position:absolute!important;
+  inline-size:1px!important;
+  block-size:1px!important;
+  width:1px!important;
+  height:1px!important;
+  margin:0!important;
+  padding:0!important;
+  border:0!important;
+  opacity:0!important;
+  overflow:hidden!important;
+  pointer-events:none!important;
+}
+
+html body:not(.home) .booking-flow-section .inquiry-card .service-choice-with-detail{
+  display:grid!important;
+  gap:.85rem!important;
+  min-width:0!important;
+}
+
+html body:not(.home) .booking-flow-section .inquiry-card .service-choice-card{
+  position:relative!important;
+  min-width:0!important;
+}
+
+html body:not(.home) .booking-flow-section .inquiry-card .service-date-range,
+html body:not(.home) .booking-flow-section .inquiry-card .service-time-window{
+  min-width:0!important;
+}
+
+html body:not(.home) .booking-flow-section .inquiry-card .service-date-range > *,
+html body:not(.home) .booking-flow-section .inquiry-card .service-time-window > *{
+  min-width:0!important;
+}
+
+@media(max-width:480px){
+  html body:not(.home) .booking-flow-section{
+    padding-left:.75rem!important;
+    padding-right:.75rem!important;
+  }
+
+  html body:not(.home) .booking-flow-section .inquiry-card{
+    padding:1rem!important;
+    border-radius:16px!important;
+  }
+
+  html body:not(.home) .booking-flow-section .inquiry-card .service-choice-card span{
+    min-height:68px!important;
+    grid-template-columns:2.25rem minmax(0,1fr)!important;
+    gap:.2rem .75rem!important;
+  }
+
+  html body:not(.home) .booking-flow-section .inquiry-card .service-choice-card i{
+    width:2.25rem!important;
+    height:2.25rem!important;
+    font-size:1.15rem!important;
+  }
+
+  html body:not(.home) .booking-flow-section .inquiry-card .inline-service-detail,
+  html body:not(.home) .booking-flow-section .inquiry-card .service-schedule-card,
+html body:not(.home) .booking-flow-section .inquiry-card .service-date-group{
+    padding:.9rem!important;
+  }
+}
+
 /* About team section */
 .team-section{
   background:#E4DCCB!important;
@@ -7984,4 +8052,19 @@ html body .home-helper-register-button .no-break{
     min-width:0!important;
     width:100%!important;
   }
+}
+
+/* Final homepage service image cover override. Keep this at the end of the cascade. */
+.home-service-list-grid .home-service-media{
+  overflow:hidden!important;
+  background:#E4DCCB!important;
+}
+
+.home-service-list-grid .home-service-media img{
+  width:100%!important;
+  height:100%!important;
+  object-fit:cover!important;
+  object-position:center!important;
+  transform:scale(1.08)!important;
+  transform-origin:center!important;
 }
