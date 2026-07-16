@@ -4,4 +4,22 @@
 (()=>{const buttons=[...document.querySelectorAll("[data-service-target]")];if(!buttons.length)return;buttons.forEach(button=>button.addEventListener("click",()=>{const card=document.querySelector('[data-service-card="'+button.dataset.serviceTarget+'"]');if(!card)return;document.querySelectorAll(".home-service-details").forEach(details=>{details.open=details.closest("[data-service-card]")===card});card.scrollIntoView({behavior:"smooth",block:"center",inline:"center"})}))})();
 (()=>{const details=[...document.querySelectorAll(".home-service-details")];if(!details.length)return;details.forEach(item=>item.addEventListener("toggle",()=>{if(!item.open)return;details.forEach(other=>{if(other!==item)other.open=false})}))})();
 (()=>{const openServiceFromHash=()=>{const id=decodeURIComponent(window.location.hash.slice(1));if(!id)return;const card=document.getElementById(id);if(!card||!card.matches("[data-service-card]"))return;document.querySelectorAll(".home-service-details").forEach(details=>{details.open=details.closest("[data-service-card]")===card});setTimeout(()=>card.scrollIntoView({behavior:"smooth",block:"center",inline:"nearest"}),50)};window.addEventListener("hashchange",openServiceFromHash);if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",openServiceFromHash,{once:true});else openServiceFromHash()})();
-(()=>{const protect=()=>{document.querySelectorAll(".nav-logo,.footer-brand .nav-logo,.home-helper-register-button").forEach(element=>{if(element.closest(".no-break"))return;element.classList.add("no-break")})};if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",protect,{once:true});else protect()})();
+(() => {
+  const protect = () => {
+    document.querySelectorAll(".nav-logo,.footer-brand .nav-logo,.home-helper-register-button").forEach((element) => {
+      if (element.closest(".no-break")) return;
+      element.classList.add("no-break");
+    });
+
+    document.querySelectorAll("h1,h2,h3,.section-label,.brand-word").forEach((element) => {
+      if (element.textContent.trim() !== "Heinzelchen") return;
+      element.classList.add("brand-word", "no-break");
+    });
+  };
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", protect, { once: true });
+  } else {
+    protect();
+  }
+})();

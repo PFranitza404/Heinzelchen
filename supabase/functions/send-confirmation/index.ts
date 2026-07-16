@@ -1,5 +1,5 @@
 import { createClient } from "npm:@supabase/supabase-js@2";
-import { Resend } from "npm:resend";
+import nodemailer from "npm:nodemailer@6.9.16";
 import {
   mailLink,
   mailParagraph,
@@ -53,10 +53,22 @@ const supabase = () => {
   return createClient(supabaseUrl, serviceRoleKey);
 };
 
-const resend = () => {
-  const apiKey = Deno.env.get("RESEND_API_KEY");
-  if (!apiKey) throw new Error("RESEND_API_KEY fehlt.");
-  return new Resend(apiKey);
+const mailTransport = () => {
+  const host = Deno.env.get("SMTP_HOST");
+  const port = Number(Deno.env.get("SMTP_PORT") || "587");
+  const user = Deno.env.get("SMTP_USER");
+  const pass = Deno.env.get("SMTP_PASS");
+
+  if (!host || !user || !pass) {
+    throw new Error("SMTP_HOST, SMTP_USER oder SMTP_PASS fehlt.");
+  }
+
+  return nodemailer.createTransport({
+    host,
+    port,
+    secure: port === 465,
+    auth: { user, pass },
+  });
 };
 
 async function bookingRecipient(record: Record<string, unknown>): Promise<Recipient | null> {
@@ -148,21 +160,13 @@ Deno.serve(async (req) => {
       });
     }
 
-    const { error } = await resend().emails.send({
+    await mailTransport().sendMail({
       from: recipient.from,
       to: recipient.email,
       replyTo: recipient.replyTo,
       subject: recipient.subject,
       html: recipient.html,
     });
-
-    if (error) {
-      console.error("RESEND ERROR:", error);
-      return new Response(JSON.stringify({ error: "Resend email failed" }), {
-        status: 500,
-        headers: corsHeaders,
-      });
-    }
 
     return new Response(JSON.stringify({ ok: true }), {
       status: 200,

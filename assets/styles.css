@@ -8083,3 +8083,58 @@ html body .home-helper-register-button .no-break{
   object-position:center 52%!important;
   transform:scale(1.18)!important;
 }
+
+/* Final mobile text-fit guard: brand words stay intact, sentence text can hyphenate. */
+html body .brand-word,
+html body .no-break,
+html body .no-break *,
+html body #home-story-title{
+  white-space:nowrap!important;
+  hyphens:none!important;
+  -webkit-hyphens:none!important;
+  -ms-hyphens:none!important;
+  overflow-wrap:normal!important;
+  word-break:keep-all!important;
+}
+
+html body.home #home-story-title,
+html body.home .home-story-inner h1#home-story-title{
+  display:block!important;
+  width:100%!important;
+  max-width:100%!important;
+  font-size:clamp(3.05rem,15.2vw,7.55rem)!important;
+  line-height:.9!important;
+  white-space:nowrap!important;
+}
+
+html body .provider-form-actions{
+  min-width:0!important;
+}
+
+html body .provider-form-actions .form-submit{
+  width:100%!important;
+  max-width:100%!important;
+  min-width:0!important;
+  white-space:normal!important;
+  overflow-wrap:normal!important;
+  word-break:normal!important;
+  hyphens:none!important;
+  -webkit-hyphens:none!important;
+  line-height:1.22!important;
+  text-align:center!important;
+  padding:clamp(.82rem,3vw,1rem) clamp(.9rem,4vw,1.4rem)!important;
+  font-size:clamp(.9rem,3.55vw,1.02rem)!important;
+}
+
+@media(max-width:390px){
+  html body.home #home-story-title,
+  html body.home .home-story-inner h1#home-story-title{
+    font-size:clamp(2.72rem,14.4vw,3.3rem)!important;
+  }
+
+  html body .provider-form-actions .form-submit{
+    font-size:clamp(.82rem,3.2vw,.94rem)!important;
+    padding-left:.75rem!important;
+    padding-right:.75rem!important;
+  }
+}
