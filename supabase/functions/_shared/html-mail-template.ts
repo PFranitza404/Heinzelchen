@@ -4,7 +4,7 @@ export const mailBrand = {
   beige: "#E4DCCB",
   card: "#EEE8DA",
   darkBlue: "#466997",
-  logoUrl: "https://heinzelchen.com/assets/heinzelchen-mail-logo.png",
+  logoUrl: "https://heinzelchen.com/assets/finales-heinzelchen-logo-transparent.png",
 };
 
 type MailLayoutOptions = {
@@ -29,7 +29,8 @@ export function renderMailLayout({ title, preheader = "", children = "" }: MailL
           <table role="presentation" width="600" cellspacing="0" cellpadding="0" border="0" style="width:100%;max-width:600px;border-collapse:collapse;">
             <tr>
               <td align="center" style="padding:0 0 20px;">
-                <img src="${mailBrand.logoUrl}" width="220" alt="Heinzelchen" style="display:block;width:220px;max-width:220px;height:auto;border:0;outline:none;text-decoration:none;">
+                <img src="${mailBrand.logoUrl}" width="320" alt="Heinzelchen" style="display:block;width:320px;max-width:100%;height:auto;border:0;outline:none;text-decoration:none;">
+                <div style="margin:8px 0 0;color:${mailBrand.red};font-family:Georgia,'Times New Roman',serif;font-size:32px;line-height:1.1;font-weight:700;">Heinzelchen</div>
               </td>
             </tr>
             <tr>

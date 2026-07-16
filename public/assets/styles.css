@@ -8068,3 +8068,18 @@ html body .home-helper-register-button .no-break{
   transform:scale(1.08)!important;
   transform-origin:center!important;
 }
+
+.home-service-list-grid #gartenarbeit .home-service-media img{
+  object-position:center 54%!important;
+  transform:scale(1.14)!important;
+}
+
+.home-service-list-grid #malerarbeiten .home-service-media img{
+  object-position:center center!important;
+  transform:scale(1.22)!important;
+}
+
+.home-service-list-grid #buegeln .home-service-media img{
+  object-position:center 52%!important;
+  transform:scale(1.18)!important;
+}
