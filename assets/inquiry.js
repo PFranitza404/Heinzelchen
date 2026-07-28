@@ -40,6 +40,33 @@
     "Putzen & Reinigen": "Hausreinigung",
     "Wäscheservice": "Bügeln",
   }[service] || service);
+  const materialEquipmentLabel = "Material/Equipment";
+  const materialEquipmentOptions = [
+    "Material und Equipment ist vor Ort",
+    "Material und Equipment muss mitgebracht werden",
+  ];
+  const serviceFieldKey = (service) => normalizeServiceName(service).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+  const materialEquipmentFieldName = (service) => `materialEquipment-${serviceFieldKey(service)}`;
+  const materialEquipmentValue = (service) => form.querySelector(`[name="${materialEquipmentFieldName(service)}"]:checked`)?.value || "";
+  const renderMaterialEquipmentField = (service) => `
+    <fieldset class="material-equipment-field" data-material-equipment-field="${escapeHtml(service)}">
+      <legend>${materialEquipmentLabel}</legend>
+      <div class="material-equipment-options">
+        ${materialEquipmentOptions.map((option) => `
+          <label>
+            <input type="radio" name="${materialEquipmentFieldName(service)}" value="${escapeHtml(option)}">
+            <span>${escapeHtml(option)}</span>
+          </label>
+        `).join("")}
+      </div>
+    </fieldset>
+  `;
+  const ensureMaterialEquipmentFields = () => {
+    detailCards.forEach((card) => {
+      if (card.querySelector("[data-material-equipment-field]")) return;
+      card.insertAdjacentHTML("beforeend", renderMaterialEquipmentField(card.dataset.serviceDetail || ""));
+    });
+  };
   const normalizePaintingTask = (task) => task === "Farbauswahl und Beratung (Farrow & Ball)" ? "Farbauswahl und Beratung" : task;
   const selectedServices = () => [...form.querySelectorAll('[name="requested-services"]:checked')].map((input) => normalizeServiceName(input.value));
   const selectedValues = (name) => {
@@ -332,22 +359,27 @@
       const selected = selectedValues(name);
       if (selected.length) lines.push(`${label}: ${selected.join(", ")}`);
     });
+    selectedServices().forEach((service) => {
+      const materialEquipment = materialEquipmentValue(service);
+      if (materialEquipment) lines.push(`${materialEquipmentLabel} ${service}: ${materialEquipment}`);
+    });
     return lines.join("\n");
   };
   const detailNotes = () => ({
-    garden: { tasks: selectedValues("detailGardenTask"), size: value("detailGardenSize"), custom: value("detailGardenCustom") },
-    tutoring: { requests: collectTutoringRequests() },
-    care: { tasks: selectedValues("detailCareTask"), custom: value("detailCareCustom") },
-    build: { tasks: collectBuildTasks() },
-    painting: { tasks: collectPaintingTasks() },
-    cleaning: { tasks: selectedValues("detailCleaningTask"), size: value("detailCleaningSize"), custom: value("detailCleaningCustom") },
-    laundry: { tasks: selectedServices().includes("Bügeln") ? ["Bügeln", "Zusammenlegen"] : [] },
-    other: { custom: value("detailOtherCustom") },
+    garden: { tasks: selectedValues("detailGardenTask"), size: value("detailGardenSize"), custom: value("detailGardenCustom"), materialEquipment: materialEquipmentValue("Gartenarbeit") },
+    tutoring: { requests: collectTutoringRequests(), materialEquipment: materialEquipmentValue("Nachhilfe") },
+    care: { tasks: selectedValues("detailCareTask"), custom: value("detailCareCustom"), materialEquipment: materialEquipmentValue("Betreuung") },
+    build: { tasks: collectBuildTasks(), materialEquipment: materialEquipmentValue("Aufbau") },
+    painting: { tasks: collectPaintingTasks(), materialEquipment: materialEquipmentValue("Malerarbeiten") },
+    cleaning: { tasks: selectedValues("detailCleaningTask"), size: value("detailCleaningSize"), custom: value("detailCleaningCustom"), materialEquipment: materialEquipmentValue("Hausreinigung") },
+    laundry: { tasks: selectedServices().includes("Bügeln") ? ["Bügeln", "Zusammenlegen"] : [], materialEquipment: materialEquipmentValue("Bügeln") },
+    other: { custom: value("detailOtherCustom"), materialEquipment: materialEquipmentValue("Sonstiges") },
   });
   const updateDetailCards = () => {
+    ensureMaterialEquipmentFields();
     const selected = new Set(selectedServices());
     detailCards.forEach((card) => {
-      card.hidden = !selected.has(card.dataset.serviceDetail);
+      card.hidden = !selected.has(normalizeServiceName(card.dataset.serviceDetail || ""));
     });
     updateServiceDurationFields();
     renderScheduleBlocks();
@@ -366,7 +398,7 @@
     form.querySelectorAll(".service-choice-with-detail").forEach((wrapper) => {
       const input = wrapper.querySelector('[name="requested-services"]');
       if (!input) return;
-      const service = input.value;
+      const service = normalizeServiceName(input.value);
       const existing = wrapper.querySelector("[data-service-duration-field]");
       if (!selected.has(service)) {
         existing?.remove();
@@ -410,6 +442,7 @@
     const required = ["street", "zip", "city", "firstName", "lastName", "phone", "email"];
     return required.every((name) => Boolean(value(name))) && value("email").includes("@");
   };
+  const hasCompleteMaterialEquipment = () => selectedServices().every((service) => Boolean(materialEquipmentValue(service)));
   const privacyAccepted = () => form.querySelector('[name="privacyAccepted"]')?.checked === true;
   const mediationStartAccepted = () => form.querySelector('[name="mediationStartAccepted"]')?.checked === true;
   const canSubmit = () => step === 3 && selectedServices().length > 0 && hasCompleteSchedule() && hasCompleteContactDetails() && privacyAccepted() && mediationStartAccepted();
@@ -533,6 +566,10 @@
     clearMessages();
     if (targetStep === 1 && !selectedServices().length) {
       showError("Bitte wähle mindestens eine Dienstleistung aus.");
+      return false;
+    }
+    if (targetStep === 1 && !hasCompleteMaterialEquipment()) {
+      showError("Bitte wähle für jede ausgewählte Dienstleistung aus, ob Material und Equipment vor Ort ist oder mitgebracht werden muss.");
       return false;
     }
     if (targetStep === 2) {
@@ -785,6 +822,7 @@
     }
   });
 
+  ensureMaterialEquipmentFields();
   if (!restoreDraft()) {
     multiSelectLists.forEach((list) => updateMultiSelectList(list.dataset.multiSelectList));
     updateDetailCards();
