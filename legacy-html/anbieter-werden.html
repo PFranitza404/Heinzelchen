@@ -4,14 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Dienstleister werden | Heinzelchen</title>
-<link rel="stylesheet" href="assets/styles.css?v=schedule-edge-beige-20260706">
+  <link rel="stylesheet" href="assets/styles.css?v=provider-service-edge-20260814">
 <link rel="icon" href="favicon.ico?v=5" sizes="any">
 <link rel="shortcut icon" href="favicon.ico?v=5">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon.png?v=5">
 <link rel="apple-touch-icon" href="apple-touch-icon.png?v=5">
 <script defer src="assets/cookie-banner.js"></script>
 </head>
-<body>
+<body class="provider-page">
 <nav>
   <a class="nav-logo" href="index.html">Heinzelchen</a>
   <button class="nav-toggle" type="button" aria-label="Menü öffnen" aria-expanded="false">☰</button>
@@ -73,9 +73,9 @@
 <section class="provider-form-section page-section">
   <form class="provider-form provider-step-form reveal" id="publicWorkerForm" novalidate>
     <div class="provider-progress" aria-label="Fortschritt">
-      <button class="provider-progress-step active" type="button" data-provider-step-jump="1"><span>1</span>Dienstleistungen & Qualifikation</button>
+      <button class="provider-progress-step active" type="button" data-provider-step-jump="1"><span>1</span>Dienstleistungen</button>
       <button class="provider-progress-step" type="button" data-provider-step-jump="2"><span>2</span>Persönliche Angaben</button>
-      <button class="provider-progress-step" type="button" data-provider-step-jump="3"><span>3</span>Verfügbarkeit & Einsatzgebiet</button>
+      <button class="provider-progress-step" type="button" data-provider-step-jump="3"><span>3</span>Einsatzgebiet</button>
     </div>
     <div class="provider-alert" id="publicWorkerFormError" hidden></div>
     <div class="booking-confirmation provider-confirmation" data-provider-confirmation hidden>
@@ -85,8 +85,7 @@
 
     <div class="provider-step-panel active" data-provider-step="1">
       <div class="form-block">
-        <div class="section-label">1. Dienstleistungen & Qualifikation</div>
-        <h2>Welche Dienstleistungen bietest Du zu welchem Stundenpreis an?</h2>
+        <h2>1. Dienstleistungen auswählen</h2>
         <p class="form-help">Heinzelchen verlangen durchschnittlich erfolgreich 20 EUR pro Stunde. Wähle eine Dienstleistung aus, ergänze die Details und bestätige sie anschließend über „Dienstleistung hinzufügen“.</p>
         <input name="skills" type="hidden" data-provider-skills-value required>
         <div class="provider-service-list">
@@ -205,8 +204,7 @@
 
     <div class="provider-step-panel" data-provider-step="2" hidden>
       <div class="form-block">
-        <div class="section-label">2. Persönliche Angaben</div>
-        <h2>Klassische Felder</h2>
+        <h2>2. Persönliche Angaben</h2>
         <div class="form-grid">
           <div><label>Vorname *</label><input name="firstName" type="text" required placeholder="Max"></div>
           <div><label>Nachname *</label><input name="lastName" type="text" required placeholder="Mustermann"></div>
@@ -223,8 +221,7 @@
 
     <div class="provider-step-panel" data-provider-step="3" hidden>
       <div class="form-block">
-        <div class="section-label">3. Verfügbarkeit & Einsatzgebiet</div>
-        <h2>Wo und wann möchtest Du Aufgaben erhalten?</h2>
+        <h2>3. Verfügbarkeit & Einsatzgebiet</h2>
         <div class="form-grid">
           <div><label>Maximaler Umkreis</label><select name="radiusKm"><option>bis 5 km</option><option>bis 10 km</option><option>bis 20 km</option><option>bis 50 km</option></select></div>
           <div><label>Ortskreise / Stadtteile</label><input name="localAreasText" type="text" placeholder="z.B. Blankenese, Nienstedten, Othmarschen"></div>
@@ -263,7 +260,7 @@
     <div class="provider-form-actions">
       <button class="btn-secondary provider-back" type="button" data-provider-back hidden>Zurück</button>
       <button class="btn-primary provider-next" type="button" data-provider-next>Weiter</button>
-      <button class="btn-primary form-submit" type="submit" hidden>Jetzt kostenlos und unverbindlich registrieren</button>
+      <button class="btn-primary form-submit" type="submit" hidden>Heinzelchen werden</button>
     </div>
     <p id="publicWorkerFormMessage" class="portal-message"></p>
   </form>

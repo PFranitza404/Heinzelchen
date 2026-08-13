@@ -35,6 +35,11 @@
     return `${year}-${month}-${day}`;
   };
   const minDateValue = dateValue(today);
+  const normalizeScheduleWindow = (group = {}) => {
+    const date = group.date >= minDateValue ? group.date : "";
+    const dateEnd = group.dateEnd >= minDateValue && (!date || group.dateEnd >= date) ? group.dateEnd : "";
+    return { ...group, date, dateEnd };
+  };
   const normalizeServiceName = (service) => ({
     "Malereiarbeiten": "Malerarbeiten",
     "Putzen & Reinigen": "Hausreinigung",
@@ -42,8 +47,8 @@
   }[service] || service);
   const materialEquipmentLabel = "Material/Equipment";
   const materialEquipmentOptions = [
-    "Material und Equipment ist vor Ort",
-    "Material und Equipment muss mitgebracht werden",
+    "ist vor Ort",
+    "muss mitgebracht werden",
   ];
   const serviceFieldKey = (service) => normalizeServiceName(service).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
   const materialEquipmentFieldName = (service) => `materialEquipment-${serviceFieldKey(service)}`;
@@ -124,15 +129,15 @@
       <button class="time-window-remove" type="button" data-remove-tutoring-subject aria-label="Fach entfernen">×</button>
     </div>
   `;
-  const renderTutoringRequest = (request = {}) => {
+  const renderTutoringRequest = (request = {}, removable = true) => {
     const subjects = Array.isArray(request.subjects) ? request.subjects : [];
     const primarySubject = subjects[0] || {};
     return `
     <div class="tutoring-request-block" data-tutoring-request>
-      <div class="tutoring-request-head">
+      ${removable ? `<div class="tutoring-request-head">
         <strong>Weitere Nachhilfe</strong>
         <button class="time-window-remove" type="button" data-remove-tutoring-request aria-label="Nachhilfe entfernen">×</button>
-      </div>
+      </div>` : ""}
       <div class="booking-field">
         <label>Klasse</label>
         <select data-tutoring-grade>${tutoringGradeOptions(request.grade || "")}</select>
@@ -147,6 +152,13 @@
       </div>
     </div>
   `;
+  };
+  const ensurePrimaryTutoringRequest = () => {
+    if (!selectedServices().includes("Nachhilfe")) return;
+    const list = form.querySelector("[data-tutoring-request-list]");
+    if (list && !list.querySelector("[data-tutoring-request]")) {
+      list.insertAdjacentHTML("afterbegin", renderTutoringRequest({}, false));
+    }
   };
   const collectBuildTasks = () => [...form.querySelectorAll("[data-build-task-item]")].map((item) => ({
     task: item.dataset.buildTaskItem || "",
@@ -283,7 +295,7 @@
     }
     appointmentContainer.innerHTML = selected.map((service) => {
       const schedule = existing[service] || { duration: "", frequency: "", windows: [{}] };
-      const dateGroups = schedule.windows?.length ? schedule.windows : [{}];
+      const dateGroups = (schedule.windows?.length ? schedule.windows : [{}]).map(normalizeScheduleWindow);
       return `
         <article class="service-schedule-card" data-service-schedule="${escapeHtml(service)}">
           <h4>${escapeHtml(service)}</h4>
@@ -377,6 +389,7 @@
   });
   const updateDetailCards = () => {
     ensureMaterialEquipmentFields();
+    ensurePrimaryTutoringRequest();
     const selected = new Set(selectedServices());
     detailCards.forEach((card) => {
       card.hidden = !selected.has(normalizeServiceName(card.dataset.serviceDetail || ""));
@@ -534,7 +547,9 @@
     });
     const tutoringList = form.querySelector("[data-tutoring-request-list]");
     if (tutoringList && Array.isArray(draft.tutoringRequests)) {
-      tutoringList.innerHTML = draft.tutoringRequests.map((request) => renderTutoringRequest(request)).join("");
+      tutoringList.innerHTML = draft.tutoringRequests
+        .map((request, index) => renderTutoringRequest(request, index > 0))
+        .join("");
     }
     const buildList = form.querySelector('[data-multi-select-list="detailBuildTask"]');
     if (buildList && Array.isArray(draft.buildTasks)) {
@@ -559,6 +574,7 @@
     updateTimeOptions();
     updateProgress();
     restoringDraft = false;
+    saveDraft();
     return true;
   };
 
@@ -593,7 +609,7 @@
         )
       );
       if (invalid) {
-        showError("Bitte fülle Datum, Von/Bis-Zeit und Häufigkeit für jede ausgewählte Dienstleistung aus.");
+        showError(`Bitte fülle Datum, Von/Bis-Zeit und Häufigkeit für „${invalid.service}“ vollständig aus.`);
         return false;
       }
     }
@@ -673,7 +689,8 @@
 
     const addTutoringRequest = event.target.closest("[data-add-tutoring-request]");
     if (addTutoringRequest) {
-      form.querySelector("[data-tutoring-request-list]")?.insertAdjacentHTML("beforeend", renderTutoringRequest());
+      ensurePrimaryTutoringRequest();
+      form.querySelector("[data-tutoring-request-list]")?.insertAdjacentHTML("beforeend", renderTutoringRequest({}, true));
       updateProgress();
       return;
     }

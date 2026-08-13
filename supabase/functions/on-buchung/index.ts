@@ -21,9 +21,13 @@ type WebhookPayload = {
 type BookingRecord = {
   id?: string;
   auftragsnummer?: number | null;
+  status?: string | null;
+  assigned_worker_id?: string | null;
   zip?: string | null;
   city?: string | null;
   street?: string | null;
+  location_notes?: string | null;
+  services?: unknown;
   services_summary?: string | null;
   detail_notes?: unknown;
   duration?: number | string | null;
@@ -57,6 +61,8 @@ const displayValue = (value: unknown): string => {
   if (value === null || value === undefined || value === "") return "-";
   if (typeof value === "string") return value.trim() || "-";
   if (typeof value === "number" || typeof value === "boolean") return String(value);
+  if (Array.isArray(value)) return value.length ? value.map(displayValue).join(", ") : "-";
+  if (typeof value === "object" && Object.keys(value as Record<string, unknown>).length === 0) return "-";
   return JSON.stringify(value, null, 2);
 };
 
@@ -99,6 +105,10 @@ const mailTransport = () => {
   });
 };
 
+const smtpSenderAddress = () => Deno.env.get("SMTP_FROM") || Deno.env.get("SMTP_USER") || "info@heinzelchen.com";
+
+const senderFrom = (name: string) => `${name} <${smtpSenderAddress()}>`;
+
 async function getOrCreateAuftragsnummer(record: BookingRecord): Promise<number> {
   if (!record.id) throw new Error("Booking id fehlt im Webhook payload.");
 
@@ -111,33 +121,192 @@ async function getOrCreateAuftragsnummer(record: BookingRecord): Promise<number>
   return auftragsnummer;
 }
 
-const internalMailBody = (record: BookingRecord, auftragsnummer: number) => `Auftragsnummer: ${auftragsnummer}
+async function assignedWorkerLabel(record: BookingRecord): Promise<string> {
+  const workerId = textValue(record.assigned_worker_id);
+  if (!workerId) return "-";
 
-WO:
+  try {
+    const { data, error } = await supabase()
+      .from("workers")
+      .select("first_name,last_name,email")
+      .eq("id", workerId)
+      .maybeSingle();
 
-PLZ: ${displayValue(record.zip)}
-Ort: ${displayValue(record.city)}
-Straße: ${displayValue(record.street)}
+    if (error) throw error;
 
-WAS:
+    const worker = (data || {}) as Record<string, unknown>;
+    const name = [textValue(worker.first_name), textValue(worker.last_name)].filter(Boolean).join(" ").trim();
+    const email = textValue(worker.email);
+    return [name, email].filter(Boolean).join(" - ") || workerId;
+  } catch (error) {
+    console.warn("Assigned worker lookup failed", error);
+    return workerId;
+  }
+}
 
-Dienstleistungen: ${displayValue(record.services_summary)}
-Details: ${displayValue(record.detail_notes)}
-Geschätzte Dauer: ${displayValue(record.duration)} Stunden
-Zusatzaufgaben: ${displayValue(record.extra_task)}
+const parseStructuredValue = (value: unknown): unknown => {
+  if (typeof value !== "string") return value;
+  const trimmed = value.trim();
+  if (!trimmed) return "";
+  try {
+    return JSON.parse(trimmed);
+  } catch {
+    return value;
+  }
+};
 
-WANN:
+const bookingServices = (record: BookingRecord) =>
+  Array.isArray(record.services) && record.services.length
+    ? record.services.map(displayValue).join(", ")
+    : displayValue(record.services_summary).split("–")[0]?.trim() || "-";
 
-Datum: ${displayValue(record.date)}
-Uhrzeit: ${displayValue(record.time)}
-Häufigkeit: ${displayValue(record.frequency)}
-Verfügbarkeit: ${displayValue(record.availability)}
+const serviceAppointments = (record: BookingRecord): Array<Record<string, unknown>> => {
+  const availability = parseStructuredValue(record.availability);
+  if (availability && typeof availability === "object") {
+    const appointments = (availability as Record<string, unknown>).serviceAppointments;
+    if (Array.isArray(appointments)) return appointments.filter((item) => item && typeof item === "object") as Array<Record<string, unknown>>;
+  }
+  return [];
+};
 
-KONTAKT:
+const dateWindowText = (window: Record<string, unknown>) => {
+  const date = displayValue(window.date);
+  const dateEnd = displayValue(window.dateEnd);
+  if (date !== "-" && dateEnd !== "-" && dateEnd !== date) return `${date} bis ${dateEnd}`;
+  if (date !== "-") return date;
+  return dateEnd !== "-" ? dateEnd : "";
+};
 
-Name: ${fullName(record)}
-E-Mail: ${displayValue(record.email)}
-Telefon: ${displayValue(record.phone)}
+const serviceDurationText = (record: BookingRecord) => {
+  const appointments = serviceAppointments(record);
+  if (appointments.length) {
+    return appointments.map((appointment) => {
+      const service = textValue(appointment.service);
+      const duration = textValue(appointment.duration);
+      return [service, duration].filter(Boolean).join(": ");
+    }).filter(Boolean).join("\n");
+  }
+  return displayValue(record.duration);
+};
+
+const frequencyText = (record: BookingRecord) => {
+  const appointments = serviceAppointments(record);
+  if (appointments.length) {
+    return appointments.map((appointment) => {
+      const service = textValue(appointment.service);
+      const frequency = textValue(appointment.frequency);
+      return service && frequency ? `${service}: ${frequency}` : frequency;
+    }).filter(Boolean).join("\n");
+  }
+  return displayValue(record.frequency);
+};
+
+const timeWindowText = (record: BookingRecord) => {
+  const appointments = serviceAppointments(record);
+  if (!appointments.length) return `${displayValue(record.date)} ${displayValue(record.time)}`.trim();
+
+  return appointments.map((appointment) => {
+    const service = textValue(appointment.service);
+    const windows = Array.isArray(appointment.windows) ? appointment.windows as Array<Record<string, unknown>> : [];
+    const windowText = windows.map((window) => {
+      const date = dateWindowText(window);
+      const times = Array.isArray(window.times) ? window.times as Array<Record<string, unknown>> : [];
+      const timeText = times.map((time) => {
+        const from = displayValue(time.from);
+        const to = displayValue(time.to);
+        return from !== "-" && to !== "-" ? `${from}-${to}` : [from, to].filter((value) => value !== "-").join("-");
+      }).filter(Boolean).join(", ");
+      return [date, timeText].filter((value) => value && value !== "-").join(": ");
+    }).filter(Boolean).join(" | ");
+    return [service, windowText].filter(Boolean).join(" - ");
+  }).filter(Boolean).join("\n");
+};
+
+const detailNotesObject = (record: BookingRecord): Record<string, unknown> => {
+  const parsed = parseStructuredValue(record.detail_notes);
+  return parsed && typeof parsed === "object" && !Array.isArray(parsed) ? parsed as Record<string, unknown> : {};
+};
+
+const taskDetailsText = (record: BookingRecord) => {
+  const details = detailNotesObject(record);
+  const labels: Record<string, string> = {
+    garden: "Gartenarbeit",
+    cleaning: "Reinigung",
+    laundry: "Bügeln/Wäsche",
+    tutoring: "Nachhilfe",
+    care: "Betreuung",
+    build: "Aufbau/Montage",
+    painting: "Malerarbeiten",
+    other: "Sonstiges",
+  };
+
+  const rows = Object.entries(labels).flatMap(([key, label]) => {
+    const detail = details[key];
+    if (!detail || typeof detail !== "object") return [];
+    const value = detail as Record<string, unknown>;
+    const parts = [
+      Array.isArray(value.tasks) && value.tasks.length ? `Aufgaben: ${value.tasks.map(displayValue).join(", ")}` : "",
+      textValue(value.size) ? `Größe/Fläche: ${textValue(value.size)}` : "",
+      textValue(value.custom) ? `Freitext: ${textValue(value.custom)}` : "",
+      textValue(value.materialEquipment) ? `Material/Equipment: ${textValue(value.materialEquipment)}` : "",
+      Array.isArray(value.requests) && value.requests.length ? `Anfragen: ${value.requests.map(displayValue).join(", ")}` : "",
+    ].filter(Boolean);
+    return parts.length ? [`${label}: ${parts.join("; ")}`] : [];
+  });
+
+  return rows.length ? rows.join("\n") : displayValue(record.extra_task);
+};
+
+const internalMailBody = (record: BookingRecord, auftragsnummer: number, assignedWorker = "-") => `1. AUFTRAGSNUMMER:
+
+${auftragsnummer}
+
+2. NAME:
+
+${fullName(record)}
+
+3. E-MAIL:
+
+${displayValue(record.email)}
+
+4. TELEFON:
+
+${displayValue(record.phone)}
+
+5. ADRESSE:
+
+${displayValue(record.street)}
+${displayValue(record.zip)} ${displayValue(record.city)}
+
+6. DIENSTLEISTUNG:
+
+${bookingServices(record)}
+
+7. AUFGABENDETAILS:
+
+${taskDetailsText(record)}
+
+8. GESCHÄTZTE DAUER:
+
+${serviceDurationText(record)}
+
+9. DATUM / ZEITFENSTER:
+
+${timeWindowText(record)}
+
+10. HÄUFIGKEIT:
+
+${frequencyText(record)}
+
+11. ZUSÄTZLICHE HINWEISE:
+
+${displayValue(record.location_notes)}
+${displayValue(record.extra_task) !== "-" ? `Zusatzaufgaben: ${displayValue(record.extra_task)}` : ""}
+
+12. STATUS / ZUWEISUNG:
+
+Status: ${displayValue(record.status)}
+Zugewiesenes Heinzelchen: ${assignedWorker}
 `;
 
 const customerMailBody = (record: BookingRecord) => {
@@ -164,36 +333,62 @@ ${TERMS_URL}
 `;
 };
 
-const internalMailHtml = (record: BookingRecord, auftragsnummer: number) =>
+const internalMailHtml = (record: BookingRecord, auftragsnummer: number, assignedWorker = "-") =>
   renderMailLayout({
     title: `Neue Buchungsanfrage [${auftragsnummer}]`,
     preheader: "Eine neue Buchungsanfrage ist eingegangen.",
     children: `
-      ${mailHeading("Wo")}
+      ${mailHeading("1. Auftragsnummer")}
       ${mailInfoTable([
-        ["PLZ", escapeHtml(record.zip)],
-        ["Ort", escapeHtml(record.city)],
-        ["Straße", escapeHtml(record.street)],
+        ["Auftragsnummer", escapeHtml(auftragsnummer)],
       ])}
-      ${mailHeading("Was")}
-      ${mailInfoTable([
-        ["Dienstleistungen", escapeHtml(displayValue(record.services_summary))],
-        ["Details", escapeHtml(displayValue(record.detail_notes)).replace(/\n/g, "<br>")],
-        ["Geschätzte Dauer", `${escapeHtml(displayValue(record.duration))} Stunden`],
-        ["Zusatzaufgaben", escapeHtml(displayValue(record.extra_task))],
-      ])}
-      ${mailHeading("Wann")}
-      ${mailInfoTable([
-        ["Datum", escapeHtml(displayValue(record.date))],
-        ["Uhrzeit", escapeHtml(displayValue(record.time))],
-        ["Häufigkeit", escapeHtml(displayValue(record.frequency))],
-        ["Verfügbarkeit", escapeHtml(displayValue(record.availability)).replace(/\n/g, "<br>")],
-      ])}
-      ${mailHeading("Kontakt")}
+      ${mailHeading("2. Name")}
       ${mailInfoTable([
         ["Name", escapeHtml(fullName(record))],
+      ])}
+      ${mailHeading("3. E-Mail")}
+      ${mailInfoTable([
         ["E-Mail", escapeHtml(displayValue(record.email))],
+      ])}
+      ${mailHeading("4. Telefon")}
+      ${mailInfoTable([
         ["Telefon", escapeHtml(displayValue(record.phone))],
+      ])}
+      ${mailHeading("5. Adresse")}
+      ${mailInfoTable([
+        ["Straße", escapeHtml(displayValue(record.street))],
+        ["PLZ", escapeHtml(displayValue(record.zip))],
+        ["Ort", escapeHtml(displayValue(record.city))],
+      ])}
+      ${mailHeading("6. Dienstleistung")}
+      ${mailInfoTable([
+        ["Dienstleistung", escapeHtml(bookingServices(record))],
+      ])}
+      ${mailHeading("7. Aufgabendetails")}
+      ${mailInfoTable([
+        ["Details", escapeHtml(taskDetailsText(record)).replace(/\n/g, "<br>")],
+      ])}
+      ${mailHeading("8. Geschätzte Dauer")}
+      ${mailInfoTable([
+        ["Dauer", escapeHtml(serviceDurationText(record)).replace(/\n/g, "<br>")],
+      ])}
+      ${mailHeading("9. Datum / Zeitfenster")}
+      ${mailInfoTable([
+        ["Zeitfenster", escapeHtml(timeWindowText(record)).replace(/\n/g, "<br>")],
+      ])}
+      ${mailHeading("10. Häufigkeit")}
+      ${mailInfoTable([
+        ["Häufigkeit", escapeHtml(frequencyText(record)).replace(/\n/g, "<br>")],
+      ])}
+      ${mailHeading("11. Zusätzliche Hinweise")}
+      ${mailInfoTable([
+        ["Hinweise", escapeHtml(displayValue(record.location_notes))],
+        ["Zusatzaufgaben", escapeHtml(displayValue(record.extra_task))],
+      ])}
+      ${mailHeading("12. Status / Zuweisung")}
+      ${mailInfoTable([
+        ["Status", escapeHtml(displayValue(record.status))],
+        ["Zugewiesenes Heinzelchen", escapeHtml(assignedWorker)],
       ])}
     `,
   });
@@ -204,7 +399,7 @@ const customerMailHtml = (record: BookingRecord) => {
 
   return renderMailLayout({
     title: "Ihre Anfrage bei den Heinzelchen",
-    preheader: "Ihre Buchungsanfrage ist bei uns eingegangen.",
+    preheader: "Ihre Anfrage ist bei uns eingegangen.",
     children: `
       ${mailParagraph(greeting)}
       ${mailParagraph("wir haben Ihre Anfrage erhalten und melden uns bei Ihnen schnellstmöglich mit einem Termin und Stundenlohn, sodass Sie den Buchungsprozess abschließen können und Ihre Aufgabe zuverlässig erledigt wird.")}
@@ -239,19 +434,20 @@ Deno.serve(async (req) => {
     if (!customerEmail) throw new Error("Kunden-E-Mail fehlt.");
 
     const auftragsnummer = await getOrCreateAuftragsnummer(record);
+    const assignedWorker = await assignedWorkerLabel(record);
     const transporter = mailTransport();
 
     await transporter.sendMail({
-      from: "Heinzelchen Buchungen <buchungen@heinzelchen.com>",
+      from: senderFrom("Heinzelchen Buchungen"),
       to: "buchungen@heinzelchen.com",
       replyTo: customerEmail,
       subject: `Neue Buchungsanfrage [${auftragsnummer}]`,
-      text: internalMailBody(record, auftragsnummer),
-      html: internalMailHtml(record, auftragsnummer),
+      text: internalMailBody(record, auftragsnummer, assignedWorker),
+      html: internalMailHtml(record, auftragsnummer, assignedWorker),
     });
 
     await transporter.sendMail({
-      from: "Heinzelchen <buchungen@heinzelchen.com>",
+      from: senderFrom("Heinzelchen"),
       to: customerEmail,
       replyTo: "info@heinzelchen.com",
       subject: "Ihre Anfrage bei den Heinzelchen",

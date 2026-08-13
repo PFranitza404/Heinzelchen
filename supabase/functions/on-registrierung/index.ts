@@ -55,8 +55,169 @@ const displayValue = (value: unknown): string => {
   if (typeof value === "string") return value.trim() || "-";
   if (typeof value === "number" || typeof value === "boolean") return String(value);
   if (Array.isArray(value)) return value.length ? value.map(displayValue).join(", ") : "-";
+  if (typeof value === "object" && Object.keys(value as Record<string, unknown>).length === 0) return "-";
   return JSON.stringify(value, null, 2);
 };
+
+const yesNo = (value: unknown) => value === true ? "Ja" : value === false ? "Nein" : displayValue(value);
+
+const parseStructuredValue = (value: unknown): unknown => {
+  if (typeof value !== "string") return value;
+  const trimmed = value.trim();
+  if (!trimmed) return "";
+  try {
+    return JSON.parse(trimmed);
+  } catch {
+    return value;
+  }
+};
+
+const serviceDetails = (record: WorkerRecord): Array<Record<string, unknown>> => {
+  const source = parseStructuredValue(record.service_details ?? record.raw_payload?.serviceDetails ?? record.raw_payload?.service_details);
+  if (Array.isArray(source)) return source.filter((item) => item && typeof item === "object") as Array<Record<string, unknown>>;
+  if (source && typeof source === "object") return [source as Record<string, unknown>];
+  return [];
+};
+
+const serviceLabel = (detail: Record<string, unknown>) =>
+  textValue(detail.service) || textValue(detail.name) || "Dienstleistung";
+
+const hourlyRateLabel = (detail: Record<string, unknown>) => {
+  const rateValue = detail.hourlyRate ?? detail.hourly_rate ?? detail.rate;
+  const rate = typeof rateValue === "number" ? String(rateValue) : textValue(rateValue);
+  return rate ? `${rate} EUR/Stunde` : "kein Stundenlohn angegeben";
+};
+
+const normalizeService = (value: unknown) =>
+  displayValue(value)
+    .toLowerCase()
+    .replaceAll("ä", "ae")
+    .replaceAll("ö", "oe")
+    .replaceAll("ü", "ue")
+    .replaceAll("ß", "ss")
+    .replace(/[^a-z0-9]+/g, "");
+
+const orderedServices = [
+  { label: "Gartenarbeit", aliases: ["gartenarbeit", "garten"] },
+  { label: "Reinigung", aliases: ["reinigung", "hausreinigung", "reinigungputzen"] },
+  { label: "Bügeln", aliases: ["buegeln", "bugeln", "waescheservice", "wascheservice"] },
+  { label: "Nachhilfe", aliases: ["nachhilfe"] },
+  { label: "Kinderbetreuung", aliases: ["kinderbetreuung"] },
+  { label: "Haustierbetreuung", aliases: ["haustierbetreuung", "haustiere", "tierbetreuung"] },
+  { label: "Aufbau/Montage", aliases: ["aufbaumontage", "aufbau", "montage"] },
+  { label: "Malerarbeiten", aliases: ["malerarbeiten", "malereiarbeiten"] },
+  { label: "Sonstiges", aliases: ["sonstiges", "sonstige"] },
+];
+
+const detailForService = (details: Array<Record<string, unknown>>, service: (typeof orderedServices)[number]) =>
+  details.find((detail) => {
+    const normalized = normalizeService(serviceLabel(detail));
+    return service.aliases.some((alias) => normalized === alias || normalized.includes(alias));
+  });
+
+const orderedServiceRows = (record: WorkerRecord) => {
+  const details = serviceDetails(record);
+  const skillText = normalizeService(skillsText(record));
+
+  return orderedServices.map((service) => {
+    const detail = detailForService(details, service);
+    const selected = Boolean(detail) || service.aliases.some((alias) => skillText.includes(alias));
+    return [
+      service.label,
+      selected ? `Ja - gewünschter Stundenlohn: ${detail ? hourlyRateLabel(detail) : "nicht angegeben"}` : "Nein",
+    ] as [string, string];
+  });
+};
+
+const orderedServiceText = (record: WorkerRecord) =>
+  orderedServiceRows(record).map(([service, value]) => `${service}: ${value}`).join("\n");
+
+const ageFromBirthdate = (birthdate: unknown) => {
+  const value = textValue(birthdate);
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) return null;
+  const birth = new Date(`${value}T00:00:00Z`);
+  if (Number.isNaN(birth.getTime())) return null;
+  const now = new Date();
+  let age = now.getUTCFullYear() - birth.getUTCFullYear();
+  const monthDiff = now.getUTCMonth() - birth.getUTCMonth();
+  if (monthDiff < 0 || (monthDiff === 0 && now.getUTCDate() < birth.getUTCDate())) age -= 1;
+  return age;
+};
+
+const birthdateWithAgeNotice = (record: WorkerRecord) => {
+  const birthdate = displayValue(record.birthdate);
+  const age = ageFromBirthdate(record.birthdate);
+  if (age === null) return birthdate;
+  return age > 30 ? `${birthdate} - ACHTUNG: älter als 30 Jahre (${age})` : `${birthdate} (${age} Jahre)`;
+};
+
+const compactGrades = (grades: unknown) => {
+  if (!Array.isArray(grades) || !grades.length) return "";
+  const numbers = grades
+    .map((grade) => Number(String(grade).replace(/\D/g, "")))
+    .filter((grade) => Number.isFinite(grade))
+    .sort((a, b) => a - b);
+
+  if (numbers.length === grades.length && numbers.length > 1) {
+    const ranges: string[] = [];
+    let start = numbers[0];
+    let previous = numbers[0];
+    for (const current of numbers.slice(1)) {
+      if (current === previous + 1) {
+        previous = current;
+      } else {
+        ranges.push(start === previous ? `${start}` : `${start}-${previous}`);
+        start = current;
+        previous = current;
+      }
+    }
+    ranges.push(start === previous ? `${start}` : `${start}-${previous}`);
+    return ranges.join(", ");
+  }
+
+  return displayValue(grades);
+};
+
+const tutoringInfo = (record: WorkerRecord) => {
+  const detail = detailForService(serviceDetails(record), orderedServices[3]);
+  if (!detail) return "";
+
+  const subjects = displayValue(detail.tutoringSubjects);
+  const grades = compactGrades(detail.tutoringGrades);
+  const byGrade = displayValue(detail.tutoringByGrade);
+  const parts = [
+    subjects !== "-" && grades ? `${subjects} in den Klassen ${grades}` : "",
+    subjects !== "-" && !grades ? `Fächer: ${subjects}` : "",
+    byGrade !== "-" ? `Zuordnung nach Klasse: ${byGrade}` : "",
+  ].filter(Boolean);
+
+  return parts.length ? parts.join("; ") : "Nachhilfe ausgewählt, keine Fächer/Klassen angegeben";
+};
+
+const additionalInformation = (record: WorkerRecord) => {
+  const details = serviceDetails(record);
+  const otherDetail = detailForService(details, orderedServices[8]);
+  const items = [
+    tutoringInfo(record),
+    textValue(record.extra_skills) ? `Zusätzliche Skills: ${textValue(record.extra_skills)}` : "",
+    otherDetail && textValue(otherDetail.description) ? `Sonstiges: ${textValue(otherDetail.description)}` : "",
+    otherDetail && textValue(otherDetail.details) ? `Sonstiges: ${textValue(otherDetail.details)}` : "",
+  ].filter(Boolean);
+  return items.length ? items.join("\n") : "-";
+};
+
+const regionValue = (record: WorkerRecord) => {
+  const values = [displayValue(record.service_area), displayValue(record.local_areas)].filter((value) => value !== "-");
+  return values.length ? values.join(" / ") : "-";
+};
+
+const addressValue = (record: WorkerRecord) => {
+  const cityLine = [displayValue(record.zip), displayValue(record.city)].filter((value) => value !== "-").join(" ");
+  const values = [displayValue(record.street), cityLine].filter(Boolean);
+  return values.length ? values.join(", ") : "-";
+};
+
+const availabilityValue = (record: WorkerRecord) => displayValue(record.availability);
 
 const escapeHtml = (value: string) =>
   value
@@ -139,6 +300,11 @@ const fullName = (record: WorkerRecord) =>
   textValue(record.raw_payload?.name) ||
   "-";
 
+const reversedName = (record: WorkerRecord) =>
+  [lastName(record), firstName(record)].filter(Boolean).join(", ").trim() ||
+  textValue(record.raw_payload?.name) ||
+  "-";
+
 const skillsText = (record: WorkerRecord) =>
   displayValue(record.skills ?? record.raw_payload?.skills);
 
@@ -173,44 +339,53 @@ const internalMailBody = (record: WorkerRecord) => {
     ? `\nHinweis: Führungszeugnis wurde eingereicht – bitte prüfen: ${displayValue(record.childcare_certificate_name)}\n`
     : "";
 
-  return `WO:
+  return `1. NACHNAME, VORNAME:
 
-PLZ: ${displayValue(record.zip)}
-Ort: ${displayValue(record.city)}
-Straße: ${displayValue(record.street)}
-Einsatzgebiet: ${displayValue(record.service_area)}
-Radius: ${displayValue(record.radius_km)} km
-Lokale Gebiete: ${displayValue(record.local_areas)}
+${reversedName(record)}
 
-WAS:
+2. GEBURTSDATUM:
 
-Dienstleistungen: ${skillsText(record)}
-Zusätzliche Skills: ${displayValue(record.extra_skills)}
-Dienstleistungsdetails: ${displayValue(record.service_details)}
+${birthdateWithAgeNotice(record)}
 
-STUNDENLOHN:
+3. E-MAIL-ADRESSE:
 
-Je Dienstleistung in ${displayValue(record.service_details)}
+${displayValue(record.email)}
 
-WANN:
+4. TELEFONNUMMER:
 
-Verfügbarkeit: ${displayValue(record.availability)}
+${displayValue(record.phone)}
+
+5. AUSGEWÄHLTE DIENSTLEISTUNGEN:
+
+${orderedServiceText(record)}
+
+6. WEITERFÜHRENDE INFORMATIONEN:
+
+${additionalInformation(record)}
+
+7. ANGEGEBENER STADTTEIL / REGION ALS EINSATZGEBIET:
+
+${regionValue(record)}
+
+8. WOHNADRESSE:
+
+${addressValue(record)}
+
+9. ANGEGEBENER RADIUS:
+
+${displayValue(record.radius_km)} km
+
+10. BEVORZUGTE ARBEITSZEITEN:
+
+${availabilityValue(record)}
 Vorlaufzeit: ${displayValue(record.lead_time)}
-
-KONTAKT:
-
-Name: ${fullName(record)}
-E-Mail: ${displayValue(record.email)}
-Telefon: ${displayValue(record.phone)}
-Geburtsdatum: ${displayValue(record.birthdate)}
-Registrierungstyp: ${displayValue(record.registration_type)}
 
 BESTÄTIGUNGEN:
 
-AGB akzeptiert: ${displayValue(record.terms_accepted)}
-Datenschutz akzeptiert: ${displayValue(record.privacy_accepted)}
-Qualifikation bestätigt: ${displayValue(record.qualification_confirmed)}
-Selbstständigkeit bestätigt: ${displayValue(record.adult_self_employed_confirmed)}
+AGB akzeptiert: ${yesNo(record.terms_accepted)}
+Datenschutz akzeptiert: ${yesNo(record.privacy_accepted)}
+Qualifikation bestätigt: ${yesNo(record.qualification_confirmed)}
+Selbstständigkeit bestätigt: ${yesNo(record.adult_self_employed_confirmed)}
 ${childcareNotice}`;
 };
 
@@ -231,43 +406,56 @@ const internalMailHtml = (record: WorkerRecord) => {
     title: "Neue Heinzelchen-Registrierung",
     preheader: "Eine neue Heinzelchen-Registrierung ist eingegangen.",
     children: `
-      ${mailHeading("Wo")}
+      ${mailHeading("1. Nachname, Vorname")}
       ${mailInfoTable([
-        ["PLZ", escapeHtml(displayValue(record.zip))],
-        ["Ort", escapeHtml(displayValue(record.city))],
-        ["Straße", escapeHtml(displayValue(record.street))],
-        ["Einsatzgebiet", escapeHtml(displayValue(record.service_area))],
-        ["Radius", `${escapeHtml(displayValue(record.radius_km))} km`],
-        ["Lokale Gebiete", escapeHtml(displayValue(record.local_areas))],
+        ["Name", escapeHtml(reversedName(record))],
       ])}
-      ${mailHeading("Was")}
+      ${mailHeading("2. Geburtsdatum")}
       ${mailInfoTable([
-        ["Dienstleistungen", escapeHtml(skillsText(record))],
-        ["Zusätzliche Skills", escapeHtml(displayValue(record.extra_skills))],
-        ["Dienstleistungsdetails", escapeHtml(displayValue(record.service_details)).replace(/\n/g, "<br>")],
-        ["Stundenlohn", `Je Dienstleistung in ${escapeHtml(displayValue(record.service_details)).replace(/\n/g, "<br>")}`],
+        ["Geburtsdatum", escapeHtml(birthdateWithAgeNotice(record))],
       ])}
-      ${mailHeading("Wann")}
+      ${mailHeading("3. E-Mail-Adresse")}
       ${mailInfoTable([
-        ["Verfügbarkeit", escapeHtml(displayValue(record.availability)).replace(/\n/g, "<br>")],
-        ["Vorlaufzeit", escapeHtml(displayValue(record.lead_time))],
-      ])}
-      ${mailHeading("Kontakt")}
-      ${mailInfoTable([
-        ["Name", escapeHtml(fullName(record))],
         ["E-Mail", escapeHtml(displayValue(record.email))],
+      ])}
+      ${mailHeading("4. Telefonnummer")}
+      ${mailInfoTable([
         ["Telefon", escapeHtml(displayValue(record.phone))],
-        ["Geburtsdatum", escapeHtml(displayValue(record.birthdate))],
-        ["Registrierungstyp", escapeHtml(displayValue(record.registration_type))],
+      ])}
+      ${mailHeading("5. Ausgewählte Dienstleistungen")}
+      ${mailInfoTable(orderedServiceRows(record).map(([service, value]) => [
+        service,
+        escapeHtml(value),
+      ]))}
+      ${mailHeading("6. Weiterführende Informationen")}
+      ${mailInfoTable([
+        ["Informationen", escapeHtml(additionalInformation(record)).replace(/\n/g, "<br>")],
+      ])}
+      ${mailHeading("7. Angegebener Stadtteil / Region als Einsatzgebiet")}
+      ${mailInfoTable([
+        ["Einsatzgebiet", escapeHtml(regionValue(record))],
+      ])}
+      ${mailHeading("8. Wohnadresse")}
+      ${mailInfoTable([
+        ["Adresse", escapeHtml(addressValue(record))],
+      ])}
+      ${mailHeading("9. Angegebener Radius")}
+      ${mailInfoTable([
+        ["Radius", `${escapeHtml(displayValue(record.radius_km))} km`],
+      ])}
+      ${mailHeading("10. Bevorzugte Arbeitszeiten")}
+      ${mailInfoTable([
+        ["Arbeitszeiten", escapeHtml(availabilityValue(record)).replace(/\n/g, "<br>")],
+        ["Vorlaufzeit", escapeHtml(displayValue(record.lead_time))],
       ])}
       ${workerDocumentsHtml(record)}
       ${certificatePreview}
       ${mailHeading("Bestätigungen")}
       ${mailInfoTable([
-        ["AGB akzeptiert", escapeHtml(displayValue(record.terms_accepted))],
-        ["Datenschutz akzeptiert", escapeHtml(displayValue(record.privacy_accepted))],
-        ["Qualifikation bestätigt", escapeHtml(displayValue(record.qualification_confirmed))],
-        ["Selbstständigkeit bestätigt", escapeHtml(displayValue(record.adult_self_employed_confirmed))],
+        ["AGB akzeptiert", escapeHtml(yesNo(record.terms_accepted))],
+        ["Datenschutz akzeptiert", escapeHtml(yesNo(record.privacy_accepted))],
+        ["Qualifikation bestätigt", escapeHtml(yesNo(record.qualification_confirmed))],
+        ["Selbstständigkeit bestätigt", escapeHtml(yesNo(record.adult_self_employed_confirmed))],
         ["Kinderbetreuung", childcareNotice],
       ])}
     `,

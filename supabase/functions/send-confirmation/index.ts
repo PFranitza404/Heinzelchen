@@ -71,6 +71,10 @@ const mailTransport = () => {
   });
 };
 
+const smtpSenderAddress = () => Deno.env.get("SMTP_FROM") || Deno.env.get("SMTP_USER") || "info@heinzelchen.com";
+
+const senderFrom = (name: string) => `${name} <${smtpSenderAddress()}>`;
+
 async function bookingRecipient(record: Record<string, unknown>): Promise<Recipient | null> {
   let email = textValue(record.email);
   let name = textValue(record.name) || fullName(record.first_name, record.last_name);
@@ -94,15 +98,15 @@ async function bookingRecipient(record: Record<string, unknown>): Promise<Recipi
   return {
     email,
     name,
-    from: "Heinzelchen Buchungen <buchungen@heinzelchen.com>",
+    from: senderFrom("Heinzelchen Buchungen"),
     replyTo: "info@heinzelchen.com",
-    subject: "Deine Buchung ist bestätigt",
+    subject: "Ihre Anfrage ist bei uns eingegangen",
     html: renderMailLayout({
-      title: "Ihre Buchung ist eingegangen",
+      title: "Ihre Anfrage ist eingegangen",
       preheader: "Wir prüfen Ihre Anfrage und melden uns persönlich.",
       children: `
         ${mailParagraph(`Hallo ${escapeHtml(displayName)},`)}
-        ${mailParagraph("Ihre Buchung bei den Heinzelchen ist bei uns eingegangen.")}
+        ${mailParagraph("Ihre Anfrage bei den Heinzelchen ist bei uns eingegangen.")}
         ${mailParagraph("Wir prüfen Ihre Anfrage und melden uns persönlich mit einem passenden Vorschlag.")}
         ${mailParagraph("Herzliche Grüße<br>Ihr Heinzelchen-Team")}
         ${mailParagraph(`${mailLink(PRIVACY_URL, "Datenschutzerklärung")}<br>${mailLink(TERMS_URL, "Nutzungsbedingungen")}`)}
@@ -121,7 +125,7 @@ async function workerRecipient(record: Record<string, unknown>): Promise<Recipie
   return {
     email,
     name,
-    from: "Heinzelchen <registrierung@heinzelchen.com>",
+    from: senderFrom("Heinzelchen"),
     replyTo: "info@heinzelchen.com",
     subject: "Willkommen bei den Heinzelchen",
     html: renderMailLayout({

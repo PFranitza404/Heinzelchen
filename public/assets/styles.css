@@ -8183,3 +8183,1055 @@ html body .provider-form-actions .form-submit{
     padding-right:.75rem!important;
   }
 }
+
+/* Navbar labels: 15.5% above the base size; the Heinzelchen brand stays unchanged. */
+html body nav .nav-links a{
+  font-size:1.0395rem;
+}
+
+@media(max-width:960px){
+  html body nav .nav-links a{
+    font-size:1.155rem;
+  }
+}
+
+/* Keep words intact across the site; lines may wrap only at normal spaces. */
+html[lang="de"] body,
+html[lang="de"] body *{
+  hyphens:none!important;
+  -webkit-hyphens:none!important;
+  -ms-hyphens:none!important;
+  overflow-wrap:normal!important;
+  word-break:normal!important;
+}
+
+html[lang="de"] body .home-helper-register-button .no-break{
+  hyphens:none!important;
+  -webkit-hyphens:none!important;
+  -ms-hyphens:none!important;
+  overflow-wrap:normal!important;
+  word-break:normal!important;
+}
+
+/* Shared eyebrow headings: 20% larger and easier to scan. */
+html body .section-label{
+  font-size:.936rem!important;
+  line-height:1.4!important;
+}
+
+/* Service-card information: preserve hierarchy while increasing every level by 20%. */
+html body.home .home-service-details p,
+html body.home .home-service-details ul{
+  font-size:1.2rem!important;
+}
+
+html body.home .home-service-details .service-copy-intro{
+  font-size:1.05rem!important;
+}
+
+html body.home .home-service-details .service-copy-heading{
+  font-size:.975rem!important;
+}
+
+@media(max-width:560px){
+  html body.home .home-service-item{
+    flex-basis:calc(100vw - 2rem)!important;
+    max-width:calc(100vw - 2rem)!important;
+  }
+}
+
+/* Booking intro steps: align the process panel with the Heinzelchen palette. */
+html body:not(.home) .booking-intro-panel .intro-panel-row{
+  background:var(--heinzel-bg)!important;
+  background-color:var(--heinzel-bg)!important;
+}
+
+html body:not(.home) .booking-intro-panel .intro-panel-row > span{
+  background:var(--heinzel-blue)!important;
+  background-color:var(--heinzel-blue)!important;
+}
+
+html body:not(.home) .booking-intro-panel .intro-panel-row strong{
+  color:var(--heinzel-red)!important;
+}
+
+html body:not(.home) .booking-intro-panel .intro-panel-row small{
+  color:var(--heinzel-blue)!important;
+}
+
+/* Booking inquiry: carry the intro panel's beige, red and light-blue hierarchy through the form. */
+html body:not(.home) .booking-flow-section .inquiry-progress-step,
+html body:not(.home) .booking-flow-section .inquiry-progress-step.active,
+html body:not(.home) .booking-flow-section .inquiry-progress-step.complete{
+  background:var(--heinzel-bg)!important;
+  background-color:var(--heinzel-bg)!important;
+  border-color:var(--heinzel-border)!important;
+  color:var(--heinzel-red)!important;
+  -webkit-text-fill-color:var(--heinzel-red)!important;
+}
+
+html body:not(.home) .booking-flow-section .inquiry-progress-step.active{
+  border-color:var(--heinzel-blue)!important;
+  box-shadow:0 10px 24px rgba(85,120,168,.18)!important;
+}
+
+html body:not(.home) .booking-flow-section .inquiry-progress-step:not(.active){
+  background:var(--heinzel-bg)!important;
+  background-color:var(--heinzel-bg)!important;
+  color:var(--heinzel-red)!important;
+  -webkit-text-fill-color:var(--heinzel-red)!important;
+}
+
+html body:not(.home) .booking-flow-section .inquiry-progress-step span,
+html body:not(.home) .booking-flow-section .inquiry-progress-step.active span,
+html body:not(.home) .booking-flow-section .inquiry-progress-step.complete span{
+  background:var(--heinzel-blue)!important;
+  background-color:var(--heinzel-blue)!important;
+  color:#FFFFFF!important;
+  -webkit-text-fill-color:#FFFFFF!important;
+}
+
+html body:not(.home) .booking-flow-section .inquiry-card .service-choice-card span,
+html body:not(.home) .booking-flow-section .inquiry-card .service-choice-card input:checked + span{
+  background:var(--heinzel-bg)!important;
+  background-color:var(--heinzel-bg)!important;
+}
+
+html body:not(.home) .booking-flow-section .inquiry-card .service-choice-card strong,
+html body:not(.home) .booking-flow-section .inquiry-card .inline-service-detail > strong{
+  color:var(--heinzel-red)!important;
+}
+
+html body:not(.home) .booking-flow-section .inquiry-card .service-choice-card small,
+html body:not(.home) .booking-flow-section .inquiry-card .form-help,
+html body:not(.home) .booking-flow-section .inquiry-card .inquiry-note,
+html body:not(.home) .booking-flow-section .inquiry-card .appointment-global-note{
+  color:var(--heinzel-blue)!important;
+}
+
+html body:not(.home) .booking-flow-section .inquiry-card .service-choice-card i{
+  background:var(--heinzel-card)!important;
+  background-color:var(--heinzel-card)!important;
+}
+
+html body:not(.home) .booking-flow-section .inquiry-card .service-choice-card input:checked + span{
+  border-color:var(--heinzel-blue)!important;
+  box-shadow:0 12px 28px rgba(85,120,168,.16),inset 0 0 0 1px rgba(85,120,168,.18)!important;
+}
+
+html body:not(.home) .booking-flow-section .inquiry-card .service-choice-card input:checked + span::after{
+  background:var(--heinzel-blue)!important;
+  background-color:var(--heinzel-blue)!important;
+  border-color:var(--heinzel-blue)!important;
+}
+
+/* Booking services: beige inactive marker and a cohesive expanded state. */
+html body:not(.home) .booking-flow-section .inquiry-card .service-choice-card input:not(:checked) + span::after{
+  background:var(--heinzel-card)!important;
+  background-color:var(--heinzel-card)!important;
+  border-color:var(--heinzel-border)!important;
+}
+
+html body:not(.home) .booking-flow-section .inquiry-card .service-choice-with-detail:has(> .request-service-option input:checked),
+html body:not(.home) .booking-flow-section .inquiry-card .inline-service-detail{
+  background:var(--heinzel-card)!important;
+  background-color:var(--heinzel-card)!important;
+  background-image:none!important;
+  border-color:var(--heinzel-border)!important;
+}
+
+html body:not(.home) .booking-flow-section .inquiry-card .inline-service-detail .booking-field,
+html body:not(.home) .booking-flow-section .inquiry-card .inline-service-detail .booking-field-row,
+html body:not(.home) .booking-flow-section .inquiry-card .inline-service-detail .material-equipment-field,
+html body:not(.home) .booking-flow-section .inquiry-card .inline-service-detail .tutoring-request-block,
+html body:not(.home) .booking-flow-section .inquiry-card .service-choice-with-detail:has(> .request-service-option input:checked) .service-duration-field{
+  background:transparent!important;
+  background-color:transparent!important;
+}
+
+html body:not(.home) .booking-flow-section .inquiry-card .inline-service-detail p,
+html body:not(.home) .booking-flow-section .inquiry-card .inline-service-detail .form-help{
+  color:var(--heinzel-blue)!important;
+}
+
+html body:not(.home) .booking-flow-section .inquiry-card .inline-service-detail input,
+html body:not(.home) .booking-flow-section .inquiry-card .inline-service-detail select,
+html body:not(.home) .booking-flow-section .inquiry-card .inline-service-detail textarea,
+html body:not(.home) .booking-flow-section .inquiry-card .inline-service-detail .selected-task-list > button,
+html body:not(.home) .booking-flow-section .inquiry-card .inline-service-detail .garden-task-dropdown{
+  background:var(--heinzel-bg)!important;
+  background-color:var(--heinzel-bg)!important;
+  border-color:var(--heinzel-border)!important;
+}
+
+/* Booking detail content: continue the red, light-blue and beige hierarchy. */
+html body:not(.home) .booking-flow-section .inquiry-card .inline-service-detail .selected-task-list > button,
+html body:not(.home) .booking-flow-section .inquiry-card .inline-service-detail .selected-task-list > button span{
+  color:var(--heinzel-blue)!important;
+}
+
+html body:not(.home) .booking-flow-section .inquiry-card .inline-service-detail input::placeholder,
+html body:not(.home) .booking-flow-section .inquiry-card .inline-service-detail textarea::placeholder{
+  color:var(--heinzel-blue)!important;
+  opacity:1!important;
+}
+
+html body:not(.home) .booking-flow-section .inquiry-card .inline-service-detail .material-equipment-field legend{
+  color:var(--heinzel-red)!important;
+}
+
+html body:not(.home) .booking-flow-section .inquiry-card .inline-service-detail .material-equipment-options input[type="radio"]{
+  appearance:none!important;
+  -webkit-appearance:none!important;
+  display:grid!important;
+  place-items:center!important;
+  border:1.5px solid var(--heinzel-border)!important;
+  border-radius:50%!important;
+  background:var(--heinzel-card)!important;
+  background-color:var(--heinzel-card)!important;
+}
+
+html body:not(.home) .booking-flow-section .inquiry-card .inline-service-detail .material-equipment-options input[type="radio"]::after{
+  content:"";
+  width:6px;
+  height:6px;
+  border-radius:50%;
+  background:#FFFFFF;
+  transform:scale(0);
+  transition:transform .15s ease;
+}
+
+html body:not(.home) .booking-flow-section .inquiry-card .inline-service-detail .material-equipment-options input[type="radio"]:checked{
+  border-color:var(--heinzel-blue)!important;
+  background:radial-gradient(circle at center,#FFFFFF 0 3px,var(--heinzel-blue) 3.5px 100%)!important;
+  background-color:var(--heinzel-blue)!important;
+}
+
+/* Booking intro: continue directly into the request section without a divider. */
+html body:not(.home) .booking-intro-hero{
+  border-bottom:0!important;
+}
+
+/* Booking form navigation: no divider and actions aligned to the right. */
+html body:not(.home) .booking-flow-section .inquiry-card .inquiry-actions{
+  justify-content:flex-end!important;
+  border-top:0!important;
+}
+
+/* Booking step 2: apply the beige, red and light-blue form hierarchy. */
+html body:not(.home) .booking-flow-section .inquiry-card [data-inquiry-step="2"] .service-schedule-card{
+  background:var(--heinzel-card)!important;
+  background-color:var(--heinzel-card)!important;
+  border-color:var(--heinzel-border)!important;
+  box-shadow:none!important;
+}
+
+html body:not(.home) .booking-flow-section .inquiry-card [data-inquiry-step="2"] .service-schedule-card h4,
+html body:not(.home) .booking-flow-section .inquiry-card [data-inquiry-step="2"] .service-schedule-section > strong{
+  color:var(--heinzel-red)!important;
+}
+
+html body:not(.home) .booking-flow-section .inquiry-card [data-inquiry-step="2"] .service-date-group{
+  background:var(--heinzel-bg)!important;
+  background-color:var(--heinzel-bg)!important;
+  border-color:var(--heinzel-border)!important;
+  border-left-color:var(--heinzel-blue)!important;
+}
+
+html body:not(.home) .booking-flow-section .inquiry-card [data-inquiry-step="2"] .service-date-range,
+html body:not(.home) .booking-flow-section .inquiry-card [data-inquiry-step="2"] .service-time-window{
+  background:var(--heinzel-card)!important;
+  background-color:var(--heinzel-card)!important;
+  border-color:var(--heinzel-border)!important;
+}
+
+html body:not(.home) .booking-flow-section .inquiry-card [data-inquiry-step="2"] .booking-field{
+  background:transparent!important;
+  background-color:transparent!important;
+}
+
+html body:not(.home) .booking-flow-section .inquiry-card [data-inquiry-step="2"] .date-range-help,
+html body:not(.home) .booking-flow-section .inquiry-card [data-inquiry-step="2"] .service-date-range span,
+html body:not(.home) .booking-flow-section .inquiry-card [data-inquiry-step="2"] .form-help{
+  color:var(--heinzel-blue)!important;
+}
+
+html body:not(.home) .booking-flow-section .inquiry-card [data-inquiry-step="2"] input,
+html body:not(.home) .booking-flow-section .inquiry-card [data-inquiry-step="2"] select{
+  background:#F7F1E8!important;
+  background-color:#F7F1E8!important;
+  border-color:var(--heinzel-border)!important;
+  color:var(--heinzel-blue)!important;
+}
+
+html body:not(.home) .booking-flow-section .inquiry-card [data-inquiry-step="2"] .appointment-time-add-button{
+  background:var(--heinzel-card)!important;
+  background-color:var(--heinzel-card)!important;
+  border-color:var(--heinzel-border)!important;
+  color:var(--heinzel-blue)!important;
+}
+
+html body:not(.home) .booking-flow-section .inquiry-card [data-inquiry-step="2"] .appointment-date-add-button{
+  background:var(--heinzel-blue)!important;
+  background-color:var(--heinzel-blue)!important;
+  color:#FFFFFF!important;
+  box-shadow:0 12px 28px rgba(85,120,168,.18)!important;
+}
+
+html body:not(.home) .booking-flow-section .inquiry-card [data-inquiry-step="2"] .inquiry-frequency span{
+  background:var(--heinzel-bg)!important;
+  background-color:var(--heinzel-bg)!important;
+  border-color:var(--heinzel-border)!important;
+  box-shadow:none!important;
+}
+
+html body:not(.home) .booking-flow-section .inquiry-card [data-inquiry-step="2"] .inquiry-frequency strong,
+html body:not(.home) .booking-flow-section .inquiry-card [data-inquiry-step="2"] .inquiry-frequency small{
+  color:var(--heinzel-blue)!important;
+}
+
+html body:not(.home) .booking-flow-section .inquiry-card [data-inquiry-step="2"] .inquiry-frequency input:checked + span{
+  background:var(--heinzel-blue)!important;
+  background-color:var(--heinzel-blue)!important;
+  border-color:var(--heinzel-blue)!important;
+  box-shadow:0 10px 24px rgba(85,120,168,.18)!important;
+}
+
+html body:not(.home) .booking-flow-section .inquiry-card [data-inquiry-step="2"] .inquiry-frequency input:checked + span strong,
+html body:not(.home) .booking-flow-section .inquiry-card [data-inquiry-step="2"] .inquiry-frequency input:checked + span small{
+  color:#FFFFFF!important;
+}
+
+html body:not(.home) .booking-flow-section .inquiry-card [data-inquiry-step="2"] .appointment-global-note{
+  background:var(--heinzel-bg)!important;
+  background-color:var(--heinzel-bg)!important;
+  border-color:var(--heinzel-border)!important;
+  color:var(--heinzel-blue)!important;
+}
+
+html body:not(.home) .booking-flow-section .inquiry-card .inquiry-actions .inquiry-back{
+  background:var(--heinzel-card)!important;
+  background-color:var(--heinzel-card)!important;
+  color:var(--heinzel-blue)!important;
+  box-shadow:inset 0 0 0 1px var(--heinzel-border)!important;
+}
+
+/* Booking step 2: remove square backing behind the rounded date inputs. */
+html body:not(.home) .booking-flow-section .inquiry-card [data-inquiry-step="2"] .service-date-range{
+  background:transparent!important;
+  background-color:transparent!important;
+  border:0!important;
+  border-radius:14px!important;
+  overflow:visible!important;
+}
+
+html body:not(.home) .booking-flow-section .inquiry-card [data-inquiry-step="2"] .service-date-range input{
+  background-clip:padding-box!important;
+  overflow:clip!important;
+}
+
+html body:not(.home) .booking-flow-section .inquiry-card [data-inquiry-step="2"] .inquiry-frequency{
+  background:transparent!important;
+  background-color:transparent!important;
+  border:0!important;
+}
+
+/* Booking step 3: remove square field backings and finish the form hierarchy. */
+html body:not(.home) .booking-flow-section .inquiry-card [data-inquiry-step="3"] .booking-field-row,
+html body:not(.home) .booking-flow-section .inquiry-card [data-inquiry-step="3"] .booking-field{
+  background:transparent!important;
+  background-color:transparent!important;
+  border:0!important;
+}
+
+html body:not(.home) .booking-flow-section .inquiry-card [data-inquiry-step="3"] input::placeholder{
+  color:var(--heinzel-blue)!important;
+  opacity:.82!important;
+}
+
+html body:not(.home) .booking-flow-section .inquiry-card [data-inquiry-step="3"] .inquiry-privacy-check{
+  background:var(--heinzel-card)!important;
+  background-color:var(--heinzel-card)!important;
+  border-color:var(--heinzel-border)!important;
+  color:var(--heinzel-blue)!important;
+}
+
+html body:not(.home) .booking-flow-section .inquiry-card [data-inquiry-step="3"] .inquiry-privacy-check a{
+  color:var(--heinzel-red)!important;
+}
+
+html body:not(.home) .booking-flow-section .inquiry-card [data-inquiry-step="3"] .inquiry-privacy-check input[type="checkbox"]{
+  appearance:none!important;
+  -webkit-appearance:none!important;
+  display:grid!important;
+  place-items:center!important;
+  width:20px!important;
+  height:20px!important;
+  min-width:20px!important;
+  margin:.1rem 0 0!important;
+  padding:0!important;
+  border:1.5px solid var(--heinzel-border)!important;
+  border-radius:5px!important;
+  background:var(--heinzel-bg)!important;
+  background-color:var(--heinzel-bg)!important;
+}
+
+html body:not(.home) .booking-flow-section .inquiry-card [data-inquiry-step="3"] .inquiry-privacy-check input[type="checkbox"]::after{
+  content:"✓";
+  color:#FFFFFF;
+  font:700 13px/1 Arial,sans-serif;
+  transform:scale(0);
+  transition:transform .15s ease;
+}
+
+html body:not(.home) .booking-flow-section .inquiry-card [data-inquiry-step="3"] .inquiry-privacy-check input[type="checkbox"]:checked{
+  border-color:var(--heinzel-blue)!important;
+  background:var(--heinzel-blue)!important;
+  background-color:var(--heinzel-blue)!important;
+}
+
+html body:not(.home) .booking-flow-section .inquiry-card [data-inquiry-step="3"] .inquiry-privacy-check input[type="checkbox"]:checked::after{
+  transform:scale(1);
+}
+
+html body:not(.home) .booking-flow-section .inquiry-card [data-inquiry-step="3"] .inquiry-note{
+  color:var(--heinzel-blue)!important;
+}
+
+html body:not(.home) .booking-flow-section .inquiry-card .inquiry-submit:disabled{
+  opacity:.55!important;
+  box-shadow:none!important;
+  cursor:not-allowed!important;
+}
+
+/* Booking navigation buttons share one stable size. */
+html body:not(.home) .booking-flow-section .inquiry-card .inquiry-actions .btn-primary,
+html body:not(.home) .booking-flow-section .inquiry-card .inquiry-actions .btn-secondary{
+  flex:0 0 240px!important;
+  width:240px!important;
+  min-width:240px!important;
+  min-height:60px!important;
+  margin-top:0!important;
+}
+
+@media(max-width:760px){
+  html body:not(.home) .booking-flow-section .inquiry-card .inquiry-actions .btn-primary,
+  html body:not(.home) .booking-flow-section .inquiry-card .inquiry-actions .btn-secondary{
+    flex:1 1 auto!important;
+    width:100%!important;
+    min-width:0!important;
+  }
+}
+
+/* Booking FAQ: remove the outer card and close the eyebrow-heading gap. */
+html body:not(.home) main > section.content.page-section.anbieter-faq{
+  background:transparent!important;
+  background-color:transparent!important;
+  border:0!important;
+  border-radius:0!important;
+  box-shadow:none!important;
+}
+
+html body:not(.home) main > section.content.page-section.anbieter-faq .anbieter-faq-head .section-label{
+  margin-bottom:0!important;
+}
+
+html body:not(.home) main > section.content.page-section.anbieter-faq .anbieter-faq-head h2{
+  margin-top:0!important;
+  margin-bottom:0!important;
+}
+
+/* Footer: keep all five desktop columns inside the available page width. */
+html body footer .footer-inner{
+  width:min(1200px,100%)!important;
+  max-width:1200px!important;
+  grid-template-columns:minmax(0,1.45fr) repeat(3,minmax(0,1fr)) minmax(0,.8fr)!important;
+  gap:clamp(1.25rem,2.2vw,2.5rem)!important;
+}
+
+html body footer .footer-inner > *{
+  min-width:0!important;
+}
+
+html body footer .footer-inner > .footer-col:nth-child(2){
+  grid-template-columns:minmax(0,1fr)!important;
+}
+
+@media(max-width:1100px){
+  html body footer .footer-inner{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  }
+}
+
+@media(max-width:560px){
+  html body footer .footer-inner{
+    grid-template-columns:minmax(0,1fr)!important;
+  }
+}
+/* Provider page: use the same red, light-blue and beige hierarchy as booking. */
+html body.provider-page .subhero-anbieter-werden{
+  border-bottom:0!important;
+}
+
+html body.provider-page .subhero-anbieter-werden .helper-hero-copy li,
+html body.provider-page .helper-proof span,
+html body.provider-page .helper-info-inner,
+html body.provider-page #so-startest-du .step{
+  background:var(--heinzel-card)!important;
+  background-color:var(--heinzel-card)!important;
+  background-image:none!important;
+  border-color:var(--heinzel-border)!important;
+  color:var(--heinzel-blue)!important;
+  box-shadow:var(--heinzel-shadow)!important;
+}
+
+html body.provider-page .subhero-anbieter-werden .helper-hero-copy li::before{
+  background:var(--heinzel-blue)!important;
+  color:#FFFFFF!important;
+}
+
+html body.provider-page .subhero-anbieter-werden .helper-hero-copy > p,
+html body.provider-page .helper-proof,
+html body.provider-page .helper-proof span,
+html body.provider-page .helper-proof strong,
+html body.provider-page .helper-info-inner p,
+html body.provider-page #so-startest-du .step p{
+  color:var(--heinzel-blue)!important;
+}
+
+html body.provider-page .helper-info-inner::after{
+  background:var(--heinzel-card)!important;
+  border-color:var(--heinzel-border)!important;
+  color:var(--heinzel-blue)!important;
+}
+
+html body.provider-page .helper-info-image,
+html body.provider-page #so-startest-du .helper-step-icon,
+html body.provider-page #so-startest-du .step:nth-child(2) .helper-step-icon{
+  background:var(--heinzel-bg)!important;
+  background-color:var(--heinzel-bg)!important;
+}
+
+html body.provider-page .provider-form,
+html body.provider-page .provider-step-panel,
+html body.provider-page .provider-progress{
+  background:var(--heinzel-card)!important;
+  background-color:var(--heinzel-card)!important;
+  background-image:none!important;
+}
+
+html body.provider-page .provider-progress-step,
+html body.provider-page .provider-progress-step:not(.active){
+  background:var(--heinzel-bg)!important;
+  background-color:var(--heinzel-bg)!important;
+  border-color:var(--heinzel-border)!important;
+  color:var(--heinzel-blue)!important;
+  -webkit-text-fill-color:var(--heinzel-blue)!important;
+}
+
+html body.provider-page .provider-progress-step span,
+html body.provider-page .provider-progress-step.active span,
+html body.provider-page .provider-progress-step.complete span{
+  background:var(--heinzel-blue)!important;
+  background-color:var(--heinzel-blue)!important;
+  color:#FFFFFF!important;
+  -webkit-text-fill-color:#FFFFFF!important;
+}
+
+html body.provider-page .provider-progress-step.active{
+  background:var(--heinzel-card)!important;
+  background-color:var(--heinzel-card)!important;
+  border-color:var(--heinzel-blue)!important;
+  color:var(--heinzel-red)!important;
+  -webkit-text-fill-color:var(--heinzel-red)!important;
+  box-shadow:0 10px 24px rgba(85,120,168,.14)!important;
+}
+
+html body.provider-page .provider-progress-step.complete{
+  background:var(--heinzel-bg)!important;
+  background-color:var(--heinzel-bg)!important;
+  color:var(--heinzel-red)!important;
+  -webkit-text-fill-color:var(--heinzel-red)!important;
+}
+
+html body.provider-page .provider-service-card,
+html body.provider-page .provider-service-toggle{
+  background:var(--heinzel-card)!important;
+  background-color:var(--heinzel-card)!important;
+  background-image:none!important;
+  border-color:var(--heinzel-border)!important;
+}
+
+html body.provider-page .provider-service-card{
+  box-shadow:none!important;
+}
+
+html body.provider-page .provider-service-card:has(.provider-service-detail:not([hidden])),
+html body.provider-page .provider-service-card.confirmed{
+  border-color:var(--heinzel-blue)!important;
+  box-shadow:0 10px 24px rgba(85,120,168,.12)!important;
+}
+
+html body.provider-page .provider-service-toggle,
+html body.provider-page .provider-service-toggle[aria-pressed="true"]{
+  color:var(--heinzel-blue)!important;
+}
+
+html body.provider-page .provider-service-toggle strong{
+  color:var(--heinzel-red)!important;
+}
+
+html body.provider-page .provider-service-toggle small,
+html body.provider-page .provider-price-field span,
+html body.provider-page .provider-upload-box p,
+html body.provider-page .provider-upload-box small,
+html body.provider-page .provider-account-note,
+html body.provider-page .qualification-note p{
+  color:var(--heinzel-blue)!important;
+}
+
+html body.provider-page .provider-service-toggle em{
+  background:var(--heinzel-bg)!important;
+  background-color:var(--heinzel-bg)!important;
+  border:1.5px solid var(--heinzel-border)!important;
+  color:var(--heinzel-blue)!important;
+}
+
+html body.provider-page .provider-service-card.confirmed .provider-service-toggle em{
+  background:var(--heinzel-blue)!important;
+  background-color:var(--heinzel-blue)!important;
+  border-color:var(--heinzel-blue)!important;
+  color:#FFFFFF!important;
+}
+
+html body.provider-page .provider-service-detail{
+  background:var(--heinzel-card)!important;
+  background-color:var(--heinzel-card)!important;
+  border-top:1px solid var(--heinzel-border)!important;
+  padding-top:1rem!important;
+}
+
+html body.provider-page .provider-service-detail input,
+html body.provider-page .provider-service-detail select,
+html body.provider-page .provider-service-detail textarea,
+html body.provider-page .provider-chip-grid span,
+html body.provider-page .provider-upload-box,
+html body.provider-page .provider-consent-check,
+html body.provider-page .qualification-note,
+html body.provider-page .profile-final-block,
+html body.provider-page .availability-day-row{
+  background:var(--heinzel-bg)!important;
+  background-color:var(--heinzel-bg)!important;
+  border-color:var(--heinzel-border)!important;
+  color:var(--heinzel-blue)!important;
+}
+
+html body.provider-page .provider-chip-grid input:checked + span{
+  background:var(--heinzel-blue)!important;
+  background-color:var(--heinzel-blue)!important;
+  border-color:var(--heinzel-blue)!important;
+  color:#FFFFFF!important;
+  box-shadow:none!important;
+}
+
+html body.provider-page .provider-tutoring-grade-subjects{
+  background:var(--heinzel-bg)!important;
+  background-color:var(--heinzel-bg)!important;
+  border-color:var(--heinzel-border)!important;
+  border-left-color:var(--heinzel-blue)!important;
+}
+
+html body.provider-page .provider-tutoring-grade-subjects h4,
+html body.provider-page .provider-upload-box > strong,
+html body.provider-page .qualification-note strong{
+  color:var(--heinzel-red)!important;
+}
+
+html body.provider-page .provider-form input::placeholder,
+html body.provider-page .provider-form textarea::placeholder{
+  color:var(--heinzel-blue)!important;
+  opacity:.82!important;
+}
+
+html body.provider-page .provider-form-actions{
+  border-top-color:var(--heinzel-border)!important;
+}
+
+html body.provider-page .provider-back{
+  background:var(--heinzel-card)!important;
+  background-color:var(--heinzel-card)!important;
+  color:var(--heinzel-blue)!important;
+  box-shadow:inset 0 0 0 1px var(--heinzel-border)!important;
+}
+
+html body.provider-page #so-startest-du .helper-step-icon,
+html body.provider-page #so-startest-du .step:nth-child(2) .helper-step-icon{
+  background:var(--heinzel-blue)!important;
+  background-color:var(--heinzel-blue)!important;
+  border-color:var(--heinzel-blue)!important;
+  color:#FFFFFF!important;
+}
+/* Provider form: mirror the booking form layout, controls and button system. */
+html body.provider-page .provider-form{
+  width:min(920px,100%)!important;
+  max-width:920px!important;
+}
+
+html body.provider-page .provider-progress{
+  gap:.75rem!important;
+  margin:0 0 1.4rem!important;
+  padding:.75rem!important;
+}
+
+html body.provider-page .provider-progress-step{
+  min-height:52px!important;
+  padding:.55rem .65rem!important;
+  font-size:clamp(.86rem,1.45vw,1rem)!important;
+  white-space:nowrap!important;
+}
+
+html body.provider-page .provider-progress-step span{
+  flex-basis:30px!important;
+}
+
+html body.provider-page .provider-step-panel,
+html body.provider-page .provider-step-panel .form-block{
+  min-width:0!important;
+}
+
+html body.provider-page .provider-step-panel .form-block{
+  margin:0!important;
+  padding:0!important;
+  border-bottom:0!important;
+}
+
+html body.provider-page .provider-step-panel h2{
+  margin:0 0 .55rem!important;
+  font-size:clamp(1.45rem,3vw,1.85rem)!important;
+  line-height:1.18!important;
+}
+
+html body.provider-page .provider-step-panel > .form-block > .form-help{
+  margin-bottom:1rem!important;
+  font-size:.95rem!important;
+  line-height:1.6!important;
+}
+
+html body.provider-page .provider-service-list{
+  gap:.8rem!important;
+}
+
+html body.provider-page .provider-service-card{
+  border-radius:18px!important;
+  overflow:hidden!important;
+}
+
+html body.provider-page .provider-service-toggle{
+  display:grid!important;
+  grid-template-columns:48px minmax(0,1fr) 34px!important;
+  gap:.85rem!important;
+  min-height:84px!important;
+  padding:.8rem 1rem!important;
+  align-items:center!important;
+}
+
+html body.provider-page .provider-service-toggle::before{
+  display:grid;
+  place-items:center;
+  width:48px;
+  height:48px;
+  border-radius:14px;
+  background:var(--heinzel-bg);
+  color:var(--heinzel-blue);
+  font-size:1.35rem;
+  line-height:1;
+}
+
+html body.provider-page [data-provider-service="Gartenarbeit"] .provider-service-toggle::before{content:"🌿"}
+html body.provider-page [data-provider-service="Reinigung"] .provider-service-toggle::before{content:"🧹"}
+html body.provider-page [data-provider-service="Nachhilfe"] .provider-service-toggle::before{content:"📚"}
+html body.provider-page [data-provider-service="Kinderbetreuung"] .provider-service-toggle::before{content:"👶"}
+html body.provider-page [data-provider-service="Haustierbetreuung"] .provider-service-toggle::before{content:"🐾"}
+html body.provider-page [data-provider-service="Aufbau / Montage"] .provider-service-toggle::before{content:"🔧"}
+html body.provider-page [data-provider-service="Malerarbeiten"] .provider-service-toggle::before{content:"🖌️"}
+html body.provider-page [data-provider-service="Wäscheservice"] .provider-service-toggle::before{content:"👕"}
+html body.provider-page [data-provider-service="Sonstiges"] .provider-service-toggle::before{content:"✨"}
+
+html body.provider-page .provider-service-toggle > span{
+  min-width:0!important;
+}
+
+html body.provider-page .provider-service-toggle strong{
+  font-size:1rem!important;
+  line-height:1.25!important;
+}
+
+html body.provider-page .provider-service-toggle small{
+  margin-top:.2rem!important;
+  font-size:.86rem!important;
+  line-height:1.4!important;
+}
+
+html body.provider-page .provider-service-toggle em{
+  width:34px!important;
+  height:34px!important;
+  justify-self:end!important;
+}
+
+html body.provider-page .provider-service-detail{
+  gap:1rem!important;
+  padding:1rem!important;
+}
+
+html body.provider-page .provider-price-field,
+html body.provider-page .form-grid{
+  gap:.75rem!important;
+}
+
+html body.provider-page .provider-form input,
+html body.provider-page .provider-form select,
+html body.provider-page .provider-form textarea{
+  min-height:54px!important;
+  padding:.75rem .9rem!important;
+}
+
+html body.provider-page .provider-form textarea{
+  min-height:96px!important;
+}
+
+html body.provider-page .provider-add-service{
+  justify-self:end!important;
+  width:240px!important;
+  min-width:240px!important;
+  min-height:60px!important;
+  margin:0!important;
+}
+
+html body.provider-page .provider-form-actions{
+  display:flex!important;
+  justify-content:flex-end!important;
+  gap:1rem!important;
+  margin-top:1.45rem!important;
+  padding-top:0!important;
+  border-top:0!important;
+}
+
+html body.provider-page .provider-form-actions .btn-primary,
+html body.provider-page .provider-form-actions .btn-secondary,
+html body.provider-page .provider-form-actions .form-submit{
+  flex:0 0 240px!important;
+  width:240px!important;
+  max-width:240px!important;
+  min-width:240px!important;
+  min-height:60px!important;
+  margin:0!important;
+  padding:.85rem 1.2rem!important;
+  border-radius:999px!important;
+  font-size:1rem!important;
+  line-height:1.22!important;
+  white-space:normal!important;
+}
+
+html body.provider-page .provider-form-actions .provider-back{
+  background:var(--heinzel-card)!important;
+  border:0!important;
+  color:var(--heinzel-blue)!important;
+  box-shadow:inset 0 0 0 1px var(--heinzel-border)!important;
+}
+
+html body.provider-page .provider-form-actions .provider-back[hidden] + .provider-next{
+  margin-left:0!important;
+}
+
+html body.provider-page .provider-consent-check{
+  color:var(--heinzel-blue)!important;
+}
+
+html body.provider-page .provider-consent-check input[type="checkbox"]{
+  appearance:none!important;
+  -webkit-appearance:none!important;
+  display:grid!important;
+  place-items:center!important;
+  width:20px!important;
+  height:20px!important;
+  min-width:20px!important;
+  min-height:20px!important;
+  margin:.1rem 0 0!important;
+  padding:0!important;
+  border:1.5px solid var(--heinzel-border)!important;
+  border-radius:5px!important;
+  background:var(--heinzel-bg)!important;
+}
+
+html body.provider-page .provider-consent-check input[type="checkbox"]::after{
+  content:"✓";
+  color:#FFFFFF;
+  font:700 13px/1 Arial,sans-serif;
+  transform:scale(0);
+  transition:transform .15s ease;
+}
+
+html body.provider-page .provider-consent-check input[type="checkbox"]:checked{
+  border-color:var(--heinzel-blue)!important;
+  background:var(--heinzel-blue)!important;
+}
+
+html body.provider-page .provider-consent-check input[type="checkbox"]:checked::after{
+  transform:scale(1);
+}
+
+html body.provider-page .availability-week-grid{
+  max-width:none!important;
+}
+
+html body.provider-page .availability-day-row{
+  box-shadow:none!important;
+}
+
+html body.provider-page .provider-account-note,
+html body.provider-page .qualification-note,
+html body.provider-page .profile-final-block{
+  border-radius:14px!important;
+  box-shadow:none!important;
+}
+
+@media(max-width:820px){
+  html body.provider-page .provider-progress{
+    grid-template-columns:1fr!important;
+  }
+
+  html body.provider-page .provider-progress-step{
+    white-space:normal!important;
+  }
+
+  html body.provider-page .provider-service-toggle{
+    grid-template-columns:42px minmax(0,1fr) 30px!important;
+    padding:.75rem!important;
+  }
+
+  html body.provider-page .provider-service-toggle::before{
+    width:42px;
+    height:42px;
+  }
+
+  html body.provider-page .provider-add-service,
+  html body.provider-page .provider-form-actions .btn-primary,
+  html body.provider-page .provider-form-actions .btn-secondary,
+  html body.provider-page .provider-form-actions .form-submit{
+    flex:1 1 auto!important;
+    width:100%!important;
+    max-width:100%!important;
+    min-width:0!important;
+  }
+
+  html body.provider-page .provider-form-actions{
+    flex-direction:column!important;
+  }
+}
+
+/* Provider form colors: match the exact layer structure used by booking. */
+html body.provider-page .provider-progress-step,
+html body.provider-page .provider-progress-step:not(.active),
+html body.provider-page .provider-progress-step.active,
+html body.provider-page .provider-progress-step.complete,
+html body.provider-page .provider-service-toggle,
+html body.provider-page .provider-service-toggle[aria-pressed="true"]{
+  background:var(--heinzel-bg)!important;
+  background-color:var(--heinzel-bg)!important;
+}
+
+html body.provider-page .provider-progress-step,
+html body.provider-page .provider-progress-step:not(.active),
+html body.provider-page .provider-progress-step.active,
+html body.provider-page .provider-progress-step.complete{
+  color:var(--heinzel-red)!important;
+  -webkit-text-fill-color:var(--heinzel-red)!important;
+}
+
+html body.provider-page .provider-service-card:has(.provider-service-detail:not([hidden])),
+html body.provider-page .provider-service-card.confirmed{
+  border-color:var(--heinzel-border)!important;
+  box-shadow:none!important;
+}
+
+html body.provider-page .provider-service-toggle em{
+  background:var(--heinzel-card)!important;
+  background-color:var(--heinzel-card)!important;
+}
+
+html body.provider-page .provider-service-card.confirmed .provider-service-toggle em{
+  background:var(--heinzel-blue)!important;
+  background-color:var(--heinzel-blue)!important;
+}
+
+html body.provider-page [data-provider-step="2"] input:not([type="checkbox"]),
+html body.provider-page [data-provider-step="2"] select,
+html body.provider-page [data-provider-step="2"] textarea,
+html body.provider-page [data-provider-step="3"] input:not([type="checkbox"]),
+html body.provider-page [data-provider-step="3"] select,
+html body.provider-page [data-provider-step="3"] textarea{
+  background:#F7F1E8!important;
+  background-color:#F7F1E8!important;
+}
+
+html body.provider-page:not(.home) .provider-form-section .provider-progress .provider-progress-step,
+html body.provider-page:not(.home) .provider-form-section .provider-progress .provider-progress-step:not(.active),
+html body.provider-page:not(.home) .provider-form-section .provider-progress .provider-progress-step.active,
+html body.provider-page:not(.home) .provider-form-section .provider-progress .provider-progress-step.complete{
+  background:var(--heinzel-bg)!important;
+  background-color:var(--heinzel-bg)!important;
+  color:var(--heinzel-red)!important;
+  -webkit-text-fill-color:var(--heinzel-red)!important;
+}
+
+html body.provider-page .provider-service-toggle::before{
+  background:var(--heinzel-card)!important;
+  background-color:var(--heinzel-card)!important;
+}
+
+html body.provider-page .provider-progress-step:disabled{
+  opacity:1!important;
+  filter:none!important;
+  -webkit-filter:none!important;
+}
+
+html body.provider-page [data-provider-step="3"] .availability-day-row span::before,
+html body.provider-page [data-provider-step="3"] .provider-consent-check input[type="checkbox"]:not(:checked){
+  background:var(--heinzel-card)!important;
+  background-color:var(--heinzel-card)!important;
+  border-color:var(--heinzel-border)!important;
+}
+
+html body.provider-page [data-provider-step="3"] .availability-day-row:has(input:checked) span::before,
+html body.provider-page [data-provider-step="3"] .provider-consent-check input[type="checkbox"]:checked{
+  background:var(--heinzel-blue)!important;
+  background-color:var(--heinzel-blue)!important;
+  border-color:var(--heinzel-blue)!important;
+  color:#FFFFFF!important;
+}
+
+html body.provider-page [data-provider-step="3"] .profile-final-block{
+  margin:1.6rem 0 0!important;
+  padding:0!important;
+  border:0!important;
+  border-radius:0!important;
+  background:transparent!important;
+  background-color:transparent!important;
+  box-shadow:none!important;
+}
+
+html body.provider-page [data-provider-step="3"] .profile-final-block .section-label{
+  margin:0 0 .65rem!important;
+}
+
+html body.provider-page [data-provider-step="3"] .profile-final-block h2{
+  margin:0 0 .55rem!important;
+}
+
+html body.provider-page [data-provider-step="3"] .profile-final-block .form-help{
+  margin:0!important;
+}
+
+html body.provider-page .provider-service-detail{
+  border-top:0!important;
+}
