@@ -9235,3 +9235,174 @@ html body.provider-page [data-provider-step="3"] .profile-final-block .form-help
 html body.provider-page .provider-service-detail{
   border-top:0!important;
 }
+
+body.home .home-story-bridge{
+  max-width:680px!important;
+  margin:.7rem auto 0!important;
+  color:#5578A8!important;
+  font-family:"Fraunces",serif!important;
+  font-size:clamp(1.55rem,4vw,2.25rem)!important;
+  font-weight:500!important;
+  line-height:1.25!important;
+  letter-spacing:0!important;
+  text-align:center!important;
+}
+
+body.home .home-story-bridge a{
+  display:inline-block!important;
+  margin-left:.28rem!important;
+  color:#5578A8!important;
+  font-weight:700!important;
+  text-decoration:underline!important;
+  text-decoration-thickness:1px!important;
+  text-underline-offset:.2em!important;
+  white-space:nowrap!important;
+}
+
+body.home .home-story-bridge a::after{
+  content:" \2192";
+}
+
+body.home .home-story-bridge a:hover{
+  color:#A63D52!important;
+}
+
+html body .about-story-section{
+  scroll-margin-top:88px;
+  padding:clamp(4.5rem,7vw,6.5rem) 5%!important;
+  background:var(--heinzel-bg)!important;
+  background-color:var(--heinzel-bg)!important;
+  border-top:0!important;
+  border-bottom:0!important;
+}
+
+html body:not(.home) main > section.subhero.subhero-kontakt{
+  border-bottom:0!important;
+}
+
+html body:not(.home) main > section.about-story-section + section.content.page-section.team-section{
+  border-top:0!important;
+}
+
+html body .about-story-inner{
+  width:min(1120px,100%);
+  margin:0 auto;
+  display:grid;
+  grid-template-columns:minmax(280px,.78fr) minmax(0,1.22fr);
+  gap:clamp(2.5rem,6vw,5.5rem);
+  align-items:center;
+}
+
+html body .about-story-visual{
+  min-width:0;
+  margin:0;
+  align-self:stretch;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+html body .about-story-visual img{
+  display:block;
+  width:min(100%,430px);
+  max-height:440px;
+  object-fit:contain;
+}
+
+html body .about-story-copy{
+  min-width:0;
+}
+
+html body .about-story-copy .section-label{
+  margin:0 0 .75rem!important;
+  color:var(--heinzel-blue)!important;
+  text-align:left!important;
+}
+
+html body .about-story-copy h2{
+  margin:0 0 1.35rem!important;
+  color:var(--heinzel-red)!important;
+  font-family:"Fraunces",Georgia,serif!important;
+  font-size:clamp(2.35rem,4.5vw,4.25rem)!important;
+  font-weight:900!important;
+  font-variation-settings:"opsz" 9,"wght" 900,"SOFT" 100,"WONK" 1!important;
+  line-height:1.02!important;
+  letter-spacing:0!important;
+}
+
+html body .about-story-copy > p{
+  margin:0 0 1rem!important;
+  color:var(--heinzel-blue)!important;
+  font-family:"Lora",Georgia,serif!important;
+  font-size:clamp(1rem,1.6vw,1.12rem)!important;
+  line-height:1.75!important;
+}
+
+html body .about-story-copy .about-story-statement{
+  margin:1.6rem 0 0!important;
+  padding:.2rem 0 .2rem 1.15rem!important;
+  border-left:4px solid var(--heinzel-red)!important;
+  color:var(--heinzel-red)!important;
+  font-family:"Fraunces",Georgia,serif!important;
+  font-size:clamp(1.3rem,2.4vw,1.75rem)!important;
+  font-weight:700!important;
+  line-height:1.35!important;
+}
+
+@media(max-width:780px){
+  html body .about-story-section{
+    scroll-margin-top:76px;
+    padding:3.75rem 5%!important;
+  }
+
+  html body .about-story-inner{
+    grid-template-columns:1fr;
+    gap:2rem;
+  }
+
+  html body .about-story-visual img{
+    width:min(82vw,340px);
+    max-height:280px;
+  }
+}
+
+html body.provider-page .helper-info-inner::after{
+  padding:0!important;
+  border:0!important;
+  border-radius:0!important;
+  background:transparent!important;
+  background-color:transparent!important;
+  box-shadow:none!important;
+  color:var(--heinzel-red)!important;
+  font-family:"Fraunces",Georgia,serif!important;
+  font-size:1.1rem!important;
+  font-weight:900!important;
+  font-variation-settings:"opsz" 9,"wght" 900,"SOFT" 100,"WONK" 1!important;
+  letter-spacing:0!important;
+  text-transform:none!important;
+}
+
+html body.provider-page .helper-info-copy{
+  flex-direction:column!important;
+  align-items:flex-start!important;
+  justify-content:center!important;
+}
+
+html body.provider-page .helper-info-inner .helper-info-document{
+  margin-top:1rem!important;
+  font-size:1rem!important;
+  line-height:1.6!important;
+}
+
+html body.provider-page .helper-info-document a{
+  color:var(--heinzel-red)!important;
+  font-family:"Fraunces",Georgia,serif!important;
+  font-weight:900!important;
+  text-decoration:underline!important;
+  text-decoration-thickness:1px!important;
+  text-underline-offset:.2em!important;
+}
+
+html body.provider-page .helper-info-document a:hover{
+  color:var(--heinzel-blue)!important;
+}
