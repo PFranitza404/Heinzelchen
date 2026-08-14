@@ -1,0 +1,32 @@
+/* Self-hosted brand fonts keep local and production rendering consistent. */
+@font-face {
+  font-family: "Fraunces";
+  src: url("fonts/fraunces-variable.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Fraunces";
+  src: url("fonts/fraunces-variable-italic.ttf") format("truetype");
+  font-style: italic;
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Lora";
+  src: url("fonts/lora-variable.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Lora";
+  src: url("fonts/lora-variable-italic.ttf") format("truetype");
+  font-style: italic;
+  font-weight: 400 700;
+  font-display: swap;
+}
