@@ -1186,6 +1186,12 @@
   color:#2C3E50;
   font-size:.92rem;
 }
+.inquiry-fee-note{
+  margin-top:.85rem;
+  color:#2C3E50;
+  font-size:.85rem;
+  line-height:1.55;
+}
 .inquiry-confirmation{
   margin-bottom:1rem;
 }
