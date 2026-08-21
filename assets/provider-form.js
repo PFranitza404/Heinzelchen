@@ -381,7 +381,7 @@
     form.scrollIntoView({ behavior: "smooth", block: "start" });
   });
 
-  form.querySelectorAll('a[href$="datenschutz.html"], a[href$="nutzungsbedingungen.html"], a[href$="agb.html"]').forEach((link) => {
+  form.querySelectorAll('a[href$="/datenschutz"], a[href$="/nutzungsbedingungen"], a[href$="/agb"], a[href$="datenschutz.html"], a[href$="nutzungsbedingungen.html"], a[href$="agb.html"]').forEach((link) => {
     link.addEventListener("click", saveDraft);
   });
 

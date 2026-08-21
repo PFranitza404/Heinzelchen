@@ -91,7 +91,7 @@
     banner.innerHTML = `
       <div class="cookie-banner__text">
         <strong>Cookies & externe Dienste</strong>
-        <p>Wir nutzen notwendige Cookies für Grundfunktionen. Google Fonts und Google Maps laden wir erst, wenn du zustimmst. Mehr dazu findest du in der <a href="datenschutz.html">Datenschutzerklärung</a>.</p>
+        <p>Wir nutzen notwendige Cookies für Grundfunktionen. Google Fonts und Google Maps laden wir erst, wenn du zustimmst. Mehr dazu findest du in der <a href="/datenschutz">Datenschutzerklärung</a>.</p>
       </div>
       <div class="cookie-banner__actions">
         <button type="button" class="cookie-banner__button cookie-banner__button--primary" data-cookie-accept>Alle akzeptieren</button>
